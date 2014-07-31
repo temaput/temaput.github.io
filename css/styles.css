@@ -1,6 +1,6 @@
 ﻿
 html {
-    background: grey;
+    background: #F5F5F5;
     padding: 0;
 }
 body {
@@ -8,6 +8,8 @@ body {
     margin: 0 auto;
     background: white;
     padding: 0 0 40px 0;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
 }
 h1 {
     padding: 0;
@@ -22,5 +24,5 @@ div {
 p {
     font: 50px Optima, Lucida Sans Unicode, Arial, sans;
     color: #B1B1B1;
-    margin-left: 320px;
+    margin-left: 240px;
 }
