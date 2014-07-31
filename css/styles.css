@@ -24,5 +24,6 @@ div {
 p {
     font: 50px Optima, Lucida Sans Unicode, Arial, sans;
     color: #B1B1B1;
-    margin-left: 240px;
+    margin: 100px 0 100px 240px;
+
 }
