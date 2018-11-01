@@ -230,12 +230,12 @@
         function addLights() {
             const light1  = new THREE.AmbientLight(0xFFFFFF, 0.3);
             light1.name = 'ambient_light';
-            // camera.add( light1 );
+            scene.add( light1 );
             const light2  = new THREE.DirectionalLight(0xFFFFFF, 0.3 * Math.PI);
             light2.position.set(0.5, 0, 0.866); // ~60º
             light2.name = 'main_light';
 
-            camera.add( light2 );
+            scene.add( light2 );
 
         }
 
