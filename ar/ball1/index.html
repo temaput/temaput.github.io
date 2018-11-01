@@ -34,8 +34,7 @@
         var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
         scene.add(camera);
 
-        var camHelper = new THREE.CameraHelper(camera);
-        scene.add(camera);
+
 
         var renderer = new THREE.WebGLRenderer({alpha: true});
         renderer.setClearColor(0xCCCCCC, 0);
@@ -231,7 +230,7 @@
         function addLights() {
             const light1  = new THREE.AmbientLight(0xFFFFFF, 0.3);
             light1.name = 'ambient_light';
-            camera.add( light1 );
+            // camera.add( light1 );
             const light2  = new THREE.DirectionalLight(0xFFFFFF, 0.3 * Math.PI);
             light2.position.set(0.5, 0, 0.866); // ~60º
             light2.name = 'main_light';
