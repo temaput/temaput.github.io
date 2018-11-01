@@ -61,11 +61,11 @@ worker.onmessage = function(ev) {
 };
 
 
-worker.call(null, 'new', [320, 240, '/examples/Data/camera_para.dat']);
+worker.call(null, 'new', [320, 240, '/ar/artoolkit/examples/Data/camera_para.dat']);
 worker.addEventListener('load', function(ev) {
 	console.log('ARController loaded', ev);
 
-	worker.call(ev.target, 'loadNFTMarker', ['/examples/DataNFT/pinball'], function(ev) {
+	worker.call(ev.target, 'loadNFTMarker', ['/ar/artoolkit/examples/DataNFT/pinball'], function(ev) {
 		console.log('Created NFT marker', ev);
 	});
 });

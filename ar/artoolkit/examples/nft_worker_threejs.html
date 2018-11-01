@@ -37,16 +37,16 @@ html,body {
 
 window.ARThreeOnLoad = function() {
 
-	ARController.getUserMediaThreeScene({maxARVideoSize: 320, cameraParam: 'Data/camera_para-iPhone 5 rear 640x480 1.0m.dat', 
+	ARController.getUserMediaThreeScene({maxARVideoSize: 320, cameraParam: 'Data/camera_para-iPhone 5 rear 640x480 1.0m.dat',
 	onSuccess: function(arScene, arController, arCamera) {
 
-		var proxy = new ARProxy(arController, '/examples/Data/camera_para-iPhone 5 rear 640x480 1.0m.dat', function() { console.log("got new", arguments); });
+		var proxy = new ARProxy(arController, '/ar/artoolkit/examples/Data/camera_para-iPhone 5 rear 640x480 1.0m.dat', function() { console.log("got new", arguments); });
 
 		proxy.addEventListener('load', function(ev) {
 			console.log('ARController loaded', ev);
 
 			this.processingDone = false;
-			this.loadNFTMarker('/examples/DataNFT/pinball', function(ev) {
+			this.loadNFTMarker('/ar/artoolkit/examples/DataNFT/pinball', function(ev) {
 				console.log('Created NFT marker', ev.result[0]);
 
 				var markerRoot = this.arController.createThreeNFTMarker(ev.result[0]);
