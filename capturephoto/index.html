@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ТНТ: AR</title>
+ 
+	<script src="//cdn.8thwall.com/web/aframe/8frame-0.9.0.min.js"></script>
+    <script src="photo-mode.js"></script> 
+	<script src="https://unpkg.com/aframe-chromakey-material/dist/aframe-chromakey-material.min.js"></script>
+    <script defer src="//cdn.8thwall.com/web/aframe/aframe-animation-component-5.1.2.min.js"></script>
+	
+    <!-- хэндлеры и лоадскрин, для теста изменил и разместил у нас -->
+	<script src="//rt360.pwrg.ru/temp/xrextras.js"></script>
+
+    <!-- библиотека, туда отправляется ключ из консоли -->
+    <script async src="//apps.8thwall.com/xrweb?appKey=lzSZYLJ7AUn5T7Op8yASlR1fcgzK194JHnowLACYufs9L50YXAGCIyHSmn35xzUvnXLh95"></script>
+
+    <link rel="stylesheet" href="index.css"> 
+	
+	<script>
+		AFRAME.registerComponent('target-video', {
+		  schema: {
+			name: { type: 'string' },
+			video: {type: 'string' },
+		  },
+		  init: function () {
+			const object3D = this.el.object3D
+			const name = this.data.name
+			object3D.visible = false
+			const v = document.querySelector(this.data.video)
+			const el = this.el
+			
+			const showImage = ({detail}) => {
+			  if (name != detail.name) {
+				return
+			  }
+			  v.play()
+			  object3D.position.copy(detail.position)
+			  object3D.quaternion.copy(detail.rotation)
+			  object3D.scale.set(detail.scale, detail.scale, detail.scale)
+			  object3D.visible = true
+			}
+
+			const hideImage = ({detail}) => {
+			  if (name != detail.name) {
+				return
+			  }
+			  v.pause() 
+			  object3D.visible = false
+			}
+
+			this.el.sceneEl.addEventListener('xrimagefound', showImage)
+			this.el.sceneEl.addEventListener('xrimageupdated', showImage)
+			this.el.sceneEl.addEventListener('xrimagelost', hideImage)
+		  }
+		})
+	</script>
+	
+  </head>
+  <body>
+	  <h1>Жопа</h1>
+    <!-- интерфейс -->
+    <div id="photoModeContainer" style="display: none">
+      <img id="photoModeImage">
+      <div id="flash"></div>
+      <div id="shutterButton"></div>
+      <div id="closeButton"></div>
+    </div>
+
+    <a-scene
+      xrweb
+      xrextras-almost-there
+	  xrextras-gesture-detector
+      xrextras-loading
+      xrextras-runtime-error
+      xrextras-tap-recenter
+      photo-mode>
+
+      <!-- видео добавляются в ассеты -->
+      <a-assets> 
+		  <video
+			id="alpha-video"
+			muted
+			autoplay
+			playsinline
+			crossorigin="anonymous"
+			loop="true"
+			src="https://rt360.pwrg.ru/temp/test_video.mp4">
+		  </video>
+      </a-assets>
+ 
+	  <a-camera
+		  position="0 4 10"
+		  raycaster="objects: .cantap"
+		  cursor="fuse: false; rayOrigin: mouse;">
+      </a-camera>
+
+      <a-entity
+        light="type: directional;
+               intensity: 0.8;"
+        position="1 4.3 2.5">
+      </a-entity>
+
+      <a-light type="ambient" intensity="1"></a-light>
+ 
+	  <!-- "name:" имя маркера в консоли -->
+      <a-entity
+		  target-video="name: 2121; video: #alpha-video;"
+		  material="shader: chromakey; src: #alpha-video; color: 0.1 0.9 0.2"
+		  geometry="primitive: plane; height: 1.125; width: 1.0;">
+      </a-entity>
+
+	</a-scene>
+	
+	<form action="" id="controls-form">
+		<input type="radio" id="video-source-url" value="https://rt360.pwrg.ru/temp/test_video.mp4">
+	</form>
+  </body>
+</html>
