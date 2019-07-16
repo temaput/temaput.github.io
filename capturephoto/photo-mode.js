@@ -49,7 +49,7 @@ AFRAME.registerComponent('photo-mode', {
         this.capturing = false;
         renderGif();
       },
-      1000
+      5000
       );
       //this.el.sceneEl.emit('screenshotrequest')
 
