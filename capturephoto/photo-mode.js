@@ -1,6 +1,8 @@
 var gif = new GIF({
 	workers: 2,
-	quality: 10
+  quality: 10,
+  width: 200,
+  height: 200
 });
 
 function renderGif() { 
