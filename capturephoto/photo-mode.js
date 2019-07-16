@@ -81,7 +81,7 @@ AFRAME.registerComponent('photo-mode', {
 
   addFrame: function() {
     if (this.capturing) {
-      addFrame(image);
+      addFrame();
       this.scheduleCapture();
     }
   }
