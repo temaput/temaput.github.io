@@ -1,6 +1,8 @@
 var gif = new GIF({
 	workers: 2,
   quality: 10,
+  width: 375,
+  height: 667,
   workerScript: 'gif-fucking-worker.js'
 });
 
