@@ -8,7 +8,14 @@ var gif = new GIF({
 function renderGif() { 
 	gif.on('finished', function(blob) {
     console.log('done!');
-	  window.open(URL.createObjectURL(blob));
+
+        // Show the photo
+        const image = document.getElementById('photoModeImage');
+    const objUrl = URL.createObjectURL(blob);
+    image.src = objUrl;
+        container.classList.add('photo');
+
+	 // window.open(URL.createObjectURL(blob));
 	});
 	gif.render();
 }
@@ -76,8 +83,7 @@ AFRAME.registerComponent('photo-mode', {
       this.el.sceneEl.emit('screenshotrequest');
     }
 			
-      // Show the photo
-      //container.classList.add('photo')
+  
     })
   }
 })
