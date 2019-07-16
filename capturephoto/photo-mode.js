@@ -7,6 +7,7 @@ var gif = new GIF({
 
 function renderGif() { 
 	gif.on('finished', function(blob) {
+    console.log('done!');
 	  window.open(URL.createObjectURL(blob));
 	});
 	gif.render();
