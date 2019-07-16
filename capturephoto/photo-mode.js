@@ -1,8 +1,6 @@
 var gif = new GIF({
 	workers: 2,
   quality: 10,
-  width: 750,
-  height: 1334
 });
 
 function renderGif() { 
@@ -21,7 +19,7 @@ function renderGif() {
 }
 
 function addFrame() {
-  
+  console.log("adding frame");
   const canvas = document.querySelector('a-scene').components.screenshot.getCanvas('equirectangular');
   gif.addFrame(canvas); 
 
@@ -82,6 +80,7 @@ AFRAME.registerComponent('photo-mode', {
 
   addFrame: function() {
     if (this.capturing) {
+
       addFrame();
       this.scheduleCapture();
     }
