@@ -1,10 +1,12 @@
 var gif = new GIF({
 	workers: 2,
   quality: 10,
+  width: 750,
+  height: 1334
 });
 
 function renderGif() { 
-  const container = document.getElementById('photoModeContainer');
+  const container = document.getElementById('photoModeContainer')
 	gif.on('finished', function(blob) {
     console.log('done!');
 
@@ -14,17 +16,14 @@ function renderGif() {
     image.src = objUrl;
         container.classList.add('photo');
 
+	 // window.open(URL.createObjectURL(blob));
 	});
 	gif.render();
 }
 
-function addFrame() {
-  console.log("adding frame");
-  const canvas = document.querySelector('a-scene').components.screenshot.getCanvas('equirectangular');
-  gif.addFrame(canvas); 
-
+function addFrame(ff) {
+	gif.addFrame(ff); 
 }
-
 
 AFRAME.registerComponent('photo-mode', {
   init: function() {
@@ -39,15 +38,11 @@ AFRAME.registerComponent('photo-mode', {
 
 
 
-    closeButton.addEventListener('click', () => {
-      container.classList.remove('photo')
-    })
-
     shutterButton.addEventListener('mousedown', () => {
       // Emit a screenshotrequest to the xrweb component
       console.log('starting capture...')
       this.capturing = true;
-      this.scheduleCapture();
+      this.el.sceneEl.emit('screenshotrequest')
 
       // Show the flash while the image is being taken
       //container.classList.add('flash')
@@ -70,19 +65,28 @@ AFRAME.registerComponent('photo-mode', {
       //container.classList.add('flash')
     })
 
+    this.el.sceneEl.addEventListener('screenshotready', e => {
+      // Hide the flash
+      //container.classList.remove('flash')
+
+      // If an error occurs while trying to take the screenshot, e.detail will be empty.
+      // We could either retry or return control to the user
+      if (!e.detail) {
+        return
+      }
+
+      // e.detail is the base64 representation of the JPEG screenshot
+      //image.src = 'data:image/jpeg;base64,' + e.detail
+	
     
-  },
-
-
-  scheduleCapture: function() {
-    setTimeout(() => this.addFrame(), 500);
-  },
-
-  addFrame: function() {
     if (this.capturing) {
-
-      addFrame();
-      this.scheduleCapture();
+      const img = document.createElement("img");
+      img.src = 'data:image/jpeg;base64,' + e.detail;
+      addFrame(img);
+      this.el.sceneEl.emit('screenshotrequest');
     }
+			
+  
+    })
   }
 })
