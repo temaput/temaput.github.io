@@ -31,6 +31,7 @@ AFRAME.registerComponent('photo-mode', {
 
     shutterButton.addEventListener('mousedown', () => {
       // Emit a screenshotrequest to the xrweb component
+      console.log('starting capture...')
       this.capturing = true;
       this.el.sceneEl.emit('screenshotrequest')
 
@@ -41,8 +42,14 @@ AFRAME.registerComponent('photo-mode', {
     
     shutterButton.addEventListener('mouseup', () => {
       // Emit a screenshotrequest to the xrweb component
-      this.capturing = false;
-      renderGif();
+      console.log('ending capture...');
+      setTimeout(() => {
+
+        this.capturing = false;
+        renderGif();
+      },
+      1000
+      );
       //this.el.sceneEl.emit('screenshotrequest')
 
       // Show the flash while the image is being taken
