@@ -37,6 +37,9 @@ AFRAME.registerComponent('photo-mode', {
     container.style.display = 'block'
 
 
+    closeButton.addEventListener('click', () => {
+      container.classList.remove('photo')
+    })
 
     shutterButton.addEventListener('mousedown', () => {
       // Emit a screenshotrequest to the xrweb component
