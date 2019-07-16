@@ -6,6 +6,7 @@ var gif = new GIF({
 });
 
 function renderGif() { 
+  const container = document.getElementById('photoModeContainer');
 	gif.on('finished', function(blob) {
     console.log('done!');
 
