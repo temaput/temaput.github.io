@@ -1,259 +1,426 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="My Portfolio">
-    <title>My &ndash;  Portfolio &ndash;</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="My Portfolio" />
+    <title>My &ndash; Portfolio &ndash;</title>
 
-    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
+      integrity="sha384-"
+      crossorigin="anonymous"
+    />
 
     <!--[if lte IE 8]>
-        <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-old-ie-min.css">
+      <link
+        rel="stylesheet"
+        href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-old-ie-min.css"
+      />
     <![endif]-->
     <!--[if gt IE 8]><!-->
-        <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css">
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css"
+    />
     <!--<![endif]-->
 
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="css/layouts/blog-old-ie.css" />
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="css/layouts/blog.css" />
+    <!--<![endif]-->
 
-        <!--[if lte IE 8]>
-            <link rel="stylesheet" href="css/layouts/blog-old-ie.css">
-        <![endif]-->
-        <!--[if gt IE 8]><!-->
-            <link rel="stylesheet" href="css/layouts/blog.css">
-        <!--<![endif]-->
-
-     <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-<meta name="msapplication-TileColor" content="#da532c">
-<meta name="theme-color" content="#ffffff">
-</head>
-<body>
-
-
-
-
-
-
-
-<div id="layout" class="pure-g">
-    <div class="sidebar pure-u-1 pure-u-md-1-4">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body>
+    <div id="layout" class="pure-g">
+      <div class="sidebar pure-u-1 pure-u-md-1-4">
         <div class="header">
-            <h1 class="brand-title">Artem Putilov</h1>
-            <h2 class="brand-tagline">List of my works and projects</h2>
-
-
+          <h1 class="brand-title">Artem Putilov</h1>
+          <h2 class="brand-tagline">List of my works and projects</h2>
         </div>
-    </div>
+      </div>
 
-    <div class="content pure-u-1 pure-u-md-3-4">
+      <div class="content pure-u-1 pure-u-md-3-4">
         <div>
-            <!-- A wrapper for all the blog posts -->
-            <div class="posts">
-                <h1 class="content-subhead">Completed works</h1>
+          <!-- A wrapper for all the blog posts -->
+          <div class="posts">
+            <h1 class="content-subhead">Completed works</h1>
 
-                <!-- A single blog post -->
-                <section class="post">
-                    <header class="post-header">
-                        <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
+            <!-- A single blog post -->
+            <section class="post">
+              <header class="post-header">
+                <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
 
-                        <h2 class="post-title">Snapchat game</h2>
+                <h2 class="post-title">
+                  KROST Mobile App
+                </h2>
+              </header>
 
-                    </header>
+              <div class="post-description">
+                <p>
+                  <a
+                    target="_blank"
+                    href="https://www.krost.ru/company/promo/mobilnoe-prilozhenie/"
+                    >This</a
+                  >
+                  application was created by another team. My job was to
+                  introduce several new features including whole bunch of
+                  semi-automatic push notifications, notifications centre a to
+                  upgrade deployment infrastructure. I upgraded IOS version
+                  (Swift) and backend (Django). For the new deployment scheme I
+                  had to remotely create private cloud with Kubernetes.
+                </p>
+              </div>
+            </section>
+            <!-- A single blog post -->
+            <section class="post">
+              <header class="post-header">
+                <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
 
-                    <div class="post-description">
-                        <p>
-                            <a target="_blank" href="https://www.snapchat.com/unlock/?type=SNAPCODE&uuid=c1ce12427c334cd4a6f1c15e6c8a54b2&metadata=01">Here</a> is a game I wrote on Snapchat Lens studio. It's a classic space-invaders where you move your ship and open fire with your face!
-                        </p>
-                    </div>
-                </section>
+                <h2 class="post-title">
+                  Coffee Brewing Guide for Amazon Alexa
+                </h2>
+              </header>
 
-                <!-- A single blog post -->
-                <section class="post">
-                    <header class="post-header">
-                        <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
+              <div class="post-description">
+                <p>
+                  <a
+                    target="_blank"
+                    href="https://www.amazon.com/Vixen-Labs-Workshop-Coffee/dp/B07VBL3MBS"
+                    >Here</a
+                  >
+                  is the Amazon Alexa skill that I developed for London Coffee
+                  Brewery. I worked together with wonderfull voice ux designer.
+                  Together we created complex guide for multiple modern coffee
+                  machines. The main script introduced state machine and was
+                  written on Typescript using Skills SDK. Hosted on AWS Lambda.
+                </p>
+              </div>
+            </section>
+            <!-- A single blog post -->
+            <section class="post">
+              <header class="post-header">
+                <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
 
-                        <h2 class="post-title">Temnikova AR game</h2>
+                <h2 class="post-title">Snapchat game</h2>
+              </header>
 
-                    </header>
+              <div class="post-description">
+                <p>
+                  <a
+                    target="_blank"
+                    href="https://www.snapchat.com/unlock/?type=SNAPCODE&uuid=c1ce12427c334cd4a6f1c15e6c8a54b2&metadata=01"
+                    >Here</a
+                  >
+                  is a game I wrote on Snapchat Lens studio. It's a classic
+                  space-invaders where you move your ship and open fire with
+                  your face!
+                </p>
+              </div>
+            </section>
 
-                    <div class="post-description">
-                        <p>
-                            <a target="_blank" href="https://itunes.apple.com/us/app/temnikova-ar/id1365375550?mt=8">This game</a> was developed by my company. My job was creating a "serverless" backend using Firebase facilities (RTDB, Messaging, Storage, Hosting, Functions) and React Antd UI components for CMS.
-                        </p>
-                    </div>
-                </section>
-                <!-- A single blog post -->
-                <section class="post">
-                    <header class="post-header">
-                        <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
+            <!-- A single blog post -->
+            <section class="post">
+              <header class="post-header">
+                <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
 
-                        <h2 class="post-title">QIWI  Match-IT application</h2>
+                <h2 class="post-title">Temnikova AR game</h2>
+              </header>
 
-                    </header>
+              <div class="post-description">
+                <p>
+                  <a
+                    target="_blank"
+                    href="https://itunes.apple.com/us/app/temnikova-ar/id1365375550?mt=8"
+                    >This game</a
+                  >
+                  was developed by my company. My job was creating a
+                  "serverless" backend using Firebase facilities (RTDB,
+                  Messaging, Storage, Hosting, Functions) and React Antd UI
+                  components for CMS.
+                </p>
+              </div>
+            </section>
+            <!-- A single blog post -->
+            <section class="post">
+              <header class="post-header">
+                <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
 
-                    <div class="post-description">
-                        <p>
-                            <a target="_blank" href="https://itunes.apple.com/ru/app/match-it/id1445682551?mt=8">This app</a> was developed by my company. 
-                            My job was Crossplatform social application for IT-conference with Tinder-ish swipe mechanics and online chat. 
-                            Made it with React.Native
-                        </p>
-                    </div>
-                </section>
-                <!-- A single blog post -->
-                <section class="post">
-                    <header class="post-header">
-                        <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
+                <h2 class="post-title">QIWI Match-IT application</h2>
+              </header>
 
-                        <h2 class="post-title">Backend and frontend for online fashion magazine site and application</h2>
+              <div class="post-description">
+                <p>
+                  <a
+                    target="_blank"
+                    href="https://itunes.apple.com/ru/app/match-it/id1445682551?mt=8"
+                    >This app</a
+                  >
+                  was developed by my company. My job was Crossplatform social
+                  application for IT-conference with Tinder-ish swipe mechanics
+                  and online chat. Made it with React.Native
+                </p>
+              </div>
+            </section>
+            <!-- A single blog post -->
+            <section class="post">
+              <header class="post-header">
+                <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
 
-                    </header>
+                <h2 class="post-title">
+                  Backend and frontend for online fashion magazine site and
+                  application
+                </h2>
+              </header>
 
-                    <div class="post-description">
-                        <p>
-                            <a target="_blank" href="https://itunes.apple.com/ru/app/the-rake-daily/id1320802705?mt=8">This app</a>  and 
-                           <a target="_blank" href="https://therakedaily.ru">this site</a> were developed by my company. 
-                            My job was creating CMS (Wagtail) and API (Rest Framework) for application as well as 
-                            developing the site (django + Vue.js)
-                        </p>
-                    </div>
-                </section>
+              <div class="post-description">
+                <p>
+                  <a
+                    target="_blank"
+                    href="https://itunes.apple.com/ru/app/the-rake-daily/id1320802705?mt=8"
+                    >This app</a
+                  >
+                  and
+                  <a target="_blank" href="https://therakedaily.ru"
+                    >this site</a
+                  >
+                  were developed by my company. My job was creating CMS
+                  (Wagtail) and API (Rest Framework) for application as well as
+                  developing the site (django + Vue.js)
+                </p>
+              </div>
+            </section>
+          </div>
+
+          <div class="posts">
+            <h1 class="content-subhead">Work in progress</h1>
+
+            <!-- A single blog post -->
+            <section class="post">
+              <header class="post-header">
+                <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
+
+                <h2 class="post-title">Multiple game platforms</h2>
+              </header>
+
+              <div class="post-description">
+                <p>
+                  <a href="https://egpl-underlords.ru">EZ Gaming</a>
+                  and couple other sites for gamers. For now there is just
+                  tournament registration platform. Soon there will be different
+                  sort of prizes, point-system, premium accounts and online
+                  shopping. There will also be game values trading platform.
+                </p>
+              </div>
+            </section>
+          </div>
+          <div class="posts">
+            <h1 class="content-subhead">Projects</h1>
+
+            <!-- A single blog post -->
+            <section class="post">
+              <header class="post-header">
+                <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
+
+                <h2 class="post-title">
+                  Calke app.
+                </h2>
+              </header>
+
+              <div class="post-description">
+                <p>
+                  <a href="https://calke.ge">https://calke.ge</a>
+                  is a car waste separation and collection startup.
+                </p>
+                <p>
+                  This startup promises to be something big in Georgia.
+                </p>
+                <p>All
+                  business part is made with ODOO framework (Python). I'm
+                  providing several front applications (React.Native) as well as
+                  general technical supervision.
+                </p>
+              </div>
+            </section>
+            <!-- A single blog post -->
+            <section class="post">
+              <header class="post-header">
+                <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
+
+                <h2 class="post-title">
+                  Gamo - car polling Startup in Georgia
+                </h2>
+              </header>
+
+              <div class="post-description">
+                <p>
+                  <a href="https://www.gamoapp.com">https://www.gamoapp.com</a>
+                  is a car polling startup in Tbilis. Hopefully soon there will
+                  be MVP opening.
+                </p>
+                <p>
+                  Recently I joined this wonderfull team as a fullstack
+                  developer. I had to finish up multiple features in their app
+                  (React.Native) as well as create new api endpoints
+                  (Express/MongoDB). I also created couple pages for Admin web
+                  app (React).
+                </p>
+              </div>
+            </section>
+
+            <!-- A single blog post -->
+            <section class="post">
+              <header class="post-header">
+                <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
+
+                <h2 class="post-title">Multiple crypto-currency facilities</h2>
+              </header>
+
+              <div class="post-description">
+                <p>
+                  Fullstack WebMoney - Crypto exchange platform made on
+                  Django/Vue
+                </p>
+                <p>
+                  Crypto Assets Portfolio control-panel, that allows too
+                  implement united trade strategy accross multiple accounts on
+                  multiple trade platforms (Kraken/Binance/Poloniex)
+                </p>
+                <p>
+                  Algorythmic trading solution based on python Catalyst
+                  framework
+                </p>
+              </div>
+            </section>
+
+            <!-- A single blog post -->
+            <section class="post">
+              <header class="post-header">
+                <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
+
+                <h2 class="post-title">Analitic System for restaurants</h2>
+              </header>
+
+              <div class="post-description">
+                <p>
+                  Multiple charts made with Highcharts/React Backend made with
+                  Django/Python collecting online restaurant business data from
+                  RK7 servers
+                </p>
+              </div>
+            </section>
+            <!-- A single blog post -->
+            <section class="post">
+              <header class="post-header">
+                <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
+
+                <h2 class="post-title">Alexa Quiz Game</h2>
+              </header>
+
+              <div class="post-description">
+                <p>
+                  Node.js (Typescript) backend for Quiz game bazed on Harry
+                  Potter story.
+                </p>
+              </div>
+            </section>
+          </div>
+
+          <div class="posts">
+            <h1 class="content-subhead">AR Experiments</h1>
+
+            <!-- A single blog post -->
+            <section class="post">
+              <header class="post-header">
+                <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
+
+                <h2 class="post-title">AR attempt with ball</h2>
+              </header>
+
+              <div class="post-description">
+                <p>
+                  <a href="ar/ball1/index.html">Here</a> suppose to be a ball
+                  that will stick to a HERO mark
+                </p>
+              </div>
+            </section>
+
+            <!-- A single blog post -->
+            <section class="post">
+              <header class="post-header">
+                <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
+
+                <h2 class="post-title">AR attempt with nft marker</h2>
+              </header>
+
+              <div class="post-description">
+                <p>
+                  <a href="ar/artoolkit/examples/nft_threejs.html">Here</a> the
+                  ball is on nft marker
+                </p>
+                <p>
+                  <a href="ar/artoolkit/examples/nft_worker_threejs.html"
+                    >Here</a
+                  >
+                  should be the same but main video feed has no extra latency
+                  because of the web worker
+                </p>
+              </div>
+            </section>
+          </div>
+          <div class="posts">
+            <h1 class="content-subhead">Older works</h1>
+
+            <!-- A single blog post -->
+            <section class="post">
+              <header class="post-header">
+                <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
+
+                <h2 class="post-title">Practica Publishers online store</h2>
+              </header>
+
+              <div class="post-description">
+                <p>
+                  <a target="_blank" href="http://practica.ru">Here</a> is one
+                  of my first works - eCommerce site made with oscar-django in
+                  2014
+                </p>
+              </div>
+            </section>
+          </div>
+          <div class="footer">
+            <div class="pure-menu pure-menu-horizontal">
+              <ul>
+                <li class="pure-menu-item">
+                  <a href="http://pwrg.ru" class="pure-menu-link">PWRG Group</a>
+                </li>
+                <li class="pure-menu-item">
+                  <a
+                    href="https://www.upwork.com/freelancers/~013955399e613b339f"
+                    class="pure-menu-link"
+                    >Upwork</a
+                  >
+                </li>
+                <li class="pure-menu-item">
+                  <a href="http://github.com/temaput" class="pure-menu-link"
+                    >GitHub</a
+                  >
+                </li>
+              </ul>
             </div>
-
-            <div class="posts">
-                <h1 class="content-subhead">Projects</h1>
-
-                <!-- A single blog post -->
-                <section class="post">
-                    <header class="post-header">
-                        <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
-
-                        <h2 class="post-title">Multiple crypto-currency facilities</h2>
-
-                    </header>
-
-                    <div class="post-description">
-                        <p>
-                        Fullstack WebMoney - Crypto exchange platform made on Django/Vue
-                        </p>
-                        <p>
-                        Crypto Assets Portfolio control-panel, that allows too implement united trade strategy accross multiple accounts on multiple trade platforms (Kraken/Binance/Poloniex)
-                        </p>
-                        <p>
-                        Algorythmic trading solution based on python Catalyst framework
-                        </p>
-                    </div>
-                </section>
-
-                <!-- A single blog post -->
-                <section class="post">
-                    <header class="post-header">
-                        <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
-
-                        <h2 class="post-title">Analitic System for restaurants</h2>
-
-                    </header>
-
-                    <div class="post-description">
-                        <p>
-                        Multiple charts made with Highcharts/React
-                        Backend made with Django/Python collecting online restaurant business data from RK7 servers
-                        </p>
-                    </div>
-                </section>
-                <!-- A single blog post -->
-                <section class="post">
-                    <header class="post-header">
-                        <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
-
-                        <h2 class="post-title">Alexa Quiz Game</h2>
-
-                    </header>
-
-                    <div class="post-description">
-                        <p>
-                        Node.js (Typescript) backend for Quiz game bazed on Harry Potter story.
-                        </p>
-                    </div>
-                </section>
-            </div>
-
-            <div class="posts">
-                <h1 class="content-subhead">AR Experiments</h1>
-
-                <!-- A single blog post -->
-                <section class="post">
-                    <header class="post-header">
-                        <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
-
-                        <h2 class="post-title">AR attempt with ball</h2>
-
-                    </header>
-
-                    <div class="post-description">
-                        <p>
-                            <a href="ar/ball1/index.html">Here</a> suppose to be a ball that will stick to a HERO mark
-                        </p>
-                    </div>
-                </section>
-
-                <!-- A single blog post -->
-                <section class="post">
-                    <header class="post-header">
-                        <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
-
-                        <h2 class="post-title">AR attempt with nft marker</h2>
-
-                    </header>
-
-                    <div class="post-description">
-                        <p>
-                            <a href="ar/artoolkit/examples/nft_threejs.html">Here</a> the ball is on nft marker
-                        </p>
-                        <p>
-                            <a href="ar/artoolkit/examples/nft_worker_threejs.html">Here</a> should be the same but main video feed has no extra latency because of the web worker
-                        </p>
-                    </div>
-                </section>
-            </div>
-            <div class="posts">
-                <h1 class="content-subhead">Older works</h1>
-
-                <!-- A single blog post -->
-                <section class="post">
-                    <header class="post-header">
-                        <!-- img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png" -->
-
-                        <h2 class="post-title">Practica Publishers online store</h2>
-
-                    </header>
-
-                    <div class="post-description">
-                        <p>
-                            <a target="_blank" href="http://practica.ru">Here</a> is one of my first works - eCommerce site made with oscar-django in 2014
-                        </p>
-                    </div>
-                </section>
-
-            </div>
-            <div class="footer">
-                <div class="pure-menu pure-menu-horizontal">
-                    <ul>
-                        <li class="pure-menu-item"><a href="http://pwrg.ru" class="pure-menu-link">PWRG Group</a></li>
-                        <li class="pure-menu-item"><a href="https://www.upwork.com/freelancers/~013955399e613b339f" class="pure-menu-link">Upwork</a></li>
-                        <li class="pure-menu-item"><a href="http://github.com/temaput" class="pure-menu-link">GitHub</a></li>
-                    </ul>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-
-
-
-
-</body>
+  </body>
 </html>
