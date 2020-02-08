@@ -1,0 +1,16 @@
+<style>
+  #react-app {
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+  }
+</style>
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/ue/sw.js", {scope: '/ue/'} ).then(function() {
+      console.log("Service Worker Registered");
+    });
+  }
+</script>
+<div id="react-app"></div>
+<script src="/ue/bundle.web.js"></script>
