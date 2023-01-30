@@ -55,8 +55,47 @@ Holodeck Inc management agreed Holoalbums to be a webversion only feature (iPad 
 
 Мы быстро протестировали данный сценарий на пустом компоненте и убедились что идея рабочая и мы действительно можем просто "подсоединить" новый компонент для просмотра альбомов в веб-версию мобильного приложения react.native.
 
+Веб-версия приложения собиралась с помощью Webpack, который мы модифицировали, подключив туда новый плагин. 
 
-![First attempt](ContainerComposition1.png)
+```javascript
+	new ModuleFederationPlugin({
+	name: "host",
+	remotes: {
+		remote: `remote@${CLIENT_LOOKBOOK_APP_URL}/remoteEntry.js`,
+	},
+	shared: {
+		react: {
+		singleton: true,
+		requiredVersion: packageJson.dependencies["react"],
+		},
+		"react-dom": {
+		singleton: true,
+		requiredVersion: packageJson.dependencies["react-dom"],
+		},
+	},
+	})
+```
+
+Здесь почти все взято из простейшего примера из [репозитория Module Federation](https://github.com/module-federation/module-federation-examples/blob/master/cra/host/modulefederation.config.js)
+
+Переменная CLIENT_LOOKBOOK_APP_URL содержит адрес веб-версии HoloProd. Ее мы передаем в скрипт через переменные окружения.
+
+```javascript
+const CLIENT_LOOKBOOK_APP_URL =
+  process.env.CLIENT_LOOKBOOK_APP_URL || "http://localhost:3002";
+  ```
+
+Описание shared модулей довольно запутанно в документации:
+> Shared modules are modules that are both overridable and provided as overrides to nested containers. They usually point to the same module in each build, e.g., the same library.
+
+> The packageName option allows setting a package name to look for a requiredVersion. It is automatically inferred for the module requests by default, set requiredVersion to false when automatic infer should be disabled.
+
+На практике 
+
+
+
+
+![First attempt](ContainerComposition1.svg)
 
 
 ### Второй подход: использовать кодовую базу админки
