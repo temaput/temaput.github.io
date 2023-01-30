@@ -1,0 +1,27 @@
+---
+title: "Welcome To My Blog"
+author: "Artem Putilov"
+date: "2022-11-04"
+categories: [news]
+---
+
+This is the first post in a Quarto blog. Welcome!
+
+![](thumbnail.jpg)
+
+I wasn't expecting to use Quarto, but I was going through wonderful [fastai](https://course.fast.ai) courses and decided to follow the [Jeremy Howard's](https://www.ted.com/talks/jeremy_howard_the_wonderful_and_terrifying_implications_of_computers_that_can_learn?language=en) advice and write a blog post about my experience. I was going to use his [fastpages](https://fastpages.fast.ai) solution, but than I discovered that it [was deprecated in favour of Quarto](https://nbdev.fast.ai/tutorials/blogging.html). So here I am, writing my first post in Quarto.
+
+The other reason is the [Second Brain book](https://www.amazon.com/Building-Second-Brain-Organize-Potential/dp/1982167386) which I am reading. I have so many ideas to explore in this blog, I'm very excited about it!
+
+I plan to follow my everyday job-related tasks in case they are interesting. Couple to mention are as follows:
+
+- Building Filter Builder with [ElasticSearch](https://www.elastic.co/) and [React](https://reactjs.org/)
+- Upgrading [React Native](https://reactnative.dev/) apps to latest SDK's
+- Extending legacy React Native app with new features via microfrontends
+
+
+In parallel, I will be exploring Quarto features and will be writing about it. Of course I'm going to experiment with theming. My ideal is retro Synthwave theme. I'm writing this post from my VsCode editore with Quatro Plugin installed. I'm also going to try to use [Quarto for Jupyter](https://quarto.org/docs/tools/vscode.html#notebook-editor) to write my blog posts. 
+
+Another topic is FastAI courses. My angle will be looking at it from the perspective of mobile application engineer. I'm going to try to apply what I learn to my daily job. 
+
+I'd like to publish this via [Github Pages](https://quarto.org/docs/publishing/github-pages.html) as my personal github subdomain. I have an old list of projects there which I'm going to archive somehow.

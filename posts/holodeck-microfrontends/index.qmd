@@ -1,0 +1,79 @@
+---
+title: "Microfrontends with Holodeck Inc"
+author: "Artem Putilov"
+date: "2023-01-07"
+categories: [code, analysis, microfrontends]
+image: "image.jpg"
+---
+
+
+
+I can't help the feeling that everytime I Work on something I keep lying to myself and to other people. I work in this Thenextgreatthink industry for many years now and it feels more and more that it just spiraled in self destructive loop of hype and fake innovation histeria. 
+
+Everything we do is self repeats trying hard to pretend to be next generations of greatness and genuine creativity while most of the time we just repeat the erroneous circle: instead of using existing tools we create a better new ones repeating same mistakes and than having to look for new solutions to remedy those.
+
+I keep asking myself: when I'm doing something why am i doing it this way and not the way it was done just half a year ago?
+
+Why should new and shiny reactjs apps look like they are written on another language compared to reactjs apps made just several years ago? Is it really necessary? What's wrong with the way we used to do it before? 
+
+It looks like instead of building a car we ought to write a poem. Instead of DRY we do CRY: can't repeat yourslef. We are just engineers after all, not poets! 
+
+Progress and creativity are good directions in general, but was there really authentic progress made by moving from class-based components to hook-based?
+
+Sometimes it almost looks like instead of doing some real-thing progress we instead just keep distracting from one new shiny thing to another and because of that distraction we actually loose time worth spending on improving stuff. If everyday there is a next great tool you have to practice with than you just don't have enough time to actually improve your skills. Plus no point - next time there will be something new anyway!
+
+Take this new trendy candy - microfrontends. Even the name was derrived from microservices, plus using and reusing shared code in every possible way was there in software engineering for ages right? Not much of a progress!
+
+However the Hype is huge! Webpack module federation plugin is stated as *"A game-changer in JavaScript architecture"* by its own author! It's just a plugin that lets us do our webapps in such way that some parts of them can be built and distributed separately from each other...
+Hardly a first thing you need adding a lot of convoluted logic behind the facade with much questionable benefits.
+
+Nevertheless  it has it's dedicated website and a blog and a whole series of youtube videos and a book for just a 40 bucks and a lot of SEO-driven articles all over the Internet. Some of them even try to consume an antihype: as "you don't need that shiny thing and here is why"! https://blog.scottlogic.com/2021/02/17/probably-dont-need-microfrontends.html
+
+I don't want to join nor anti nor pro side armies. My point shall be: are we even doing this right? And I think I'm gonna focus on myself here: am I really  doing this right? Should I really have used this shiny tool or could it have ben done differently and simpler?
+
+Captain Janeway (Startrek Voyager: Cathexis, Learning Curve, Persistence of Vision) deletes Lord Burleigh character from Computer which causes system to look for replacement.
+
+We are the employees of Holodeck Inc, who develops and maintains the system, working on latest updates and improvements. 
+
+Our platform is responsible for supplying the holodecks all around the world with numerous new hologram characters, finding replacements, picking the best candidates for the holo-plots, advertisements and etc.
+
+Through our platform the holoproducers can reach to holocreators and we are provide the necessary tools for them to share and distribute their content (latter) search for cintent and compile it into the final product (formers).
+
+Our platform consists of 2 mobile apps - one for holo-producers and another for holo-artists and a central dashboard that allows our admins and holocasters to assist producers in finding everything they need.
+
+
+Recently Holodeck Inc management decided to completely revamp their central dashboard and we were tasked to create a new and shiny web console made with ReactJS. One of the major new features there is our brand new Holoalbum - a dynamic and powerful reactjs component that lets our holocasters prepare a list of recommended holo-characters with all their characteristics, multiple photos and etc. This component lets manually order, filter, hide and further finetune the list. The result should be visible whithin the ProdApp as a similar but much simplified version.
+
+The most challenging here was that we had to implement Holoalbum twice: admin version on a new Fresh reactjs dashboard  webapp and limited producers version on HoloProd app. HoloProd app was initially developed by subcontractors as react.native app for iPads. Unfortunately implementation was very poor. Later we had to add a lot of functionality there including webversion (react native web), mfa (Firebase) and secure encrypted offline storage that was leveraging service workers in web version. Since it was a project dedicated to revamping admin dashboard and not the apps and we were very limited in terms of time and resources  we would prefer to deal with HoloProd codebase as little as possible.
+
+After serious  considerations we decided to try a new microfrontend architecture to achieve maximal code reusability and to minimize the  unpleasant  updates to react.native app code.
+
+Holodeck Inc management agreed Holoalbums to be a webversion only feature (iPad version was very rarely used by the time anyway ).
+
+### Первый подход: просто скопировать код
+У нас был готовый компонент Holoalbum, который мы использовали в админке. Нам нужно было его использовать в HoloProd. Но HoloProd был написан на react.native и мы не хотели его трогать. Поэтому мы решили создать новый CRA проект для реализации продюсерского варианта Holo Album, перенеся туда основные компоненты альбома из админки и подключив его к HoloProd как микрофронтенд.
+
+Мы быстро протестировали данный сценарий на пустом компоненте и убедились что идея рабочая и мы действительно можем просто "подсоединить" новый компонент для просмотра альбомов в веб-версию мобильного приложения react.native.
+
+
+![First attempt](ContainerComposition1.png)
+
+
+### Второй подход: использовать кодовую базу админки
+Скоро мы сообразили, что можем просто использовать кодовую базу админки для создания нового продюсерского веб-приложения. Мы добавили отдельные скрипты, генерирующие запуск и билд продюсерского веб-приложения в package.json. 
+
+
+
+Our initial idea was to implement a simple one-page webapp on top of CRA boilerplate to be a micro frontend client container and then our webversion HoloProd would be host plugged §
+
+
+
+
+Вифлеемская башня: зыбкий фундамент. 
+Вместо уверенности и поучений начну с сомнений и признания собственного незнания. Научный подход.
+
+Critique of my solution
+
+Critique of the tool and its docs:
+1. Shared modules is not described enough - what to put there and what not?
+2. Why do we even need that: understanding dependencies is the main webpack task after all
