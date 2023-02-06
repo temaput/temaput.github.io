@@ -3,7 +3,7 @@ title: "Holodeck Inc. Elastic Queries"
 author: "Artem Putilov"
 date: "2022-11-07"
 categories: [news, code, analysis]
-image: "image.jpg"
+image: "image.png"
 ---
 
 **Can you tell me a little bit about your current project? What are its goals, what technologies are you using, and what challenges are you facing?**

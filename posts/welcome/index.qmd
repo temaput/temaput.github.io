@@ -1,27 +1,53 @@
 ---
-title: "Welcome To My Blog"
+title: "Fake Innovation"
 author: "Artem Putilov"
 date: "2022-11-04"
-categories: [news]
+categories: [initial_commit]
+image: "thumbnail.png"
 ---
 
-This is the first post in a Quarto blog. Welcome!
+_--- I keep having the feeling that every time I work on something, I keep lying to myself and to others. I've been working in the IT industry for many years now, and it seems like it's just spiraling into a self-destructive loop of hype and fake innovation hysteria._
 
-![](thumbnail.jpg)
-
-I wasn't expecting to use Quarto, but I was going through wonderful [fastai](https://course.fast.ai) courses and decided to follow the [Jeremy Howard's](https://www.ted.com/talks/jeremy_howard_the_wonderful_and_terrifying_implications_of_computers_that_can_learn?language=en) advice and write a blog post about my experience. I was going to use his [fastpages](https://fastpages.fast.ai) solution, but than I discovered that it [was deprecated in favour of Quarto](https://nbdev.fast.ai/tutorials/blogging.html). So here I am, writing my first post in Quarto.
-
-The other reason is the [Second Brain book](https://www.amazon.com/Building-Second-Brain-Organize-Potential/dp/1982167386) which I am reading. I have so many ideas to explore in this blog, I'm very excited about it!
-
-I plan to follow my everyday job-related tasks in case they are interesting. Couple to mention are as follows:
-
-- Building Filter Builder with [ElasticSearch](https://www.elastic.co/) and [React](https://reactjs.org/)
-- Upgrading [React Native](https://reactnative.dev/) apps to latest SDK's
-- Extending legacy React Native app with new features via microfrontends
+--- The IT industry can certainly be a fast-paced and ever-changing field, with a lot of pressure to constantly innovate and deliver new products and solutions. It's not uncommon for individuals in this industry to experience feelings of burnout or frustration with the focus on hype and "the next big thing" instead of delivering meaningful and sustainable solutions. It may be helpful for you to take some time to reflect on what you value in your work and what kind of impact you hope to have. You may also consider seeking out projects or initiatives within your company that align with your values and give you a sense of purpose and fulfillment.
 
 
-In parallel, I will be exploring Quarto features and will be writing about it. Of course I'm going to experiment with theming. My ideal is retro Synthwave theme. I'm writing this post from my VsCode editore with Quatro Plugin installed. I'm also going to try to use [Quarto for Jupyter](https://quarto.org/docs/tools/vscode.html#notebook-editor) to write my blog posts. 
 
-Another topic is FastAI courses. My angle will be looking at it from the perspective of mobile application engineer. I'm going to try to apply what I learn to my daily job. 
+_--- You right, but what about the industry itself? Everything we do is self repeats trying hard to pretend to be next generations of greatness and genuine creativity while most of the time we just repeat the erroneous circle: instead of using existing tools we create a better new ones repeating same mistakes and than having to look for new solutions to remedy those._
 
-I'd like to publish this via [Github Pages](https://quarto.org/docs/publishing/github-pages.html) as my personal github subdomain. I have an old list of projects there which I'm going to archive somehow.
+--- It's true that the IT industry can sometimes be characterized by a focus on creating new solutions rather than improving existing ones, which can lead to a cycle of "reinventing the wheel" and fixing new problems that arise. However, this approach can also drive innovation and progress. The key is to strike a balance between creating new solutions and building on existing ones in a sustainable and thoughtful way.
+
+It's important to remember that the industry is made up of individuals and companies, and there is a wide range of approaches and values within it. Some prioritize short-term gains and hype, while others prioritize stability, sustainability, and real-world impact. By seeking out projects and companies that align with your values, you can play a role in shaping the industry in a direction that you believe is more positive and impactful.
+
+
+
+_--- I keep asking myself, why do I work on things in a certain way, and not the way it was done just half a year ago? Why do new and shiny ReactJS apps look so different from ReactJS apps made just a few years ago? Is this really necessary? What's wrong with the way we used to do it before?_
+
+--- The rapid pace of change in the IT industry can sometimes lead to a feeling of constantly having to adapt to new technologies and approaches. This can be frustrating, especially if you feel that previous approaches were effective and efficient.
+
+In some cases, the push towards new solutions is driven by the desire for better performance, increased security, or improved user experience. In other cases, it may be driven by a desire for novelty or the pursuit of hype and marketing advantage.
+
+Ultimately, whether or not a change is necessary will depend on the specific context and goals of a project. It's important to evaluate each change objectively, taking into consideration the trade-offs and benefits, and to prioritize what is most important for your users and stakeholders.
+
+By staying informed and up-to-date on the latest developments in your field, you can make informed decisions about which approaches are best suited for the specific problem you are trying to solve. Additionally, it may be helpful to establish best practices and guidelines within your organization to ensure that change is implemented in a consistent and effective way.
+
+
+
+<!-- _--- Take this new trendy candy - microfrontends. Even the name was derrived from microservices, plus using and reusing shared code in every possible way was there in software engineering for ages right? Not much of a progress!_
+
+_However the Hype is huge! Webpack module federation plugin is stated as *"A game-changer in JavaScript architecture"* by its own author! It's just a plugin that lets us do our webapps in such way that some parts of them can be built and distributed separately from each other..._
+_Hardly a first thing you need adding a lot of convoluted logic behind the facade with much questionable benefits._
+
+--- It's true that the hype surrounding new technologies and approaches can sometimes be disproportionate to their actual impact and benefits. Microfrontends is one example of a concept that has gained popularity in recent years.
+
+In the case of microfrontends, while the idea of breaking down a monolithic frontend into smaller, more manageable parts has some appeal, it can also introduce new complexities and trade-offs. It's important to carefully evaluate whether microfrontends are the right approach for a particular project, taking into consideration factors such as complexity, scalability, maintainability, and development team size and expertise.
+
+It's also important to keep in mind that the industry is constantly evolving, and what is considered a "best practice" today may not be the case tomorrow. By staying informed and critically evaluating new approaches and technologies, you can make informed decisions about what is best for your particular use case. -->
+
+
+_--- I don't want to join either the anti-hype or pro side army. My point is, are we even doing this right? And I'm thinking about focusing on myself here: am I really doing this right? Should I have really used this shiny tool, or could it have been done differently and more simply?_
+
+--- It's important to regularly reflect on your approach to software development and to question whether you are using the right tools and techniques for a given project. It's possible that a new and shiny tool may not be the best fit for a particular problem, and that a simpler solution would be more appropriate.
+
+When making decisions about tools and techniques, it's important to consider the specific needs and requirements of the project, as well as the skills and experience of your development team. Keeping up-to-date with the latest developments in the industry can also help you make informed decisions.
+
+Additionally, it's a good idea to regularly re-evaluate your approach and consider whether there are other, more effective ways of solving the problem at hand. By constantly learning and iterating, you can continually improve your skills and grow as a software engineer.
