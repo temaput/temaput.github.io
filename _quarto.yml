@@ -5,9 +5,10 @@ website:
   title: "Blog"
   navbar:
     right:
-      - about.qmd
+      - href: https://temaput.github.io/
+        text: About Me
       - icon: github
-        href: https://temaput.github.com/
+        href: https://github.com/temaput/
       - icon: linkedin
         href: https://www.linkedin.com/in/temaput/
 format:
