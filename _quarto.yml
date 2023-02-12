@@ -9,10 +9,12 @@ website:
       - href: index.qmd
         text: About Me
       - projects-list.qmd
+      - href: https://temaput.github.io/Blog
+        text: Blog
 
 format:
   html:
-    theme: lumen
+    theme: flatly
     css: styles.css
     toc: true
 

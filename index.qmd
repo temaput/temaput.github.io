@@ -1,5 +1,15 @@
 ---
 title: "About Me"
+image: profile.jpeg
+about:
+  template: jolla
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/temaput
+    - icon: github
+      text: Github
+      href: https://github.com/temaput
 ---
 
 
