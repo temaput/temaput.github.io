@@ -2,17 +2,19 @@ project:
   type: website
 
 website:
-  title: "Behind My Code"
+  title: "Artem Putilov"
   description: "A blog about how technological curiosity shapes my development adventure"
   google-analytics: "G-XBYLY9KNL7"
   favicon: favicon.png
   twitter-card: true
   open-graph: true
-  site-url: https://temaput.github.io/Blog/
+  site-url: https://temaput.github.io/
   body-footer: "<br><br> [![](/by.svg)](https://creativecommons.org/licenses/by/4.0/)<br> Artem Putilov, 2023"
   navbar:
     right:
-      - href: https://temaput.github.io/
+      - href: /projects-list.html
+        text: My Projects
+      - href: /about.html
         text: About Me
       - icon: github
         href: https://github.com/temaput/

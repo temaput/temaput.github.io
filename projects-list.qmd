@@ -1,0 +1,112 @@
+---
+title: "Projects List"
+format: html
+toc: true
+---
+
+
+Here is a list of projects I have worked on, specifically selected to include both those that were published and those that hold personal significance to me.
+
+
+## Completed Projects
+
+
+
+
+
+### ProjectX - custom ERP solution for a talent agency
+Created complete architecture, also worked as project manager and team lead.
+
+- Microservices architecture (NestJS)
+- CQRS and Event Sourcing (MongoDB as main eventlog, Elastic as Projections db, RabbitMQ as broker)
+- Admin Dashboard built from scratch on React Bootstrap
+- Complex filter builder solution powered by Elastic Search
+
+
+### Web Quizz Game
+In 2021 I worked solo on quickly developing [this SPA](https://challenge.eliasgameplan.com). The app is a Quizz Game built using NextJS, Firebase and ReTool as an admin panel. Whole project from scratch was done in 2 weeks time.
+
+
+### Elias Gameplan App
+In 2021 I worked as TeamLead and frontend developer on [this React.Native app](https://eliasgameplan.com/). We built it from scratch. 
+
+
+### UVE Artiste App
+In 2020 I developed [this React.Native app](https://universalextras.co.uk/extras/) from scratch. It uses Firebase for Authentication and messaging.
+
+### UVE Client App
+I started working on [this React.Native app](https://universalextras.co.uk/casting/uve-client-app/) in 2019. Added a lot of functionality, fixed a lot of bugs since than. We created a Web portal based on this iPad app using react-native-web.
+Later I added MFA there using poorly documented and Firebase MFA feature. I had to [extend](https://github.com/invertase/react-native-firebase/pull/5372) Javascript Firebase SDK, because it was missing MFA feature.
+
+### KROST Mobile App
+
+[This application](https://apps.apple.com/ru/app/%D0%BA%D1%80%D0%BE%D1%81%D1%82/id1289592348) was created by another team. My job was to introduce several new features including whole bunch of semi-automatic push notifications, notifications centre a to upgrade deployment infrastructure. I upgraded IOS version (Swift) and backend (Django). For the new deployment scheme I had to remotely create private cloud with Kubernetes.
+
+### Coffee Brewing Guide for Amazon Alexa
+
+[Here](https://www.amazon.com/Vixen-Labs-Workshop-Coffee/dp/B07VBL3MBS) is the Amazon Alexa skill that I developed for London Coffee Brewery. I worked together with wonderfull voice ux designer. Together we created complex guide for multiple modern coffee machines. The main script introduced state machine and was written on Typescript using Skills SDK. Hosted on AWS Lambda.
+
+### Snapchat game
+
+[Here](https://www.snapchat.com/unlock/?type=SNAPCODE&uuid=c1ce12427c334cd4a6f1c15e6c8a54b2) is a game I wrote on Snapchat Lens studio. It's a classic space-invaders where you move your ship and open fire with your face!
+
+### Temnikova AR game
+
+[This game](https://itunes.apple.com/us/app/temnikova-ar/id1365375550) was developed by my company. My job was creating a "serverless" backend using Firebase facilities (RTDB, Messaging, Storage, Hosting, Functions) and React Antd UI components for CMS.
+
+### QIWI Match-IT application
+
+[This app](https://itunes.apple.com/ru/app/match-it/id1445682551) was developed by my company. My job was Crossplatform social application for IT-conference with Tinder-ish swipe mechanics and online chat. Made it with React.Native
+
+### Backend and frontend for online fashion magazine site and application
+
+[This app](https://itunes.apple.com/ru/app/the-rake-daily/id1320802705) and [this site](https://therakedaily.ru/) were developed by my company. My job was creating CMS (Wagtail) and API (Rest Framework) for application as well as developing the site (django + Vue.js)
+
+
+### Practica Publishers online store
+
+[Here](http://practica.ru/) is one of my first works - eCommerce site made with oscar-django in 2014
+
+
+## Startups / Personal projects
+
+### IOS Health App
+
+In 2021 I joined an interesting startup that was developing an IOS health app. I did a lot of RnD work around Apple Watch and IOS health related data. Also I developed an architecture to support secure decentralized sharing of health data between the patient and a their doctors.
+
+IOS and Watch apps were done in SwiftUI. The backend architecture was based on NodeJS and Kafka.
+
+
+### Calke
+
+calke.ge is a waste separation and collection startup.
+
+All business part is made with ODOO framework (Python). I'm providing several front applications (React.Native) as well as general technical supervision.
+
+
+### Gamo
+[gamoapp.com](https://gamoapp.com) is a car polling startup in Tbilis. Hopefully soon there will be MVP opening.
+
+Recently I joined this wonderfull team as a fullstack developer. I had to finish up multiple features in their app (React.Native) as well as create new api endpoints (Express/MongoDB). I also created couple pages for Admin web app (React).
+
+
+
+## Other Projects
+
+### Multiple crypto-currency facilities
+
+Fullstack WebMoney - Crypto exchange platform made on Django/Vue
+
+Crypto Assets Portfolio control-panel, that allows too implement united trade strategy accross multiple accounts on multiple trade platforms (Kraken/Binance/Poloniex)
+
+Algorythmic trading solution based on python Catalyst framework
+
+
+### Analytics System for restaurants
+
+Multiple charts made with Highcharts/React Backend made with Django/Python collecting online restaurant business data from RK7 servers
+
+
+### Analytics System for big pharma holding
+
+In 2021 I worked solo on developing an analytical system based on Odoo ERP platform. The system was injesting data from multiple companies presenting it in several dashboards and generating reports.

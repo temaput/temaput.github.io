@@ -1,8 +1,8 @@
 ---
-title: "About"
-image: profile.jpg
+title: "Artem Putilov"
+image: profile.jpeg
 about:
-  template: jolla
+  template: trestles
   links:
     - icon: linkedin
       text: LinkedIn
@@ -10,7 +10,25 @@ about:
     - icon: github
       text: Github
       href: https://github.com/temaput
-
 ---
 
-About this blog
+
+
+| | |
+| -- | -- |
+| Age | 41 |
+| Location | Buenos Aires |
+| Specialization | Software Engineer |
+| Languages | English, Russian, Spanish (beginner) |
+| Skills | TypeScript, Python, Swift, Django, NestJS, React, React.Native, Vue, MongoDB, Postgres, ElasticSearch, Firebase etc |
+
+
+I am a Senior Software Engineer and the Head of the Georgian Branch of Conso4s LTD. With over 10 years of experience in software development, I bring a wealth of technical knowledge and expertise to the table. 
+
+I am proud of my recent accomplishments, including becoming a team lead after just half a year as a front-end engineer and receiving a partnership offer from one of my clients. I am also proud of the recent project I managed as the head of the Georgian Branch of Conso4s LTD, which I successfully architected and developed with the help of my team.
+
+Looking ahead, I am eager to continue developing my skills in software development and architecture. I am also highly interested in AI and would be excited to participate in AI-focused projects. I hold a degree in musicology from the Gnesins Music Academy in Moscow and have a passion for classical music, cultorology and mathematics. In my free time, I enjoy playing chess and sometimes piano.
+
+I lived in Georgia for 5 years. I was lucky enough to call Tbilisi my home. It's where I met my best friends and my wonderful wife. I will always be grateful for those special times.
+
+Now, I live in Buenos Aires and I'm so happy here. The city is beautiful and the people are friendly. I want to know more about Argentina, so I'm learning Spanish. I hope to understand its culture and nature better.
