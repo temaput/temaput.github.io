@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.262">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Artem Putilov">
 <meta name="dcterms.date" content="2022-11-07">
 
-<title>Blog - Holodeck Inc.&nbsp;Elastic Queries</title>
+<title>Behind My Code - Holodeck Inc.&nbsp;Elastic Queries</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,9 +19,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -48,43 +49,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -120,7 +91,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -136,30 +108,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Blog</span>
+    <span class="navbar-title">Behind My Code</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="https://temaput.github.io/">
+    <a class="nav-link" href="https://temaput.github.io/" rel="" target="">
  <span class="menu-text">About Me</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/temaput/"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/temaput/" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/temaput/"><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/temaput/" rel="" target=""><i class="bi bi-linkedin" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -208,35 +182,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<p><strong>Can you tell me a little bit about your current project? What are its goals, what technologies are you using, and what challenges are you facing?</strong></p>
+<p><em>— Can you tell me a little bit about your current project? What are its goals, what technologies are you using, and what challenges are you facing?</em></p>
 <p>Sure! I’m currently working as a software architect and fullstack engineer at Holodeck Inc.&nbsp;We are revamping Holodeck Inc ERP system. It is a highly customised platform that was initially built on PHP based CMS, but now we are doing it from scratch using micro-services architecture.</p>
-<p><strong>Great! It sounds like an interesting project. Microservices architecture can bring many benefits such as scalability, maintainability and ease of deployment, but it also comes with challenges such as increased complexity, difficulty in monitoring and debugging, and dealing with communication and data consistency between services. How are you approaching these challenges in your project?</strong></p>
+<p><em>— Great! It sounds like an interesting project. Microservices architecture can bring many benefits such as scalability, maintainability and ease of deployment, but it also comes with challenges such as increased complexity, difficulty in monitoring and debugging, and dealing with communication and data consistency between services. How are you approaching these challenges in your project?</em></p>
 <p>We decided to use event sourcing as a core of entire system. Event-sourcing suites very well for micro-services platforms. To complement this we also chose a CQRS approach to building our new api.</p>
-<p><strong>That’s a smart choice! Event sourcing and CQRS can help to manage the complexity of a microservices system and ensure data consistency between services. Event sourcing helps to maintain a complete and verifiable history of the changes to the data in the system, while CQRS allows you to separate the handling of read and write operations, providing better scalability and performance. What technology stack have you decided to use for implementing this new system?</strong></p>
+<p><em>— That’s a smart choice! Event sourcing and CQRS can help to manage the complexity of a microservices system and ensure data consistency between services. Event sourcing helps to maintain a complete and verifiable history of the changes to the data in the system, while CQRS allows you to separate the handling of read and write operations, providing better scalability and performance.</em> What technology stack have you decided to use for implementing this new system?_—</p>
 <p>Great question! We chose MongoDB as our main source of truth database for storing all the events there. As a projections database we decided to go with ElasticSearch. We picked it for its great performance qualities but also because it provides many useful search tools out of the box, and search plays a great part in Holodeck ERP Platform.</p>
-<p><strong>MongoDB and Elasticsearch are both popular choices for event sourcing and CQRS, so it sounds like you have a solid technology stack. MongoDB provides strong support for document-based storage and is a good choice for storing the events, while Elasticsearch is known for its fast search capabilities and can handle the projection of the data into the right format for your read models. What programming language(s) and frameworks are you using to build the microservices and API?</strong></p>
+<p><em>— MongoDB and Elasticsearch are both popular choices for event sourcing and CQRS, so it sounds like you have a solid technology stack. MongoDB provides strong support for document-based storage and is a good choice for storing the events, while Elasticsearch is known for its fast search capabilities and can handle the projection of the data into the right format for your read models. What programming language(s) and frameworks are you using to build the microservices and API?</em>—</p>
 <p>We were picking between Kafka and RabbitMQ for a broker, but decided to go with RabbitMQ finally. As main language we have TypeScript for both backend and frontend. Specifically we use NestJS on backend and React and React.Native for the Dashboard and a couple of mobile apps.</p>
-<p><strong>RabbitMQ and TypeScript are both widely used and reliable technologies. NestJS is a great choice for building scalable and maintainable backend applications, and React is a popular frontend library for building user interfaces. Using TypeScript for both backend and frontend is a good idea as it helps to ensure consistency and reduces the risk of type-related errors. Please tell me more.</strong></p>
+<p><em>— RabbitMQ and TypeScript are both widely used and reliable technologies. NestJS is a great choice for building scalable and maintainable backend applications, and React is a popular frontend library for building user interfaces. Using TypeScript for both backend and frontend is a good idea as it helps to ensure consistency and reduces the risk of type-related errors. Please tell me more.</em></p>
 <p>Well we actually developed quite interesting solution for read operations: we wanted to avoid unnecessary duplication of logic on frontend and backend and decided to go with a kind of a hybrid approach: while in the write mode most of the business rules is implemented (and enforced) on backend, for read side we mostly implement business logic on a frontend side. Does it make sense to you?</p>
-<p><strong>Yes, that can make sense in some situations. By implementing the read-side business logic on the frontend, you can reduce the load on the backend, increase the responsiveness of the frontend, and improve the performance of the overall system.</strong> <strong>However, it’s important to keep in mind that implementing business logic on the frontend can also increase the complexity of the frontend code and make it more difficult to maintain and test. Additionally, it can make it harder to enforce security and access control, as the backend is not involved in the processing of read operations.</strong> <strong>It’s a trade-off between the benefits and drawbacks, and the best approach will depend on the specific requirements and constraints of your project.</strong></p>
+<p><em>— Yes, that can make sense in some situations. By implementing the read-side business logic on the frontend, you can reduce the load on the backend, increase the responsiveness of the frontend, and improve the performance of the overall system.</em> <em>— However, it’s important to keep in mind that implementing business logic on the frontend can also increase the complexity of the frontend code and make it more difficult to maintain and test. Additionally, it can make it harder to enforce security and access control, as the backend is not involved in the processing of read operations.</em> <em>— It’s a trade-off between the benefits and drawbacks, and the best approach will depend on the specific requirements and constraints of your project.</em></p>
 <p>Yes exactly! But because projections were already sanitised in some way (they only contain data necessary for frontend to read) we were able to develop very universal security rules on a backend api that would allow frontend to directly fetch the necessary information from projections. Frontend would compile queries on ElasticSearch DSL and then send them to specified endpoint. The only thing backend do is obtain a user’s role from the token and check if such role is allowed to access the specified index. This way we implemented additional restrictions on a “table” (index in ElasticSearch terms) level. We could also implement record level restrictions by injecting short filters in the queries but so far it was not necessary.</p>
-<p><strong>That sounds like a good approach for balancing the responsibilities of the frontend and backend. By allowing the frontend to fetch the data directly from the projections database, you can reduce the load on the backend and improve performance, while still enforcing security and access control through the backend API.</strong> <strong>By using ElasticSearch’s search DSL, you can ensure that the frontend is able to easily and efficiently access the data it needs, while still being able to apply any necessary restrictions and filters.</strong> <strong>It’s a good example of how careful consideration of the trade-offs can result in a well-designed solution that strikes a balance between different requirements and constraints.</strong></p>
+<p><em>— That sounds like a good approach for balancing the responsibilities of the frontend and backend. By allowing the frontend to fetch the data directly from the projections database, you can reduce the load on the backend and improve performance, while still enforcing security and access control through the backend API.</em> <em>— By using ElasticSearch’s search DSL, you can ensure that the frontend is able to easily and efficiently access the data it needs, while still being able to apply any necessary restrictions and filters.</em> <em>— It’s a good example of how careful consideration of the trade-offs can result in a well-designed solution that strikes a balance between different requirements and constraints.</em></p>
 <p>Thank you! In some way this approach was inspired by GraphQL and Firebase Realtime DB solutions</p>
-<p><strong>That’s great to hear! Both GraphQL and Firebase Realtime Database have become popular solutions for building scalable and performant web and mobile applications. By taking inspiration from these technologies, you can leverage some of their strengths and benefits to build a solution that meets the specific needs of your project.</strong> <strong>Overall, it sounds like you have a solid plan and well-thought-out approach to building the new ERP system. Tell me more about it!</strong></p>
+<p><em>— That’s great to hear! Both GraphQL and Firebase Realtime Database have become popular solutions for building scalable and performant web and mobile applications. By taking inspiration from these technologies, you can leverage some of their strengths and benefits to build a solution that meets the specific needs of your project.</em> <em>— Overall, it sounds like you have a solid plan and well-thought-out approach to building the new ERP system. Tell me more about it!</em></p>
 <p>Still there was one issue that we had to address: that is a separation of concerns. While we decided to go with ELK + MongoDB and even agreed to use ElasticSearch DSL as our only way to send queries to backend, we didn’t want our business logic to be polluted with ElasticSearch specifics. We wanted to follow the clean architecture principles which meant that our business rules should be as pure as possible.</p>
-<p><strong>That’s a great point. Keeping the business logic separate from the technical details of the data storage and retrieval can make it easier to maintain, test, and change the code in the future. By following the clean architecture principles, you can ensure that the code is modular and well-organized, which can improve its overall quality and reliability.</strong></p>
-<p><strong>To address this issue, you can use an intermediary layer between the business logic and the data storage. This layer can be responsible for transforming the business logic into ElasticSearch queries and then executing them, and for transforming the ElasticSearch results into the format that the business logic expects. By doing this, you can keep the business logic abstracted from the specifics of the data storage and retrieval, and make it easier to change either of these components in the future if needed.</strong></p>
+<p><em>— That’s a great point. Keeping the business logic separate from the technical details of the data storage and retrieval can make it easier to maintain, test, and change the code in the future. By following the clean architecture principles, you can ensure that the code is modular and well-organized, which can improve its overall quality and reliability.</em></p>
+<p><em>— To address this issue, you can use an intermediary layer between the business logic and the data storage. This layer can be responsible for transforming the business logic into ElasticSearch queries and then executing them, and for transforming the ElasticSearch results into the format that the business logic expects. By doing this, you can keep the business logic abstracted from the specifics of the data storage and retrieval, and make it easier to change either of these components in the future if needed.</em></p>
 <p>Thats exactly what we did! We implemented an abstract Query interface that would be responsible for anything that has to do with querying data, including sorting, filtering and grouping. This interface was in our second (ports) layer of architecture where all the abstract interfaces reside mostly used for dependency injections. Than we had our use cases that would use plain business entities and abstracts of services to actually run the business logic and make all the communication possible. Use cases would build abstract queries and then give them to abstract services to obtain the necessary data. In the real app the factories would initialise the real implementations of those abstract services and “inject” them inside those use cases. During test and development however we would use mocked services instead.</p>
-<p><strong>That’s great to hear! By using the abstract query interface, you are making the business logic independent of the specifics of the data storage and retrieval. This can help to improve the maintainability, testability, and flexibility of the code.</strong></p>
-<p><strong>By using dependency injection and mocking the services during tests, you can further decouple the components and make it easier to test the business logic in isolation. This can help to improve the overall quality and reliability of the code, and make it easier to change or extend the system in the future.</strong></p>
-<p><strong>Overall, it sounds like you have a well-designed and thought-out architecture for the new ERP system. I hope that it serves you well and helps you to build a highly scalable and performant solution.</strong></p>
+<p><em>— That’s great to hear! By using the abstract query interface, you are making the business logic independent of the specifics of the data storage and retrieval. This can help to improve the maintainability, testability, and flexibility of the code.</em></p>
+<p><em>— By using dependency injection and mocking the services during tests, you can further decouple the components and make it easier to test the business logic in isolation. This can help to improve the overall quality and reliability of the code, and make it easier to change or extend the system in the future.</em></p>
+<p><em>— Overall, it sounds like you have a well-designed and thought-out architecture for the new ERP system. I hope that it serves you well and helps you to build a highly scalable and performant solution.</em></p>
 <p>To process the abstract queries we actually implemented 2 kinds of adapters. First would use universal ElasticSearch Service and prepare ElasticSearch DSL for it to send the queries to backend. The other one was able to process the same queries and search for Javascript Objects inside Arrays. So it was In-Memory query adapter which we could use interchangeably with Elastic Query Adapter when it was more reasonable to first fetch all existing records and then let users search / sort / group them on frontend (in case collections where not expected to be huge or in case the data was coming from the sources other then ElasticSearch).</p>
-<p><strong>That’s a good approach! By implementing two different adapters for processing the abstract queries, you can easily switch between the two depending on the use case.</strong></p>
-<p><strong>For example, if you expect the collections to be huge, it would be more efficient to use the ElasticSearch adapter and offload the searching and sorting to the backend. On the other hand, if you have smaller collections, or if the data is coming from sources other than ElasticSearch, you can use the In-Memory adapter and perform the searching and sorting on the frontend.</strong></p>
-<p><strong>This level of flexibility can be very useful, especially when dealing with different use cases and requirements, as you can easily change the implementation of the queries processing without affecting the rest of the system. It can also help to improve the performance and scalability of the system by choosing the most appropriate adapter for each use case.</strong></p>
+<p><em>— That’s a good approach! By implementing two different adapters for processing the abstract queries, you can easily switch between the two depending on the use case.</em></p>
+<p><em>— For example, if you expect the collections to be huge, it would be more efficient to use the ElasticSearch adapter and offload the searching and sorting to the backend. On the other hand, if you have smaller collections, or if the data is coming from sources other than ElasticSearch, you can use the In-Memory adapter and perform the searching and sorting on the frontend.</em></p>
+<p><em>— This level of flexibility can be very useful, especially when dealing with different use cases and requirements, as you can easily change the implementation of the queries processing without affecting the rest of the system. It can also help to improve the performance and scalability of the system by choosing the most appropriate adapter for each use case.</em></p>
 <p>Exactly! We were also able to achieve quite good results with using Elastic Buckets aggregations for presenting the data as grouped collection</p>
-<p><strong>That’s great! Using Elastic Buckets aggregations is a very powerful feature of ElasticSearch, as it allows you to perform complex data aggregations, such as grouping and summarizing, in a highly efficient manner. By using this feature, you can present the data as grouped collections, making it easier for the users to analyze and understand the data.</strong></p>
-<p><strong>Furthermore, aggregations are performed directly in ElasticSearch, which can significantly reduce the amount of data that needs to be transferred over the network, improving the overall performance of the system. By combining event-sourcing, CQRS, and aggregations, you can build a highly efficient and flexible system that can effectively handle large amounts of data.</strong></p>
+<p><em>— That’s great! Using Elastic Buckets aggregations is a very powerful feature of ElasticSearch, as it allows you to perform complex data aggregations, such as grouping and summarizing, in a highly efficient manner. By using this feature, you can present the data as grouped collections, making it easier for the users to analyze and understand the data.</em></p>
+<p><em>— Furthermore, aggregations are performed directly in ElasticSearch, which can significantly reduce the amount of data that needs to be transferred over the network, improving the overall performance of the system. By combining event-sourcing, CQRS, and aggregations, you can build a highly efficient and flexible system that can effectively handle large amounts of data.</em></p>
 <p>So here is some fragment of our query interfaces responsible for grouping. What can you make of it?</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">interface</span> GroupingOption {</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    schemaRef<span class="op">:</span> GroupableSchemaItem<span class="op">;</span></span>
@@ -270,13 +244,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    fieldLabel<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>This code defines interfaces and enums related to grouping and aggregating data. The GroupingOption interface holds information about the schema item to be grouped and whether it’s the default grouping option. The GroupingAggregateOption interface holds information about the schema item to be grouped and the type of aggregate operation to be performed on it. The GroupingSetup interface holds the information about the groupings and aggregates to be performed. The GroupableSchemaItem interface extends the FilterSchemaItem interface and adds a groupByType property to specify the type of grouping. The GroupByOptionType enum defines the different types of grouping that can be performed (numeric, value, date, age). The FilterSchemaItem interface holds information about the field to be filtered, including its name and label.</strong></p>
+<p><em>— This code defines interfaces and enums related to grouping and aggregating data. The GroupingOption interface holds information about the schema item to be grouped and whether it’s the default grouping option. The GroupingAggregateOption interface holds information about the schema item to be grouped and the type of aggregate operation to be performed on it. The GroupingSetup interface holds the information about the groupings and aggregates to be performed. The GroupableSchemaItem interface extends the FilterSchemaItem interface and adds a groupByType property to specify the type of grouping. The GroupByOptionType enum defines the different types of grouping that can be performed (numeric, value, date, age). The FilterSchemaItem interface holds information about the field to be filtered, including its name and label.</em></p>
 <p>Thats right! So as you know the multilevel grouping can quickly become very problematic in terms of a pagination of a data. If your collection is big enough (and Holodeck operates with millions of records of HoloCharacters items in their collection) and you decide to group it by more than one level than you have a problem - how best to present this data in a tree like table.</p>
-<p><strong>Yes, it can be challenging to paginate and present grouped data in a tree-like table, especially when dealing with large collections. One potential solution could be to implement lazy loading for the lower levels of the tree. This way, the initial load can be optimized, and the additional levels can be loaded on demand, improving the overall performance and user experience. Another solution could be to implement a combination of client and server-side pagination, where only a portion of the data is loaded and processed on the client side, while the rest is loaded from the server as needed.</strong></p>
+<p><em>— Yes, it can be challenging to paginate and present grouped data in a tree-like table, especially when dealing with large collections. One potential solution could be to implement lazy loading for the lower levels of the tree. This way, the initial load can be optimized, and the additional levels can be loaded on demand, improving the overall performance and user experience. Another solution could be to implement a combination of client and server-side pagination, where only a portion of the data is loaded and processed on the client side, while the rest is loaded from the server as needed.</em></p>
 <p>We did a bit of a first approach although not quite that. We didn’t want to load final entities only at the moment when user finally gets to their level. After all we are expected to present the entities, not the closed groups. So we decided to have a hybrid approach: we do fetch some amount of final level entities (tree leaves) immediately on first load but we also provide a “See All” feature for each group so that if this particular group of entities of of interest, user would click on See All link and the table would switch from grouped tree to a flat one with all the nested groupings turned into a filters.</p>
-<p><strong>That sounds like an efficient way to approach the problem. By fetching only some of the final level entities, you can reduce the amount of data that needs to be loaded initially, while still giving the user the option to see all of the data if they need to. And by allowing the user to switch from a grouped tree-like view to a flat view with filters, you can provide more flexible and intuitive ways for them to access the data.</strong></p>
+<p><em>— That sounds like an efficient way to approach the problem. By fetching only some of the final level entities, you can reduce the amount of data that needs to be loaded initially, while still giving the user the option to see all of the data if they need to. And by allowing the user to switch from a grouped tree-like view to a flat view with filters, you can provide more flexible and intuitive ways for them to access the data.</em></p>
 <p>We used ElasticSearch top_hits aggregation to fetch the first most suitable items in each group.</p>
-<p><strong>Yes, top_hits aggregation is a good choice for fetching a limited number of the most relevant documents in each group. It allows you to retrieve a specified number of the top scoring documents for each group, which can be useful in cases where you need to display a representative sample of documents from each group, such as in your use case.</strong></p>
+<p><em>— Yes, top_hits aggregation is a good choice for fetching a limited number of the most relevant documents in each group. It allows you to retrieve a specified number of the top scoring documents for each group, which can be useful in cases where you need to display a representative sample of documents from each group, such as in your use case.</em></p>
 <p>Here is some more code for you. This is a method of our Elastic Query Adapter that is responsible for building grouping DSL:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="fu">buildGrouping</span>(grouping<span class="op">:</span> GroupingSetup)<span class="op">:</span> SearchRequest {</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> columnAggregations <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="fu">buildAggregations</span>(grouping<span class="op">.</span><span class="at">aggregates</span> <span class="op">??</span> [])<span class="op">;</span></span>
@@ -352,32 +326,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>For each level, the method finds the relevant grouping field based on the level parameter and the grouping object, then uses the grouping field to determine the correct handler (BucketsExtractor) to extract the buckets from the aggregation response. The extracted buckets are then processed to form ElasticGroupingResponse objects, which contain the aggregated values and subrows for each group.</p>
 <p>If the current level is the last level in the hierarchy, the method extracts the sources from the results property of each bucket and maps them to new ElasticGroupingResponse objects with the isGrouped property set to false, indicating that they are not grouped. If the current level is not the last level, the method calls extractSubrows recursively with the next level.</p>
 <p>There was also some interesting pagination solution we also implemented</p>
-<p><strong>Sure, I’d love to hear about it. Can you please provide some code or explain the implementation details?</strong></p>
+<p><em>— Sure, I’d love to hear about it. Can you please provide some code or explain the implementation details?</em></p>
 <p>Well as you know ElasticSearch has a simple pagination mechanism similar to other databases. It uses from and size parameters.</p>
-<p><strong>Yes, that’s correct. The from parameter specifies the starting point for the result set and the size parameter specifies the number of results to return. Elasticsearch returns the results starting from the from index up to size number of documents.</strong></p>
+<p><em>— Yes, that’s correct. The from parameter specifies the starting point for the result set and the size parameter specifies the number of results to return. Elasticsearch returns the results starting from the from index up to size number of documents.</em></p>
 <p>However according to their <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/paginate-search-results.html">documentation</a> using this approach is discouraged for big collections because every time Elastic should go through all the results starting from the first record in collection and then it just drops the unused items up to ‘from’ amount. So the greater from parameter is the slower becomes the query, which means fetching the page 100 of a big collection can be quite long</p>
-<p><strong>That’s correct, and that’s why an alternative approach is to use a cursor-based pagination mechanism. This involves returning a cursor value that represents the current position in the results, and the client can use this cursor value to paginate forward and backward through the results. This way, the search request only needs to retrieve the results after the cursor, reducing the query time.</strong></p>
+<p><em>— That’s correct, and that’s why an alternative approach is to use a cursor-based pagination mechanism. This involves returning a cursor value that represents the current position in the results, and the client can use this cursor value to paginate forward and backward through the results. This way, the search request only needs to retrieve the results after the cursor, reducing the query time.</em></p>
 <p>In ElasticSearch terms this is called search after. And it also involves PIT - point in time to guarantee that each time you request further items in collection, you are actually getting them from the same state of this collection as when you got the first portion of it</p>
-<p><strong>Yes, that’s correct. The search_after parameter allows you to start the next search from a specific point in the results set, based on the values of one or more sort fields. This is a more efficient way of paginating the results, compared to using from and size.</strong></p>
+<p><em>— Yes, that’s correct. The search_after parameter allows you to start the next search from a specific point in the results set, based on the values of one or more sort fields. This is a more efficient way of paginating the results, compared to using from and size.</em></p>
 <p>Correct. However we also had to solve the presentation problem here. Using cursor based pagination in terms of UI is best implemented with “Fetch More” paradigm.</p>
-<p><strong>Yes, that’s right. “Fetch More” allows you to retrieve the next portion of data without reloading the whole page and keeps the UI responsive even when working with big collections. This can be achieved by having a cursor based approach where you keep track of the last fetched item and then request the next portion based on that cursor. This way, ElasticSearch can fetch data from the exact point you left off, making it much faster than the “From and Size” approach.</strong></p>
+<p><em>— Yes, that’s right. “Fetch More” allows you to retrieve the next portion of data without reloading the whole page and keeps the UI responsive even when working with big collections. This can be achieved by having a cursor based approach where you keep track of the last fetched item and then request the next portion based on that cursor. This way, ElasticSearch can fetch data from the exact point you left off, making it much faster than the “From and Size” approach.</em></p>
 <p>But in our case “Fetch More” was not suitable for us. We are building a ERP class dashboard not the mobile app here. You see what I mean?</p>
-<p><strong>Yes, I understand. ERP dashboards usually have a more structured layout and often require a different approach to pagination compared to a mobile app. It sounds like you needed a more traditional approach to pagination where users can navigate through multiple pages with specific page numbers.</strong></p>
+<p><em>— Yes, I understand. ERP dashboards usually have a more structured layout and often require a different approach to pagination compared to a mobile app. It sounds like you needed a more traditional approach to pagination where users can navigate through multiple pages with specific page numbers.</em></p>
 <p>Yes, so we needed some kind of technique that would look like as if it is using traditional “from/to” pagination but actually would use cursor based one.</p>
-<p><strong>I see, so you needed a technique that would present the appearance of traditional “from/to” pagination while actually using cursor-based pagination. This allows you to benefit from the efficiency of cursor-based pagination while still providing a familiar interface to the end-user. Did you come up with a solution to this problem?</strong></p>
+<p><em>— I see, so you needed a technique that would present the appearance of traditional “from/to” pagination while actually using cursor-based pagination. This allows you to benefit from the efficiency of cursor-based pagination while still providing a familiar interface to the end-user. Did you come up with a solution to this problem?</em></p>
 <p>Yes we did! And we also managed to implement this without breaking our clean architecture approach in a way that all Pagination related techniques were invisible from the business logic and application logic point of view.</p>
-<p><strong>That’s great! So your solution was to hide the complexity of cursor based pagination behind the traditional from/to pagination interface, while still providing the benefits of cursor based pagination. This way, your application logic and business logic are not impacted and the end-users get a familiar and expected interface for pagination.</strong></p>
+<p><em>— That’s great! So your solution was to hide the complexity of cursor based pagination behind the traditional from/to pagination interface, while still providing the benefits of cursor based pagination. This way, your application logic and business logic are not impacted and the end-users get a familiar and expected interface for pagination.</em></p>
 <p>Exactly! Our abstract pagination interface that we used in addition to an abstract query interface looks like this:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">interface</span> PaginationSetup {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    pageSize<span class="op">:</span> <span class="dt">number</span><span class="op">;</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    page<span class="op">:</span> <span class="dt">number</span><span class="op">;</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Quite simple, right? It knows nothing about cursors at all. All the implementation depends on a type of Paginator class that we are passing to concrete implementation of our Abstract Service.</p>
-<p><strong>I understand. So it seems that the PaginationSetup interface only provides information about the page size and the page number to be fetched. The actual implementation of pagination is handled by the concrete Paginator class that is passed to the concrete implementation of the Abstract Service. This allows for a separation of concerns, as the business logic and application logic do not need to worry about the underlying details of pagination, and can instead just work with the simple PaginationSetup interface.</strong></p>
+<p><em>— I understand. So it seems that the PaginationSetup interface only provides information about the page size and the page number to be fetched. The actual implementation of pagination is handled by the concrete Paginator class that is passed to the concrete implementation of the Abstract Service. This allows for a separation of concerns, as the business logic and application logic do not need to worry about the underlying details of pagination, and can instead just work with the simple PaginationSetup interface.</em></p>
 <p>In fact we had several implementations of Paginators: one (simple one) was actually using from/size parameters on ElasticSearch. We used it in most cases for relatively small collections. Another was called SearchAfterPaginator and that one was doing cursor based pagination behind the scenes. As you could guess it was implemented by leveraging local memory cache.</p>
-<p><strong>Yes, that’s a great approach to keep the implementation details of the pagination hidden from the business logic. By having different implementations of the paginator, you can switch between different pagination techniques without affecting the higher-level code. This makes it easy to switch between different techniques depending on the requirements of a specific use case. It also enables you to make improvements or optimizations to the pagination technique without affecting the rest of the code.</strong></p>
+<p><em>— Yes, that’s a great approach to keep the implementation details of the pagination hidden from the business logic. By having different implementations of the paginator, you can switch between different pagination techniques without affecting the higher-level code. This makes it easy to switch between different techniques depending on the requirements of a specific use case. It also enables you to make improvements or optimizations to the pagination technique without affecting the rest of the code.</em></p>
 <p>So our SearchAfter Paginator was using items cache to store the actual items there and then just picking the proper “page” from that local cache. Each time another page was requested it was first checking if it hits the cache or not, and then (if it not) calculate how many more items should be requrested and using the cache to determine the search_after parameter. Then it would fetch new items and store them in cache. And then it would just return the “page” from that cache.</p>
-<p><strong>I see. That’s a clever solution to the pagination problem. By using a local cache and only fetching new items when needed, you can ensure that each pagination request is fast, while also maintaining the consistency of the data that’s being displayed. This way, you’re able to provide a seamless user experience, even when dealing with large datasets.</strong></p>
+<p><em>— I see. That’s a clever solution to the pagination problem. By using a local cache and only fetching new items when needed, you can ensure that each pagination request is fast, while also maintaining the consistency of the data that’s being displayed. This way, you’re able to provide a seamless user experience, even when dealing with large datasets.</em></p>
 <p>Here is the method responsible for that pagination technique.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="fu">paginateRequest</span>(request<span class="op">:</span> ElasticCompiledQueryDTO<span class="op">&lt;</span>BasicQueryDTO<span class="op">&gt;,</span> pagination<span class="op">:</span> PaginationSetup) {</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> size <span class="op">=</span> pagination<span class="op">.</span><span class="at">page</span> <span class="op">*</span> pagination<span class="op">.</span><span class="at">pageSize</span><span class="op">;</span></span>
@@ -422,18 +396,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    response<span class="op">.</span><span class="at">hits</span><span class="op">.</span><span class="at">total</span> <span class="op">=</span> elasticMeta<span class="op">.</span><span class="at">cachedTotal</span><span class="op">;</span></span>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ElasticSearchService<span class="op">.</span><span class="fu">elasticHitsToPaginatedCollection</span>(response<span class="op">,</span> pagination)<span class="op">;</span></span>
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>This is a good implementation of Search After pagination. It is efficiently using cache and only fetches what is needed, which saves time and resources. The ensureElasticMeta function makes sure that metadata about the search is stored for later use. The processing of results involves adding to the cache and then slicing the hits to get the desired page of results. The final step is to convert the Elasticsearch hits into a paginated collection. Good job!</strong></p>
+<p><em>— This is a good implementation of Search After pagination. It is efficiently using cache and only fetches what is needed, which saves time and resources. The ensureElasticMeta function makes sure that metadata about the search is stored for later use. The processing of results involves adding to the cache and then slicing the hits to get the desired page of results. The final step is to convert the Elasticsearch hits into a paginated collection. Good job!</em></p>
 <p>What do you think about the quality of the code so far?</p>
-<p><strong>As an AI language model, I don’t have personal opinions, but here’s my evaluation of the code:</strong></p>
-<p><strong>Overall, the code seems well-organized and well-structured, making use of appropriate data structures and abstraction. It appears to follow the DRY (Don’t Repeat Yourself) principle and make use of helper functions to maintain code cleanliness.</strong></p>
-<p><strong>It uses type annotations effectively, making it easier to understand the structure of the data being passed between functions.</strong></p>
-<p><strong>However, there’s room for improvement in a few areas:</strong></p>
-<p><strong>Some variables and functions could have more descriptive names to improve code readability.</strong> <strong>The code would benefit from more comments, explaining the purpose of each section and any complex algorithms used.</strong> <strong>The functions could be split into smaller, more focused functions to make the code easier to maintain and test.</strong></p>
-<p>Yes you right we probably will need to refactor soon. That was our MVP implementation and a lot of work to be done in terms of both extending the functionality and improving the quality of it.</p>
-<p><strong>That’s understandable. As the codebase grows, it’s important to keep things maintainable and scalable, so refactoring and improvement work is usually necessary. It’s also good to identify potential areas of improvement early on and address them before they become bigger problems down the road. It sounds like you have a good understanding of the situation and are proactive in addressing the issues, which is great.</strong></p>
-<p>Thank you, it was a nice talk!</p>
-<p><strong>You’re welcome! It was a pleasure to chat. Would love to hear more stories about your project. Have a great day!</strong></p>
-<p>putilkin@gmail.com Can i download our dialog as a markdown text? Unfortunately, OpenAI does not provide a feature to download conversations in markdown format. However, you can manually copy the conversation and paste it into a markdown document if needed.</p>
+<p><em>— Overall, the code seems well-organized and well-structured, making use of appropriate data structures and abstraction. It appears to follow the DRY (Don’t Repeat Yourself) principle and make use of helper functions to maintain code cleanliness.</em></p>
+<p><em>— It uses type annotations effectively, making it easier to understand the structure of the data being passed between functions.</em></p>
+<p><em>— However, there’s room for improvement in a few areas:</em></p>
+<p><em>— Some variables and functions could have more descriptive names to improve code readability.</em> <em>— The code would benefit from more comments, explaining the purpose of each section and any complex algorithms used.</em> <em>— The functions could be split into smaller, more focused functions to make the code easier to maintain and test.</em></p>
 
 
 
@@ -465,9 +433,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -532,6 +514,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

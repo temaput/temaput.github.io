@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Artem Putilov">
+<meta name="dcterms.date" content="2023-09-01">
+<meta name="keywords" content="Swift, MFEncoder, OpenAI, GPT-4, Data Encoding, Multipart Forms, Software Development, Programming">
+
+<title>Behind My Code - Learning Swift Through Building MFEncoder: A Journey Guided by OpenAI</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Behind My Code</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://temaput.github.io/" rel="" target="">
+ <span class="menu-text">About Me</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/temaput/" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/temaput/" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Learning Swift Through Building MFEncoder: A Journey Guided by OpenAI</h1>
+            <p class="subtitle lead">Part 3: Diving deep into Encoder</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">code</div>
+                <div class="quarto-category">swift</div>
+                <div class="quarto-category">web</div>
+                <div class="quarto-category">ai</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Artem Putilov </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 1, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<section id="brief-summary" class="level2">
+<h2 class="anchored" data-anchor-id="brief-summary">Brief Summary</h2>
+<p>In this set of articles, we take a close look at Swift programming. We’re focusing on creating a package called “MFEncoder” to handle multipart form data. This is important for things like sending forms and files over the internet. We will use the OpenAI GPT-4 chatbot as a guide or mentor to help us through the project.</p>
+</section>
+<section id="previous-parts" class="level2">
+<h2 class="anchored" data-anchor-id="previous-parts">Previous Parts</h2>
+<p>In <a href="../../posts/mfencoder/part_1.html">Part 1</a> we discussed the details of Multipart form encoding. We also built some foundational elements as well as interactive Playground to help us with testing our implementation with the real backend.</p>
+<p>In <a href="../../posts/mfencoder/part_2.html">Part 2</a> we implemented MFFormData - a low-level API, inspired by the Web’s FormData API, that gives complete control over the form data before submitting it over HTTP.</p>
+</section>
+</section>
+<section id="part-three" class="level1">
+<h1>Part three</h1>
+<p>We will tell about implementing MFEncoder - A high-level API that conforms to Swift’s <code>Encoder</code> protocol. Perfect for converting your Swift models into multipart form data without hassle.</p>
+<section id="about-encoder-and-encodable-protocols" class="level2">
+<h2 class="anchored" data-anchor-id="about-encoder-and-encodable-protocols">About Encoder and Encodable protocols</h2>
+<p>Why do we need to implement MFEncoder, isn’t MFFormData enough?</p>
+<p>The <code>Encoder</code> and <code>Encodable</code> protocols in Swift are designed in a declarative manner. This focus allows us to specify what needs to be done, rather than detailing how to do it. By defining what properties our data structure has and marking it as <code>Encodable</code>, the compiler and runtime take care of the rest. This design offers several advantages:</p>
+<section id="simplifies-our-code" class="level3">
+<h3 class="anchored" data-anchor-id="simplifies-our-code">Simplifies Our Code</h3>
+<p>Because we’re only declaring what to encode, we don’t need to write imperative code to convert each property to a transportable data format. The <code>Encoder</code> itself knows how to take our declaratively defined structure and serialize it, significantly simplifying our codebase.</p>
+</section>
+<section id="encourages-consistency" class="level3">
+<h3 class="anchored" data-anchor-id="encourages-consistency">Encourages Consistency</h3>
+<p>A declarative approach encourages a consistent method of data encoding and decoding across our entire project or even across multiple projects. Every type that conforms to <code>Encodable</code> can be serialized in the same way, using the same <code>Encoder</code> types.</p>
+</section>
+<section id="enhances-maintainability" class="level3">
+<h3 class="anchored" data-anchor-id="enhances-maintainability">Enhances Maintainability</h3>
+<p>Since our code is not concerned with the ‘how,’ it becomes easier to maintain. If Swift or its libraries update the underlying encoding mechanisms, our <code>Encodable</code> types should continue to work without modification.</p>
+</section>
+<section id="enables-abstraction" class="level3">
+<h3 class="anchored" data-anchor-id="enables-abstraction">Enables Abstraction</h3>
+<p>The <code>Encoder</code> protocol abstracts the details of the encoding storage and format. Because these details are abstracted away, we can switch between different encoding formats (like JSON, Plist’s, Multipart Form etc.) without having to change the model classes/structures themselves.</p>
+</section>
+<section id="facilitates-extensibility" class="level3">
+<h3 class="anchored" data-anchor-id="facilitates-extensibility">Facilitates Extensibility</h3>
+<p>Swift’s <code>Encodable</code> protocol makes it straightforward to add encoding capabilities to existing types through extensions. If we have a type that we wish to encode but don’t control its source code, we can extend it to conform to <code>Encodable</code>, assuming its properties are also <code>Encodable</code>.</p>
+</section>
+<section id="example" class="level3">
+<h3 class="anchored" data-anchor-id="example">Example</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode swift code-with-copy"><code class="sourceCode swift"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Book<span class="op">:</span> <span class="dt">Encodable</span> <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="va">title</span><span class="op">:</span> String</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="va">author</span><span class="op">:</span> String</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="va">publishDate</span><span class="op">:</span> Date</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">ourBook</span> <span class="op">=</span> Book<span class="op">(</span>title<span class="op">:</span> <span class="st">"1984"</span><span class="op">,</span> author<span class="op">:</span> <span class="st">"George Orwell"</span><span class="op">,</span> publishDate<span class="op">:</span> Date<span class="op">())</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this example, just by declaring <code>Book</code> as <code>Encodable</code>, we’ve established that a book can be encoded to any format supported by an <code>Encoder</code>. We don’t need to specify how this encoding happens; it’s all managed by the protocol and the specific <code>Encoder</code> instance we choose to use (like <code>JSONEncoder</code>). This is the essence of declarative programming.</p>
+</section>
+</section>
+<section id="approaching-implementation" class="level2">
+<h2 class="anchored" data-anchor-id="approaching-implementation">Approaching implementation</h2>
+<p>Implementing a custom encoder is an advanced task that requires a good understanding of the encoding process and how Swift handles different types of data. GPT-4 provides us with a very high level skeleton and advises to look into JSONEncoder implementation which can be found in the <a href="https://github.com/apple/swift-corelibs-foundation/blob/main/Sources/Foundation/JSONEncoder.swift">Swift project on GitHub</a></p>
+<p>Here’s what GPT-4 gave us an example of how we might start implementing a custom encoder. This example doesn’t fully implement an encoder, but it does show the structure we’d need to follow.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode swift code-with-copy"><code class="sourceCode swift"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">struct</span> CustomEncoder<span class="op">:</span> <span class="dt">Encoder</span> <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">var</span> <span class="va">codingPath</span><span class="op">:</span> <span class="op">[</span>CodingKey<span class="op">]</span> <span class="op">=</span> <span class="op">[]</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">var</span> <span class="va">userInfo</span><span class="op">:</span> <span class="op">[</span>CodingUserInfoKey<span class="op">:</span> Any<span class="op">]</span> <span class="op">=</span> <span class="op">[:]</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">func</span> <span class="fu">container</span><span class="op">&lt;</span><span class="dt">Key</span><span class="op">&gt;(</span><span class="va">keyedBy</span> <span class="va">type</span><span class="op">:</span> <span class="dt">Key</span>.<span class="va">Type</span><span class="op">)</span> -&gt; <span class="fu">KeyedEncodingContainer</span><span class="op">&lt;</span><span class="dt">Key</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="fu">Key</span><span class="op">:</span> <span class="dt">CodingKey</span> <span class="op">{</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> <span class="va">container</span> <span class="op">=</span> CustomKeyedEncodingContainer<span class="op">&lt;</span>Key<span class="op">&gt;(</span>codingPath<span class="op">:</span> codingPath<span class="op">,</span> userInfo<span class="op">:</span> userInfo<span class="op">)</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> KeyedEncodingContainer<span class="op">(</span>container<span class="op">)</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">func</span> <span class="fu">unkeyedContainer</span><span class="op">()</span> -&gt; <span class="fu">UnkeyedEncodingContainer</span> <span class="op">{</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        CustomUnkeyedEncodingContainer<span class="op">(</span>codingPath<span class="op">:</span> codingPath<span class="op">,</span> userInfo<span class="op">:</span> userInfo<span class="op">)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="kw">func</span> <span class="fu">singleValueContainer</span><span class="op">()</span> -&gt; <span class="fu">SingleValueEncodingContainer</span> <span class="op">{</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        CustomSingleValueEncodingContainer<span class="op">(</span>codingPath<span class="op">:</span> codingPath<span class="op">,</span> userInfo<span class="op">:</span> userInfo<span class="op">)</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notice how Encoder doesn’t even require the <code>encode</code> method. <code>CustomKeyedEncodingContainer</code>, <code>CustomUnkeyedEncodingContainer</code>, and <code>CustomSingleValueEncodingContainer</code> are placeholder types and we need to implement these types to properly handle the encoding.</p>
+<p>Each of these methods is part of the <code>Encoder</code> protocol and is used when encoding different types of data. The actual work of encoding the data will be performed by the <code>CustomKeyedEncodingContainer</code>, <code>CustomUnkeyedEncodingContainer</code>, and <code>CustomSingleValueEncodingContainer</code> types.</p>
+</section>
+<section id="learning-from-jsonencoder-source-code" class="level2">
+<h2 class="anchored" data-anchor-id="learning-from-jsonencoder-source-code">Learning from JSONEncoder source code</h2>
+<p>Lets follow the advice and try to figure out some details of encoding in Swift by looking at <a href="https://github.com/apple/swift-corelibs-foundation/blob/main/Sources/Foundation/JSONEncoder.swift">JSONEncoder implementation</a></p>
+<p>We will describe central entities, their roles, relationships and some of their methods. We will also provide a sequence chart of encoding process.</p>
+<section id="jsonvalue" class="level3">
+<h3 class="anchored" data-anchor-id="jsonvalue">JSONValue</h3>
+<p>Fundamental data structure that is used to represent full JSON payload within Swift types system. Its a recursive polymorphic enum, containing 4 basic JSON types:</p>
+<ul>
+<li>string</li>
+<li>number</li>
+<li>boolean</li>
+<li>null</li>
+</ul>
+<p>as well as 2 container types:</p>
+<ul>
+<li>list, represented as an array of JSONValues</li>
+<li>object, represented as a dictionary <code>[String: JSONValue]</code></li>
+</ul>
+<p>JSONValue is what gets assembled as a result of all encoding operations. Having a top-level JSONValue takes a trivial recursive operation to produce the wanted JSON string.</p>
+</section>
+<section id="jsonfuture" class="level3">
+<h3 class="anchored" data-anchor-id="jsonfuture">JSONFuture</h3>
+<p>Wraps JSONValue making possible to reference its nested containers and update them during serialization on all levels. To achieve this JSONFuture holds reference based wrappers around primitive array and dictionary.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode swift code-with-copy"><code class="sourceCode swift"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="kw">enum</span> JSONFuture <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> value<span class="op">(</span>JSONValue<span class="op">)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> nestedArray<span class="op">(</span>RefArray<span class="op">)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">case</span> nestedObject<span class="op">(</span>RefObject<span class="op">)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> RefArray <span class="op">{</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">private</span><span class="op">(</span><span class="kw">set</span><span class="op">)</span> <span class="kw">var</span> <span class="va">array</span><span class="op">:</span> <span class="op">[</span>JSONFuture<span class="op">]</span> <span class="op">=</span> <span class="op">[]</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">// ... multiple mutate methods omitted ...</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> RefObject <span class="op">{</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">private</span><span class="op">(</span><span class="kw">set</span><span class="op">)</span> <span class="kw">var</span> <span class="va">dict</span><span class="op">:</span> <span class="op">[</span>String<span class="op">:</span> JSONFuture<span class="op">]</span> <span class="op">=</span> <span class="op">[:]</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">// ... multiple mutate methods omitted ...</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>When serializing complex, nested structures like JSON objects — which can include other objects, or arrays containing additional arrays — we encounter a specific challenge related to Swift’s value semantics. In a nested structure, any modification to a deep-level object would only affect a copy of that object, leaving the overall parent structure unchanged. This limitation makes a basic <code>JSONValue</code> approach insufficient for our purposes, prompting the need for reference types like <code>RefArray</code> and <code>RefObject</code> during the encoding process.</p>
+<p>Both <code>RefArray</code> and <code>RefObject</code> have the capability to create each other, nesting new reference containers within themselves. Additionally, they offer value getters that output them as plain dictionaries or arrays containing <code>JSONValues</code>. These getters enable the recursive assembly of the complete payload into a <code>JSONValue</code> tree, which is essential for the final serialization step.</p>
+<p>These reference wrappers are used by Keyed and Unkeyed under the hood.</p>
+</section>
+<section id="keyed-unkeyed-and-single-value-containers" class="level3">
+<h3 class="anchored" data-anchor-id="keyed-unkeyed-and-single-value-containers">Keyed, Unkeyed and Single value containers</h3>
+<p>Containers do the actual encoding work. Each includes multiple overloaded encode methods to deal with all possible primitive values in Swift as well as any user types corresponding to Encodable protocol. Each wraps its kind of container:</p>
+<ul>
+<li>JSONFuture.RefObject for Keyed</li>
+<li>JSONFuture.RefArray for Unkeyed</li>
+<li>JSONValue for SingleValue</li>
+</ul>
+<p>Keyed and Unkeyed can create and return nested containers, building the tree of JSONFuture polymorphic entities.</p>
+</section>
+<section id="jsonencoderimpl" class="level3">
+<h3 class="anchored" data-anchor-id="jsonencoderimpl">JSONEncoderImpl</h3>
+<p>Implements Encoder protocol, holding the root (or sub root) node as one of 3 possible <code>JSONFuture</code> values from above. Implements container generation methods to comply to protocol. Holds current path which can be accessed by user encode methods.</p>
+<p>Each container holds reference to its parent encoder implementation.</p>
+</section>
+<section id="specialtreatmentencoder" class="level3">
+<h3 class="anchored" data-anchor-id="specialtreatmentencoder">_SpecialTreatmentEncoder</h3>
+<p>Is internal protocol that is used like kind of Template Class for both JSONEncoderImpl and all Container classes. It holds default implementation for several convenient methods used by both Encoder and Containers.</p>
+<ul>
+<li>wrapDate - uses DateEncodingStrategy to provide different convenient methods for date encoding</li>
+<li>similar wrappers for Data and Object (Dictionary)</li>
+<li>wrapEncodable&lt;E: Encodable&gt; - is the central encoding dispatch. For complex Swift objects like <code>Date</code>, <code>Data</code>, <code>Dict</code> it calls internal wrapping methods. For user types, it generates a new JSONEncoderImpl instance and initiates a recursive encoding. It produces JSONValue for final serialization.</li>
+</ul>
+<p>This is the relationship scheme of described objects. <img src="JSONEncoder.excalidraw.svg" class="img-fluid" alt="JSONEncoder structures"></p>
+</section>
+<section id="jsonencoder" class="level3">
+<h3 class="anchored" data-anchor-id="jsonencoder">JSONEncoder</h3>
+<p>The main class is a Facade form JSONEncoderImpl, that stores the options, like dateEncodingStrategy or field name conversion strategy etc. It provides main top level entrypoint - <code>encode</code> method:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode swift code-with-copy"><code class="sourceCode swift"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>    open <span class="kw">func</span> <span class="fu">encode</span><span class="op">&lt;</span><span class="dt">T</span><span class="op">:</span> <span class="dt">Encodable</span><span class="op">&gt;(</span><span class="va">_</span> <span class="va">value</span><span class="op">:</span> <span class="dt">T</span><span class="op">)</span> <span class="kw">throws</span> -&gt; <span class="fu">Data</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> <span class="va">encoder</span> <span class="op">=</span> JSONEncoderImpl<span class="op">(</span>options<span class="op">:</span> <span class="kw">self</span><span class="op">.</span>options<span class="op">,</span> codingPath<span class="op">:</span> <span class="op">[])</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> <span class="va">value</span><span class="op">:</span> JSONValue <span class="op">=</span> <span class="cf">try</span> encoder<span class="op">.</span>wrapEncodable<span class="op">(</span>value<span class="op">,</span> <span class="cf">for</span><span class="op">:</span> <span class="kw">nil</span><span class="op">)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> <span class="va">writer</span> <span class="op">=</span> JSONValue<span class="op">.</span>Writer<span class="op">(</span>options<span class="op">:</span> <span class="kw">self</span><span class="op">.</span>outputFormatting<span class="op">)</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> <span class="va">bytes</span> <span class="op">=</span> writer<span class="op">.</span>writeValue<span class="op">(</span>value<span class="op">)</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> Data<span class="op">(</span>bytes<span class="op">)</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="encoding-process-example" class="level2">
+<h2 class="anchored" data-anchor-id="encoding-process-example">Encoding process example</h2>
+<p>Here is an example of advanced <code>Encoder</code> usage in client code</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode swift code-with-copy"><code class="sourceCode swift"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> ContactInfo<span class="op">:</span> <span class="dt">Encodable</span> <span class="op">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> <span class="va">firstName</span><span class="op">:</span> String <span class="op">=</span> <span class="st">"John"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> <span class="va">lastName</span><span class="op">:</span> String <span class="op">=</span> <span class="st">"Smith"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> <span class="va">homePhone</span><span class="op">:</span> String <span class="op">=</span> <span class="st">"11 222 3333"</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> <span class="va">cellularPhone</span><span class="op">:</span> String <span class="op">=</span> <span class="st">"+11 222 333 444"</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> <span class="va">email</span><span class="op">:</span> String <span class="op">=</span> <span class="st">"john@email.com"</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">website</span><span class="op">:</span> String <span class="op">=</span> <span class="st">"https://example.com"</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">linkedIn</span><span class="op">:</span> String <span class="op">=</span> <span class="st">"https://linkedin.com/john"</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">github</span><span class="op">:</span> String <span class="op">=</span> <span class="st">"https://github.com/john"</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="fu">encode</span><span class="op">(</span><span class="va">to</span> <span class="va">encoder</span><span class="op">:</span> <span class="dt">Encoder</span><span class="op">)</span> <span class="kw">throws</span> <span class="op">{</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> <span class="va">contact</span> <span class="op">=</span> encoder<span class="op">.</span>container<span class="op">(</span>keyedBy<span class="op">:</span> ContactInfoKeys<span class="op">.</span><span class="kw">self</span><span class="op">)</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span> contact<span class="op">.</span>encode<span class="op">(</span><span class="st">"</span><span class="er">\(</span><span class="st">firstName) </span><span class="er">\(</span><span class="st">lastName)"</span><span class="op">,</span> forKey<span class="op">:</span> <span class="op">.</span>name<span class="op">)</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span> contact<span class="op">.</span>encode<span class="op">(</span>email<span class="op">,</span> forKey<span class="op">:</span> <span class="op">.</span>email<span class="op">)</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> <span class="va">phones</span> <span class="op">=</span> contact<span class="op">.</span>nestedUnkeyedContainer<span class="op">(</span>forKey<span class="op">:</span> <span class="op">.</span>phones<span class="op">)</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span> phones<span class="op">.</span>encode<span class="op">(</span>homePhone<span class="op">)</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span> phones<span class="op">.</span>encode<span class="op">(</span>cellularPhone<span class="op">)</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> <span class="va">sites</span> <span class="op">=</span> contact<span class="op">.</span>nestedContainer<span class="op">(</span>keyedBy<span class="op">:</span> SitesKeys<span class="op">.</span><span class="kw">self</span><span class="op">,</span> forKey<span class="op">:</span> <span class="op">.</span>sites<span class="op">)</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    print<span class="op">(</span><span class="st">"Contact Info coding path: </span><span class="er">\(</span><span class="st">encoder.codingPath)"</span><span class="op">)</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    print<span class="op">(</span><span class="st">"Sites coding path: </span><span class="er">\(</span><span class="st">sites.codingPath)"</span><span class="op">)</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span> sites<span class="op">.</span>encode<span class="op">(</span>website<span class="op">,</span> forKey<span class="op">:</span> <span class="op">.</span>personal<span class="op">)</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span> sites<span class="op">.</span>encode<span class="op">(</span>linkedIn<span class="op">,</span> forKey<span class="op">:</span> <span class="op">.</span>linkedIn<span class="op">)</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span> sites<span class="op">.</span>encode<span class="op">(</span>github<span class="op">,</span> forKey<span class="op">:</span> <span class="op">.</span>github<span class="op">)</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">encoder</span> <span class="op">=</span> JSONEncoder<span class="op">()</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>encoder<span class="op">.</span>outputFormatting <span class="op">=</span> <span class="op">[.</span>prettyPrinted<span class="op">,</span> <span class="op">.</span>withoutEscapingSlashes<span class="op">,</span> <span class="op">.</span>sortedKeys<span class="op">]</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">data</span> <span class="op">=</span> <span class="cf">try</span> encoder<span class="op">.</span>encode<span class="op">(</span>ContactInfo<span class="op">())</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this example, we have a <code>ContactInfo</code> struct that conforms to the <code>Encodable</code> protocol.</p>
+<section id="custom-encoding-logic" class="level4">
+<h4 class="anchored" data-anchor-id="custom-encoding-logic">Custom Encoding Logic</h4>
+<p>Instead of relying on the default behavior of the <code>Encodable</code> protocol, we implement the <code>encode(to:)</code> method to manually dictate how the data should be serialized into JSON.</p>
+<p>Here are the key points:</p>
+<ol type="1">
+<li><p><strong>Combining Fields</strong>: The <code>firstName</code> and <code>lastName</code> are combined and encoded as a single JSON key-value pair with the key “name”.</p></li>
+<li><p><strong>Nested Unkeyed Container for Phones</strong>: Both <code>homePhone</code> and <code>cellularPhone</code> are packed into an unkeyed container (essentially an array) under the key “phones”.</p></li>
+<li><p><strong>Nested Keyed Container for Sites</strong>: The various website URLs (<code>website</code>, <code>linkedIn</code>, <code>github</code>) are grouped into a nested keyed container under the key “sites”.</p></li>
+<li><p><strong>Debugging with Coding Paths</strong>: The coding path of each nested container is printed, helping us to debug or understand the hierarchy of our encoding.</p></li>
+</ol>
+</section>
+<section id="encoder-configuration" class="level4">
+<h4 class="anchored" data-anchor-id="encoder-configuration">Encoder Configuration</h4>
+<p>We use a <code>JSONEncoder</code> to serialize our <code>ContactInfo</code> object into JSON format. The encoder is configured to produce pretty-printed JSON, without escaping slashes, and with sorted keys.</p>
+</section>
+<section id="encoding-process-sequence" class="level3">
+<h3 class="anchored" data-anchor-id="encoding-process-sequence">Encoding process sequence</h3>
+<p>Now lets look at the sequence chart of this process</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    actor User
+
+    User-&gt;&gt;JSONEncoder: encode Encodable
+    JSONEncoder-&gt;&gt;JSONEncoderImpl: wrap Encodable
+    JSONEncoderImpl-&gt;&gt;Encodable: encode to Self
+
+    Encodable-&gt;&gt;JSONEncoderImpl: ask for Container
+    JSONEncoderImpl-&gt;&gt;Encodable: generate and return Container
+    loop for each field 
+        Encodable-&gt;&gt;Container: ask for nested Container
+        Container-&gt;&gt;JSONFuture: generate nested JSONFuture object
+        JSONFuture-&gt;&gt;Container: return nested JSONFuture object
+        Container-&gt;&gt;Encodable: generate and return nested Container
+        Encodable-&gt;&gt;Container: call encode passing field name and value
+        Container-&gt;&gt;JSONFuture: append value
+    end
+
+    JSONEncoderImpl-&gt;&gt;JSONFuture: get value
+    JSONFuture-&gt;&gt;JSONEncoderImpl: return JSONValue
+    JSONEncoderImpl-&gt;&gt;JSONEncoder: JSONValue
+    JSONEncoder-&gt;&gt;User: Data
+</pre>
+</div>
+</div>
+</div>
+</div>
+<p>For each nested user type encountered during serialization a new subprocess starts with <code>wrapEncodable</code> method.</p>
+<p>Utilizing a customized <code>encode</code> method within the <code>ContactInfo</code> struct provides us with greater insights into the encoding mechanics. By default, when we conform a struct to the <code>Encodable</code> protocol, Swift automatically synthesizes standard <code>encode</code> methods through internal reflection. This custom approach allows us to observe and control the process more closely.</p>
+<p>Now that we know all the necessary details, implementing MFEncoder will be quite straightforward. In the <a href="../../posts/mfencoder/part_4.html">last</a> part we will discuss some minor details of our implementation which are specific for <code>multipart/form-data</code> as well as show our approach to testing those with Playgrounds.</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

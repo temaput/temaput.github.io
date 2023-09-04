@@ -1,0 +1,39 @@
+---
+title: "Learning Swift Through Building MFEncoder: A Journey Guided by OpenAI"
+subtitle: "Part 4: Final"
+author: "Artem Putilov"
+date: "2023-09-02"
+categories: [code, swift, web, ai]
+keywords: [Swift, MFEncoder, OpenAI, GPT-4, Data Encoding, Multipart Forms, Software Development, Programming]
+image: "image.png"
+---
+
+# Introduction
+
+## Brief Summary
+
+In this set of articles, we take a close look at Swift programming. We're focusing on creating a package called "MFEncoder" to handle multipart form data. This is important for things like sending forms and files over the internet. We will use the OpenAI GPT-4 chatbot as a guide or mentor to help us through the project.
+
+## Previous Parts
+In [Part 1](part_1.qmd) we discussed the details of Multipart form encoding. We also built some foundational elements as well as interactive Playground to help us with testing our implementation with the real backend.
+
+In [Part 2](part_2.qmd) we implemented MFFormData - a low-level API, inspired by the Web's FormData API, that gives complete control over the form data before submitting it over HTTP.
+
+In [Part 3](part_2.qmd) we dived into details of Encoder protocol implementation, looking at JSONEncoder source code. 
+
+
+# Part four
+
+Since our MFEncoder implementation is very much derrived from JSONEncoder which we discussed with details already, we will only give brief introduction of what is now openly available as [Swift Package](https://github.com/temaput/MFEncoder)
+
+
+
+## Using AI as code mentor
+
+Initially, our strategy was to rely solely on GPT-4 for assistance, a plan that proved effective in approximately 80% of cases. With the guidance of GPT-4, we found little need to consult Stack Overflow. However, we occasionally turned to Apple's official documentation and conducted a comprehensive examination of the source code for `JSONEncoder`, as recommended by GPT-4.
+
+GPT-4 excels at offering high-level explanations of topics such as multipart/form-data and the Encoder protocol. It serves as a valuable supplement to Apple's formal documentation by providing more accessible language and practical examples. While some of these examples occasionally encountered issues, many of them were resolvable through iterative discussions with GPT-4.
+
+We discovered that the psychological effect of having a readily available "expert" via GPT-4 positively influenced our confidence. This made even the more complex tasks appear somewhat less daunting.
+
+Lastly, GPT-4 has been an invaluable asset in crafting both the package documentation and this article. Overall, we are highly optimistic about the potential of learning new technologies and programming languages through this approach.

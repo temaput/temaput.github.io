@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.262">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Artem Putilov">
 <meta name="dcterms.date" content="2023-01-07">
 
-<title>Blog - Microfrontends with Holodeck Inc</title>
+<title>Behind My Code - Microfrontends with Holodeck Inc</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,9 +19,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -48,43 +49,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -120,7 +91,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -136,30 +108,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Blog</span>
+    <span class="navbar-title">Behind My Code</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="https://temaput.github.io/">
+    <a class="nav-link" href="https://temaput.github.io/" rel="" target="">
  <span class="menu-text">About Me</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/temaput/"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/temaput/" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/temaput/"><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/temaput/" rel="" target=""><i class="bi bi-linkedin" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -214,35 +188,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>(Startrek Voyager: Persistence of Vision)</p>
 <p>We are the employees of Holodeck Inc, who develops and maintains the system, working on latest updates and improvements.</p>
 <p>Our platform is responsible for supplying the holodecks all around the world with numerous new hologram characters, finding replacements, picking the best candidates for the holo-plots, advertisements and etc.</p>
-<p>Through our platform the holoproducers can reach to holocreators and we are provide the necessary tools for them to share and distribute their content (latter) search for cintent and compile it into the final product (formers).</p>
-<p>Our platform consists of 2 mobile apps - one for holo-producers and another for holo-artists and a central dashboard that allows our admins and holocasters to assist producers in finding everything they need.</p>
+<p>Through our platform the holo-producers can reach to holo-creators and we are provide the necessary tools for them to share and distribute their content (latter) search for content and compile it into the final product (formers).</p>
+<p>Our platform consists of 2 mobile apps - one for holo-producers and another for holo-artists and a central dashboard that allows our admins and holo-casters to assist producers in finding everything they need.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="Platform.svg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Platform</figcaption><p></p>
+<figcaption class="figure-caption">Platform</figcaption>
 </figure>
 </div>
-<p>Recently Holodeck Inc management decided to completely revamp their central dashboard and we were tasked to create a new and shiny web console made with ReactJS. One of the major new features there is our brand new Holoalbum - a dynamic and powerful reactjs component that lets our holocasters prepare a list of recommended holo-characters with all their characteristics, multiple photos and etc. This component lets manually order, filter, hide and further finetune the list. The result should be visible whithin the ProdApp as a similar but much simplified version.</p>
+<p>Recently Holodeck Inc management decided to completely revamp their central dashboard and we were tasked to create a new and shiny web console made with ReactJS. One of the major new features there is our brand new Holoalbum - a dynamic and powerful react.js component that lets our holo-casters prepare a list of recommended holo-characters with all their characteristics, multiple photos and etc. This component lets manually order, filter, hide and further fine tune the list. The result should be visible within the ProdApp as a similar but much simplified version.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="HoloAlbum.svg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">HoloAlbum</figcaption><p></p>
+<figcaption class="figure-caption">HoloAlbum</figcaption>
 </figure>
 </div>
-<p>The most challenging here was that we had to implement Holoalbum twice: admin version on a new Fresh reactjs dashboard webapp and limited producers version on HoloProd app. HoloProd app was initially developed by subcontractors as react.native app for iPads. Unfortunately implementation was very poor. Later we had to add a lot of functionality there including webversion (react native web), mfa (Firebase) and secure encrypted offline storage that was leveraging service workers in web version. Since it was a project dedicated to revamping admin dashboard and not the apps and we were very limited in terms of time and resources we would prefer to deal with HoloProd codebase as little as possible.</p>
-<p>After serious considerations we decided to try a new microfrontend architecture to achieve maximal code reusability and to minimize the unpleasant updates to react.native app code.</p>
-<p>Holodeck Inc management agreed Holoalbums to be a webversion only feature (iPad version was very rarely used by the time anyway ).</p>
-<section id="первый-подход-просто-скопировать-код" class="level3">
-<h3 class="anchored" data-anchor-id="первый-подход-просто-скопировать-код">Первый подход: просто скопировать код</h3>
-<p>У нас был готовый компонент Holoalbum, который мы использовали в админке. Нам нужно было его использовать в HoloProd. Но HoloProd был написан на react.native и мы не хотели его трогать. Поэтому мы решили создать новый CRA проект для реализации продюсерского варианта Holo Album, перенеся туда основные компоненты альбома из админки и подключив его к HoloProd как микрофронтенд.</p>
+<p>The most challenging here was that we had to implement Holoalbum twice: admin version on a new Fresh react.js dashboard webapp and limited producers version on HoloProd app. HoloProd app was initially developed by subcontractors as react.native app for iPads. Unfortunately implementation was very poor. Later we had to add a lot of functionality there including web version (react native web), mfa (Firebase) and secure encrypted offline storage that was leveraging service workers in web version. Since it was a project dedicated to revamping admin dashboard and not the apps and we were very limited in terms of time and resources we would prefer to deal with HoloProd codebase as little as possible.</p>
+<p>After serious considerations we decided to try a new micro frontend architecture to achieve maximal code reusability and to minimize the unpleasant updates to react.native app code.</p>
+<p>Holodeck Inc management agreed Holoalbums to be a web version only feature (iPad version was very rarely used by the time anyway ).</p>
+<section id="first-approach-simply-copy-the-code" class="level3">
+<h3 class="anchored" data-anchor-id="first-approach-simply-copy-the-code">First Approach: Simply Copy the Code</h3>
+<p>We had a ready-made Holoalbum component that we used in the admin panel. We needed to use it in HoloProd. But HoloProd was written in react.native, and we didn’t want to touch it. Therefore, we decided to create a new CRA project for the producer version of the Holo Album, transferring the main album components from the admin panel and connecting it to HoloProd as a micro frontend.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="ContainerComposition1.svg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Initial Composition</figcaption><p></p>
+<figcaption class="figure-caption">Initial Composition</figcaption>
 </figure>
 </div>
-<p>Мы быстро протестировали данный сценарий на пустом компоненте и убедились что идея рабочая и мы действительно можем просто “подсоединить” новый компонент для просмотра альбомов в веб-версию мобильного приложения react.native.</p>
-<p>Веб-версия приложения собиралась с помощью Webpack, который мы модифицировали, подключив туда новый плагин.</p>
+<p>We quickly tested this scenario on an empty component and confirmed that the idea was workable and that we could indeed just “connect” a new component for viewing albums to the web version of the react.native mobile app.</p>
+<p>The web version of the app was built using Webpack, which we modified by adding a new plugin.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">new</span> <span class="fu">ModuleFederationPlugin</span>({</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">name</span><span class="op">:</span> <span class="st">"host"</span><span class="op">,</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">remotes</span><span class="op">:</span> {</span>
@@ -259,26 +233,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        }<span class="op">,</span></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Здесь почти все взято из простейшего примера из <a href="https://github.com/module-federation/module-federation-examples/blob/master/cra/host/modulefederation.config.js">репозитория Module Federation</a></p>
-<p>Переменная PRODUCER_ALBUM_APP_URL содержит адрес веб-версии HoloProd. Ее мы передаем в скрипт через переменные окружения.</p>
+<p>Almost everything here is taken from the simplest example in the <a href="https://github.com/module-federation/module-federation-examples/blob/master/cra/host/modulefederation.config.js">Module Federation repository</a>.</p>
+<p>The variable PRODUCER_ALBUM_APP_URL contains the address of the web version of HoloProd. We pass it to the script through environment variables.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> PRODUCER_ALBUM_APP_URL <span class="op">=</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">process</span><span class="op">.</span><span class="at">env</span><span class="op">.</span><span class="at">PRODUCER_ALBUM_APP_URL</span> <span class="op">||</span> <span class="st">"http://localhost:3002"</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Описание shared модулей довольно запутанно в документации: &gt; Shared modules are modules that are both overridable and provided as overrides to nested containers. They usually point to the same module in each build, e.g., the same library.</p>
+<p>The documentation’s description of shared modules is quite convoluted: &gt; Shared modules are modules that are both overridable and provided as overrides to nested containers. They usually point to the same module in each build, e.g., the same library.</p>
 <blockquote class="blockquote">
-<p>The packageName option allows setting a package name to look for a requiredVersion. It is automatically inferred for the module requests by default, set requiredVersion to false when automatic infer should be disabled.</p>
+<p>The packageName option allows setting a package name to look for a requiredVersion. It is automatically inferred for the module requests by default, set requiredVersion to false when automatic inference should be disabled.</p>
 </blockquote>
-<p>На практике это означает, что необходимо указывать в shared modules те зависимости, которые могут использоваться в обоих проектах и указывать конкретные версии этих зависимостей если только они не совпадают. Указывать вообще все модули, как это сделано в примере, не обязательно, и в нашем случае это приводило к ошибкам компиляции, поскольку модули react.native имеют особенности сборки. Кроме того в проекте были ссылки на кастомные модули в github, что также приводило к ошибкам.</p>
-<p>Помимо этого мы сразу же столкнулись с ошибкой компиляции, которая первой указана в документации:</p>
+<p>In practice, this means that you need to specify in shared modules those dependencies that can be used in both projects and specify specific versions of these dependencies unless they match. You don’t need to list all modules, as done in the example. In our case, doing so led to compilation errors because react.native modules have build peculiarities. Additionally, the project had links to custom modules in GitHub, which also caused errors.</p>
+<p>Besides that, we immediately encountered a compilation error, which is the first one listed in the documentation:</p>
 <blockquote class="blockquote">
 <p>Uncaught Error: Shared module is not available for eager consumption</p>
 </blockquote>
-<p>Как следует из <a href="https://webpack.js.org/concepts/module-federation/#uncaught-error-shared-module-is-not-available-for-eager-consumption">документации</a>, проблема в попытке импортировать модули, которые подгружаются асинхронно. То есть если в App.js у нас импортируется, например, react, а этот модуль еще должен быть скачен асинхронно, то приложение не сможет его найти. Поэтому в документации рекомендуется использовать lazy loading. Переместить код входного файла проекта (в нашем случае index.web.js) в отдельный модуль (bootstrap.web.js), а в самом входном файле оставить только асинхронный импорт</p>
+<p>As the <a href="https://webpack.js.org/concepts/module-federation/#uncaught-error-shared-module-is-not-available-for-eager-consumption">documentation suggests</a>, the issue is the attempt to import modules that load asynchronously. So, if in App.js, for example, we import react, and this module still needs to be downloaded asynchronously, the application won’t be able to find it. Therefore, the documentation recommends using lazy loading. Move the entry file’s code (in our case index.web.js) to a separate module (bootstrap.web.js), and in the main entry file, leave only the asynchronous import.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// index.web.js</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span>(<span class="st">"./bootstrap.web"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="подключение-компонента-в-навигацию" class="level4">
-<h4 class="anchored" data-anchor-id="подключение-компонента-в-навигацию">Подключение компонента в навигацию</h4>
-<p>Доступ к конкретному альбому осуществляется по специальной ссылке, которую мы получаем из админки. Нет общего списка альбомов, страница конкретного альбома получает айдишник из ссылки и делает запрос на получение данных альбома.</p>
-<p>В навигацию на базе react-navigation мы добавили новый экран, который отображает страницу альбома. Для этого в файле homeNavigation.js мы добавили новый экран в стек навигации:</p>
+<section id="integrating-the-component-into-navigation" class="level4">
+<h4 class="anchored" data-anchor-id="integrating-the-component-into-navigation">Integrating the Component into Navigation</h4>
+<p>Access to a specific album is made via a unique link that we obtain from the admin panel. There’s no general list of albums; the page of a specific album retrieves the ID from the link and requests the album’s data.</p>
+<p>In the react-navigation-based navigation, we added a new screen that displays the album page. For this, in the homeNavigation.js file, we incorporated a new screen into the navigation stack:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> HomeNavigation <span class="op">=</span> <span class="fu">createDrawerNavigator</span>(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  {</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">/*...*/</span></span>
@@ -286,8 +260,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">screen</span><span class="op">:</span> ProdAlbum<span class="op">,</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Как видно из кода, мы используем Android-like навигацию с боковым меню. Во время тестирования, мы пробовали добавлять экран в други навигационные стеки, но в итоге остановились на этом варианте.</p>
-<p>ProdAlbum.js имеет 2 версии, различающиеся суффиксом в соответствии с принятой практикой в RN: ProdAlbum.web.js и ProdAlbum.ios.js. Последний файл испрользуется для отображения пустого экрана в iOS приложении, где по условиям задачи Альбомы не поддерживаются. Веб версия ProdAlbum.web.js проверяет авторизацию пользователя и подключает наш микрофронтенд, который отображает страницу альбома.</p>
+<p>As evident from the code, we utilize an Android-like navigation with a side menu. During testing, we tried adding the screen to other navigation stacks, but eventually settled on this option.</p>
+<p>ProdAlbum.js has two versions, differentiated by a suffix following the RN convention: ProdAlbum.web.js and ProdAlbum.ios.js. The latter file is used to display an empty screen in the iOS app where, per the task requirements, Albums are not supported. The web version, ProdAlbum.web.js, checks user authentication and integrates our micro-frontend, which presents the album page.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ProdAlbum.web.js</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>token) {</span>
@@ -310,35 +284,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>      <span class="op">&lt;/</span>ScrollView<span class="op">&gt;</span></span>
 <span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">&lt;/</span>React<span class="op">.</span><span class="at">Suspense</span><span class="op">&gt;</span></span>
 <span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Как видно из кода, мы используем React.Suspense для отображения загрузки, пока микрофронтенд не загрузится. Кроме того, мы используем штатный каркас экрана: Header + ScrollView для отображения нашего внешнего компонента внутри стандартного экрана приложения. Для того чтобы наш микрофронтенд мог успешно осуществлять запросы к API, мы передаем ему токен пользователя, который мы получили в ходе авторизации.</p>
-<p>Сам внешний компонент загружается с помощью React.lazy, который позволяет загружать компоненты динамически. В нашем случае, мы используем Webpack для сборки нашего приложения, поэтому мы можем использовать директиву import() для загрузки компонента.</p>
+</section>
+<section id="using-micro-frontends-with-react-and-webpack" class="level4">
+<h4 class="anchored" data-anchor-id="using-micro-frontends-with-react-and-webpack">Using Micro-Frontends with React and Webpack</h4>
+<p>We utilize React.Suspense to display a loading spinner while the micro-frontend is being loaded. Moreover, we employ the standard screen framework: a Header combined with a ScrollView to present our external component within the app’s default screen. To ensure our micro-frontend can successfully make API requests, we pass it the user’s token, which we obtain during authentication.</p>
+<p>The external component is loaded using React.lazy, allowing for dynamic component loading. In our context, since we use Webpack to bundle our application, we can employ the import() directive for component loading.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ProdAlbum.web.js</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> RemoteProducerAlbum <span class="op">=</span> React<span class="op">.</span><span class="fu">lazy</span>(() <span class="kw">=&gt;</span> <span class="im">import</span>(<span class="st">"remote/App"</span>))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>remote/App.js - это точка входа в наш микрофронтенд. В этом файле мы экспортируем наш компонент Album, который будет отображаться внутри нашего хост-приложения.</p>
-<p>Этим ограничивается набор модификаций хост-приложения:</p>
+<p>remote/App.js serves as the entry point to our micro-frontend. Within this file, we export our Album component to be displayed inside our host application.</p>
+<p>The modifications to the host application are limited to:</p>
 <ol type="1">
-<li>Создание каркаса экрана, который будет отображать внешний компонент</li>
-<li>Подключение его к навигации</li>
-<li>Модификация настройки Webpack для подключения Module Federation Plugin</li>
+<li>Crafting a screen framework that displays the external component.</li>
+<li>Incorporating it into the navigation.</li>
+<li>Adapting the Webpack configuration to integrate the Module Federation Plugin.</li>
 </ol>
-<p>Данный подход позволил нам решить следующие проблемы:</p>
+<p>This approach equipped us to address the following challenges:</p>
 <ol type="1">
-<li>Минимизация изменений в хост-приложении. Как мы видели, едиственная серьезная модификация потребовалась для подключения Module Federation Plugin. Все остальное - либо создание нового кода, либо минимальные изменения в существующем коде.</li>
-<li>Использование возможностей хост приложения для отображения внешнего компонента. Доступ к альбомам осуществляется с использованием тех же механизмов безопасности (MFA), что и внутри хост-приложения. Также, мы можем использовать любые другие возможности хост-приложения, например, использовать Redux для хранения данных, которые будут доступны внутри внешнего компонента, или использовать штатные навигационные и стилевые компоненты.</li>
+<li><strong>Minimized Changes to Host Application</strong>: As observed, the only significant modification required was integrating the Module Federation Plugin. Everything else involved creating new code or making minor adjustments to the existing code.</li>
+<li><strong>Leveraging Host Application Capabilities</strong>: Album access utilizes the same security mechanisms (MFA) as within the host application. Additionally, we can capitalize on any other features of the host application, like employing Redux for data storage accessible within the external component, or utilizing built-in navigation and styling components.</li>
 </ol>
 </section>
 </section>
-<section id="второй-подход-использовать-кодовую-базу-админки" class="level3">
-<h3 class="anchored" data-anchor-id="второй-подход-использовать-кодовую-базу-админки">Второй подход: использовать кодовую базу админки</h3>
-<p>Скоро мы сообразили, что можем просто использовать кодовую базу админки для создания нового продюсерского веб-приложения. Вместо того чтобы выдергивать компоненты Альбома из админки мы просто создали отдельный контейнер - обертку, который внутри себя использовал те же компоненты, что и основной контейнер альбома. Различие заключалось в недоступности некоторых инструментов редактирования, скрытии нескольких лишних элементов, а также использования специальной службы, которая получала данные Альбома из другого эндпоинта, который в отличие от эндпоинта Админки, принимал токены Продюсеров и осуществлял дополнительные проверки доступа.</p>
+<section id="second-approach-utilizing-the-admins-codebase" class="level3">
+<h3 class="anchored" data-anchor-id="second-approach-utilizing-the-admins-codebase">Second Approach: Utilizing the Admin’s Codebase</h3>
+<p>Soon, we realized that we could simply use the admin’s codebase to develop a new producer web application. Instead of extracting Album components from the admin panel, we created a separate container wrapper that internally used the same components as the main album container. The differences were the unavailability of some editing tools, hiding a few extra elements, and the use of a specialized service fetching the Album’s data from a different endpoint. Unlike the admin endpoint, this one accepted producer tokens and performed additional access checks.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="ContainerComposition2.svg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Final Composition</figcaption><p></p>
+<figcaption class="figure-caption">Final Composition</figcaption>
 </figure>
 </div>
-<p>Таким образом мы избавились от лишнего приложения и необходимости дублировать код. Для запуска и билда продюсерского веб-приложения мы добавили отдельные скрипты в package.json, подсмотрев идею в <a href="https://github.com/module-federation/module-federation-examples/blob/master/cra/remote/package.json">том же примере от автора плагина</a>. Поскольку админка была изначально собрана на базе CRA, этот пример был для нас очень полезен.</p>
-<p>Подражая примеру, мы выносим конфигурацию плагина в отдельный файл modulefederation.config.js. Тут все стандартно: важно чтобы имя контейнера было тем же, которое мы использовали в хост приложении (remote), а путь к корневому файлу был тот же, что мы используем в импорте в хост приложении (App).</p>
+<p>This way, we eliminated the need for an extra application and redundant code. To launch and build the producer web app, we added separate scripts in the package.json, drawing inspiration from <a href="https://github.com/module-federation/module-federation-examples/blob/master/cra/remote/package.json">the same example by the plugin’s author</a>. Since the admin panel was initially built on CRA (Create React App), this example was highly beneficial for us.</p>
+<p>Following the example, we exported the plugin configuration to a separate file named modulefederation.config.js. Everything here is standard: it’s essential that the container’s name remained the same as we used in the host application (remote), and the path to the root file matched what we use in the host app’s import (App).</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> {</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">name</span><span class="op">:</span> <span class="st">'remote'</span><span class="op">,</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">exposes</span><span class="op">:</span> {</span>
@@ -347,8 +324,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">filename</span><span class="op">:</span> <span class="st">'remoteEntry.js'</span><span class="op">,</span></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* ... */</span></span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Использование отдельных сценариев для запуска и билда позволяет нам модифицировать стандартную конфигурацию webpack, добавляя в нее плагин ModuleFederationPlugin и передавая ему настройки из modulefederation.config.js. При этом нам не нужно добавлять никаких специальных инструментов типа rewired. Все прозрачно и понятно.</p>
-<p>Помимо подключения плагина, наш webpack.config override переопределяет точку входа: вместо index.tsx, который инициализирует полноценное приложении админки, мы указываем специальный файл, который инициализирует только наш ProdAlbum компонент.</p>
+<p>Using separate scripts for launching and building allows us to modify the default webpack configuration, incorporating the ModuleFederationPlugin and feeding it settings from modulefederation.config.js. In doing so, we don’t have to introduce any specialized tools like rewired. Everything remains transparent and straightforward.</p>
+<p>Besides integrating the plugin, our webpack.config override redefines the entry point: rather than index.tsx, which initializes the full-blown admin app, we designate a specific file that solely initializes our ProdAlbum component.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">// override/webpack.config.js</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> override <span class="op">=</span> config <span class="kw">=&gt;</span> {</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  config<span class="op">.</span><span class="at">plugins</span><span class="op">.</span><span class="fu">push</span>(<span class="kw">new</span> <span class="fu">ModuleFederationPlugin</span>(<span class="pp">require</span>(<span class="st">'../../../modulefederation.config.js'</span>)))<span class="op">;</span></span>
@@ -360,7 +337,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> config<span class="op">;</span></span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Данный индекс использует ту же технику для асинхронной подгрузки компонентов: непосредственно в индексном файле расположен только один асинхронный импорт, который загружает bootstrap модуль, который импортирует и передает в ReactDOM.render приложение-обертку, которое возвращает компонент альбома и его контекст.</p>
+<p>This index employs the same technique for asynchronous component loading: directly in the index file, there’s only one asynchronous import that fetches the bootstrap module. This module, in turn, imports and passes to the ReactDOM.render a wrapper application, which returns the album component and its context.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">// ProdAlbumApp.tsx</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> ProdAlbumApp <span class="op">=</span> (props<span class="op">:</span> { <span class="dt">idToken</span><span class="op">:</span> string }) <span class="kw">=&gt;</span> {</span>
@@ -390,25 +367,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;/</span>CastingPortsContext<span class="op">.</span><span class="at">Provider</span><span class="op">&gt;</span></span>
 <span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    )<span class="op">;</span></span>
 <span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Большой пример, где мы используем id документа, доставая его из URL, а также передаваемый в компонент idToken, который мы получили в хост-приложении. Этот токен используется для инициализации специфической службы, которая получает данные Альбома из специфического эндпоинта, проверяющего права доступа конкретного продюсера к этому документу.</p>
-<p>Таким образом мы можем не беспокоиться об инициализации всех остальных служб и контекстов, используемых в админке (авторизация, глобальный redux store и проч), а подключаться непосредственно к нашему компоненту, готовя только необходимые для него контексты и службы.</p>
-<p>Отдельного упоминания заслуживает publicPath параметр, установленный в примере в значение ‘auto’. Как следует из <a href="https://webpack.js.org/guides/public-path/#root">документации</a> он задает базовый путь для всех статических ресурсов, которые будут сгенерированы Webpack. В шаблоне CRA этот параметр устанавливается на основе PUBLIC_URL или homePage в package.json. В случае, если мы хотим использовать один и тот же шаблон для разных приложений, но с разными publicPath, то мы можем использовать значение ‘auto’, которое позволяет Webpack самостоятельно определить publicPath на основе текущего URL. Поскольку в основном проекте мы используем homePage мы попытались установить этот же путь и в publicPath. Однако это не сработало и мы получали ошибку загрузки:</p>
+<p>A significant example where we utilize the document ID, extracting it from the URL, as well as the idToken passed to the component, which we obtained in the host application. This token is used to initialize a specific service that fetches Album data from a particular endpoint, verifying a specific producer’s access rights to this document.</p>
+<p>This way, we can avoid concerns about initializing all other services and contexts used in the admin panel (authorization, global redux store, etc.), and connect directly to our component, preparing only the necessary contexts and services for it.</p>
+<p>Worthy of separate mention is the <code>publicPath</code> parameter set in the example to ‘auto’. As per the <a href="https://webpack.js.org/guides/public-path/#root">documentation</a>, it defines the base path for all static resources that will be generated by Webpack. In the CRA template, this parameter is based on PUBLIC_URL or homePage in package.json. If we want to use the same template for different applications but with different publicPaths, we can use the ‘auto’ value, allowing Webpack to independently determine the publicPath based on the current URL. Since we use homePage in the main project, we tried to set this same path in publicPath. However, this didn’t work, and we encountered a loading error:</p>
 <blockquote class="blockquote">
 <p>Uncaught ChunkLoadError: Loading chunk … failed.</p>
 </blockquote>
-<p>Причина в том, что поскольку мы собираем отдельный бандл Альбома, и располагаем его на отдельном хостинге, то homePage в package.json не будет соответствовать текущему URL. В итоге мы остановились на следующем решении: оставить значение pulicPath = ‘auto’, а непосредственно в сценариях запуска и сборки переписывать PUBLIC_URL на значение по-умолчанию:</p>
+<p>The reason being, since we compile a separate Album bundle and place it on a separate hosting, the homePage in package.json will not match the current URL. In the end, we settled on the following solution: keep the value of publicPath = ‘auto’, and directly in the launch and build scripts, rewrite the PUBLIC_URL to its default value:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">process</span><span class="op">.</span><span class="at">env</span><span class="op">.</span><span class="at">PUBLIC_URL</span> <span class="op">=</span> <span class="st">'/'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="развертывание" class="level3">
-<h3 class="anchored" data-anchor-id="развертывание">Развертывание</h3>
-<p>Сборка и публикация веб версии ProdApp и ProdAlbum бандла осуществляется с использованием статического хостинга Firebase и Github Actions CI. Firebase предоставляет все удобства, включая шаблоны workflows для Github Actions, а также автоматизированные адреса для превью версий. Путь к бандлу ProdAlbum (PRODUCER_ALBUM_APP_URL) сохраняем в github secrets и не забываем передать его в соотвтествующих workflow.</p>
+<section id="deployment" class="level3">
+<h3 class="anchored" data-anchor-id="deployment">Deployment</h3>
+<p>The build and publication of the web version of ProdApp and the ProdAlbum bundle are executed using Firebase’s static hosting and Github Actions CI. Firebase offers all the conveniences, including workflow templates for Github Actions, as well as automated addresses for preview versions. We store the path to the ProdAlbum bundle (PRODUCER_ALBUM_APP_URL) in GitHub secrets and remember to pass it in the corresponding workflow.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">    # Prod App workflow</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">    # ...</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Build</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">run</span><span class="kw">:</span><span class="at"> yarn run web:build-stage</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">env</span><span class="kw">:</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">PRODUCER_ALBUM_APP_URL</span><span class="kw">:</span><span class="at"> ${{ secrets.PRODUCER_ALBUM_APP_URL }}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>В обоих случаях для правильной работы SPA необходимо настроить правила перенаправления на index.html. В Firebase это делается с помощью файла firebase.json:</p>
+<p>In both cases, for the SPA to work correctly, it is necessary to set up redirection rules to index.html. In Firebase, this is done using the firebase.json file:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"hosting"</span><span class="fu">:</span> <span class="fu">{</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"rewrites"</span><span class="fu">:</span> <span class="ot">[</span></span>
@@ -419,7 +396,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Дополнительно для правильного отображения шрифтов из бандла ProdAlbum потребовалось добавить заголовок <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin">Access-Control-Allow-Origin</a>:</p>
+<p>Additionally, to display the fonts correctly from the ProdAlbum bundle, it was necessary to add the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin">Access-Control-Allow-Origin</a> header:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="dt">"headers"</span><span class="fu">:</span> <span class="ot">[</span> <span class="fu">{</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"source"</span><span class="fu">:</span> <span class="st">"**/*.@(eot|otf|ttf|ttc|woff|font.css)"</span><span class="fu">,</span></span>
@@ -431,12 +408,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="итоги" class="level3">
-<h3 class="anchored" data-anchor-id="итоги">Итоги</h3>
-<p>Нам кажется, данный кейс представляет собой случай эффективного использования microfrontends на практике. Нам удалось значительно сократить время разработки, засчет “подключения” к устаревшему проекту нового функционала, взяв его из кодовой базы, которая находилась в активной разработке и была практически готова к использованию, вместо того, чтобы создавать его заново на базе старого проекта. Также мы смогли избежать дублирования кода, который был общим для обоих проектов, и использовать его в обоих приложениях.</p>
-<p>Конечно это привело к появлению дополнительной зависимости: ProdApp теперь зависит от бандла ProdAlbum, который является частью кодовой базы Dashboard. Однако, поскольку ProdAlbum собирается и разворачивается отдельно от Dashboard эта зависимость не создает лишних рисков что при очередном обновлении Dashboard мы случайно сломаем ProdApp. Кроме того данная зависимость представляеся соответствующей правилу “принципа единственной ответственности” поскольку бизнес-логика Альбома сосредоточена в одном месте и если что-то поменяется в том как Альбомы выглядят или работают в Dashboard, то это почти наверняка повлечет перемены в ProdAlbum.</p>
-<p>Ключевым моментом в данном случае в пользу выбора microfrontends оказалось то как легко было передать авторизационный токен из среды ProdApp в ProdAlbum. Если бы мы просто развернули микросайт для просмотра Альбомов и поместили бы его на тот же домен что и ProdApp, нам бы не удалось так же просто использовать авторизацию в ProdApp для доступа к ProdAlbum. Вместо этого нам пришлось бы реализовать еще одну авторизацию для ProdAlbum, что было бы не очень хорошо с точки зрения безопасности и потребовало бы дополнительных действий со стороны пользователя.</p>
-<p>Хочется поблагодарить создателя плагина <a href="https://twitter.com/ScriptedAlchemy">Zack Jackson</a> за его работу и за прекрасный набор примеров использования из которых мы почерпнули много полезного (не только для данного кейса). С другой стороны, нам кажется, что документация плагина и Webpack в целом могла бы быть более подробной и понятной. Например, формулировки, объясняющие shared modules и publicPath в документации плагина не совсем понятны и не дают полного представления о том как они работают.</p>
+<section id="conclusions" class="level3">
+<h3 class="anchored" data-anchor-id="conclusions">Conclusions</h3>
+<p>We believe that this case serves as an example of effective microfrontends implementation in practice. We managed to significantly reduce development time by “plugging in” new features into an outdated project, taking it from a codebase that was actively being developed and almost ready to use, rather than rebuilding it on the base of an older project. Additionally, we avoided duplicating code that was common to both projects, allowing its use in both applications.</p>
+<p>Of course, this led to the emergence of an additional dependency: ProdApp now relies on the ProdAlbum bundle, which is part of the Dashboard codebase. However, since the ProdAlbum is built and deployed separately from the Dashboard, this dependency doesn’t introduce any additional risks that an update to the Dashboard might inadvertently break the ProdApp. Moreover, this dependency adheres to the “single responsibility principle,” since the business logic of the Album is concentrated in one place. If anything changes regarding how the Albums look or operate in the Dashboard, it would most likely result in changes to ProdAlbum.</p>
+<p>A key point in this case in favor of choosing microfrontends was how easily we were able to transfer the authorization token from the ProdApp environment to ProdAlbum. Had we simply launched a microsite for viewing the Albums and placed it on the same domain as the ProdApp, we would not have been able to leverage the authorization in ProdApp for access to ProdAlbum. Instead, we would have had to implement another authentication mechanism for ProdAlbum, which would not have been optimal from a security standpoint and would have required additional user actions.</p>
+<p>We’d like to thank the plugin creator, <a href="https://twitter.com/ScriptedAlchemy">Zack Jackson</a>, for his work and the excellent set of examples from which we drew a lot of valuable insights (not only for this case). On the other hand, we feel that the documentation for the plugin and Webpack in general could be more detailed and clear. For instance, the explanations regarding shared modules and publicPath in the plugin’s documentation are not entirely clear and don’t provide a full understanding of how they operate.</p>
 
 
 </section>
@@ -469,9 +446,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -536,6 +527,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

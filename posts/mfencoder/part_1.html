@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Artem Putilov">
+<meta name="dcterms.date" content="2023-08-29">
+<meta name="keywords" content="Swift, MFEncoder, OpenAI, GPT-4, Data Encoding, Multipart Forms, Software Development, Programming">
+
+<title>Behind My Code - Learning Swift Through Building MFEncoder: A Journey Guided by OpenAI</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Behind My Code</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://temaput.github.io/" rel="" target="">
+ <span class="menu-text">About Me</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/temaput/" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/temaput/" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Learning Swift Through Building MFEncoder: A Journey Guided by OpenAI</h1>
+            <p class="subtitle lead">How We Used OpenAI’s GPT-4 as a Virtual Mentor in Swift Development</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">code</div>
+                <div class="quarto-category">swift</div>
+                <div class="quarto-category">web</div>
+                <div class="quarto-category">ai</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Artem Putilov </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 29, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<section id="brief-summary" class="level2">
+<h2 class="anchored" data-anchor-id="brief-summary">Brief Summary</h2>
+<p>In this set of articles, we take a close look at Swift programming. We’re focusing on creating a package called “MFEncoder” to handle multipart form data. This is important for things like sending forms and files over the internet. We will use the OpenAI GPT-4 chatbot as a guide or mentor to help us through the project.</p>
+</section>
+<section id="what-were-doing" class="level2">
+<h2 class="anchored" data-anchor-id="what-were-doing">What We’re Doing</h2>
+<p>Swift is a popular language for making software, especially for Apple’s devices like iPhones and Macs. Multipart forms help us to send more complex data from a client to a server. Right now, there’s a gap in available tools that make working with multipart forms in Swift easy and efficient. Our package, “MFEncoder,” aims to fill that gap.</p>
+<p>The final result can be found <a href="https://github.com/temaput/MFEncoder">here</a></p>
+</section>
+<section id="goals" class="level2">
+<h2 class="anchored" data-anchor-id="goals">Goals</h2>
+<ol type="1">
+<li>To understand the real-world challenges and basic ideas behind using Swift for data encoding.</li>
+<li>To build “MFEncoder,” a tool for making multipart form data handling easier in Swift.</li>
+<li>To explore how OpenAI’s GPT-4 can act as a virtual mentor to help us complete this project.</li>
+</ol>
+</section>
+<section id="how-well-do-it" class="level2">
+<h2 class="anchored" data-anchor-id="how-well-do-it">How We’ll Do It</h2>
+<p>We’ll cover these topics in the series:</p>
+<ol type="1">
+<li>Starting Points: We’ll talk about the basics of data encoding and multipart forms.</li>
+<li>Deep Dive into MFEncoder: We’ll explain how the package works and what features it offers.</li>
+<li>Learning from a Virtual Mentor: How OpenAI’s chatbot has guided us in this project.</li>
+<li>Testing and Performance: We’ll discuss how we know the package works well.</li>
+<li>Wrap-Up and Next Steps: We’ll summarize what we’ve done and talk about what could come next.</li>
+</ol>
+</section>
+<section id="why-this-matters" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-matters">Why This Matters</h2>
+<p>This set of articles is both a learning resource and a practical guide. It’s designed to help anyone interested in Swift programming by providing both basic knowledge and practical examples. Plus, the package we’re making will meet a real need for those looking to work with multipart forms in Swift.</p>
+</section>
+</section>
+<section id="part-one" class="level1">
+<h1>Part One</h1>
+<section id="what-is-a-multipart-form" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-multipart-form">What is a multipart form?</h2>
+<p>Multipart form data is typically used when sending forms that have more complex data, such as files. It’s called “multipart” because the different parts of the form are sent as different parts in the body of the HTTP request, with each part having its own content type and other headers.</p>
+<p>In order to construct a multipart/form-data payload, we need to:</p>
+<ol type="1">
+<li><p>Set the HTTP header <code>Content-Type</code> to <code>multipart/form-data; boundary=someArbitraryString</code>, where <code>someArbitraryString</code> is a string that doesn’t occur in the data.</p></li>
+<li><p>Encode the data for each part with the following format:</p>
+<pre><code>--someArbitraryString
+Content-Disposition: form-data; name="fieldName"; filename="filename.jpg"
+Content-Type: image/jpeg
+
+...data...</code></pre>
+<p>The <code>--someArbitraryString</code> line denotes the start of a part. The <code>Content-Disposition</code> header specifies the name of the form field and, if applicable, the filename. The <code>Content-Type</code> header specifies the MIME type of the data. After the headers, an empty line is required, and then the data for the part can follow. We need to make sure the boundary doesn’t appear in our data, and to use for line breaks, as required by the HTTP specification.</p></li>
+<li><p>After all parts, add a final boundary with an extra <code>--</code> at the end: <code>--someArbitraryString--</code></p></li>
+</ol>
+<section id="mime-and-content-disposition-a-brief-history" class="level3">
+<h3 class="anchored" data-anchor-id="mime-and-content-disposition-a-brief-history">MIME and Content-Disposition: A Brief History</h3>
+<p>MIME (Multipurpose Internet Mail Extensions) and Content-Disposition are quite ancient in the context of internet technologies, dating back to the early days of the World Wide Web and even earlier to email systems.</p>
+<p>MIME was initially created to extend the format of email messages to support text in character sets other than ASCII, as well as attachments of audio, video, images, and application programs. Before MIME, email was largely constrained to the English language and could not easily handle multimedia attachments. MIME solved this by specifying how different types of content could be encoded for transport.</p>
+</section>
+<section id="content-disposition-a-child-of-mime" class="level3">
+<h3 class="anchored" data-anchor-id="content-disposition-a-child-of-mime">Content-Disposition: A Child of MIME</h3>
+<p>The <code>Content-Disposition</code> header originated as a way to specify the disposition of MIME-encoded message parts. It was used to specify whether a certain piece of content should be displayed inline within the email client or treated as an attachment. It also allowed for the naming of attached files.</p>
+</section>
+<section id="how-did-we-get-here" class="level3">
+<h3 class="anchored" data-anchor-id="how-did-we-get-here">How Did We Get Here?</h3>
+<p>Over time, the HTTP protocol borrowed many ideas from MIME due to the similarity in their requirements. HTTP often deals with the transportation of various types of content just like email, and therefore many MIME headers, including <code>Content-Type</code> and <code>Content-Disposition</code>, became useful in HTTP as well.</p>
+<section id="why-similar" class="level4">
+<h4 class="anchored" data-anchor-id="why-similar">Why Similar?</h4>
+<ol type="1">
+<li><p><strong>Extensible</strong>: Both HTTP and email needed a way to handle an arbitrary number of types of content, so the extensible nature of MIME was a good fit.</p></li>
+<li><p><strong>Self-Describing</strong>: MIME makes each message part self-describing. This is crucial in both email and HTTP where a message may go through several intermediaries, and each needs to be able to understand the content to some extent.</p></li>
+<li><p><strong>Multi-Part Messages</strong>: Both email and HTTP forms had to solve the problem of “multipart” messages (i.e., messages containing multiple pieces of data in potentially different formats). MIME offered a standardized solution for this with <code>multipart/*</code> types.</p></li>
+<li><p><strong>Character Sets</strong>: With the globalization of the internet, the need for handling multiple character sets became evident. MIME had already solved this problem for email, so it made sense to reuse the same solution for HTTP.</p></li>
+<li><p><strong>Binary Data</strong>: Both email and HTTP had the need to transmit binary data. MIME provides a mechanism to encode this kind of data for transport.</p></li>
+</ol>
+<p>So, while MIME and Content-Disposition may seem dated, they provide a tried-and-true standard for handling a wide variety of content types across different internet technologies. And because they were designed to be extensible, they have been able to evolve and remain relevant even as the internet has grown and changed.</p>
+</section>
+</section>
+</section>
+<section id="how-to-produce-it-with-swift" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-produce-it-with-swift">How to produce it with Swift</h2>
+<p>GPT-4 suggests the following example which we will be using as a starting point:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode swift code-with-copy"><code class="sourceCode swift"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> <span class="va">request</span> <span class="op">=</span> URLRequest<span class="op">(</span>url<span class="op">:</span> URL<span class="op">(</span>string<span class="op">:</span> <span class="st">"https://example.com"</span><span class="op">)!)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>request<span class="op">.</span>httpMethod <span class="op">=</span> <span class="st">"POST"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">boundary</span> <span class="op">=</span> <span class="st">"Boundary-</span><span class="er">\(</span><span class="st">UUID().uuidString)"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>request<span class="op">.</span>setValue<span class="op">(</span><span class="st">"multipart/form-data; boundary=</span><span class="er">\(</span><span class="st">boundary)"</span><span class="op">,</span> forHTTPHeaderField<span class="op">:</span> <span class="st">"Content-Type"</span><span class="op">)</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> <span class="va">body</span> <span class="op">=</span> Data<span class="op">()</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">fieldName</span> <span class="op">=</span> <span class="st">"myField"</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">fieldValue</span> <span class="op">=</span> <span class="st">"myValue"</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>body<span class="op">.</span>append<span class="op">(</span><span class="st">"--</span><span class="er">\(</span><span class="st">boundary)</span><span class="sc">\r\n</span><span class="st">"</span><span class="op">.</span>data<span class="op">(</span>using<span class="op">:</span> <span class="op">.</span>utf8<span class="op">)!)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>body<span class="op">.</span>append<span class="op">(</span><span class="st">"Content-Disposition: form-data; name=</span><span class="sc">\"</span><span class="er">\(</span><span class="st">fieldName)</span><span class="sc">\"\r\n\r\n</span><span class="st">"</span><span class="op">.</span>data<span class="op">(</span>using<span class="op">:</span> <span class="op">.</span>utf8<span class="op">)!)</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>body<span class="op">.</span>append<span class="op">(</span><span class="st">"</span><span class="er">\(</span><span class="st">fieldValue)</span><span class="sc">\r\n</span><span class="st">"</span><span class="op">.</span>data<span class="op">(</span>using<span class="op">:</span> <span class="op">.</span>utf8<span class="op">)!)</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">fileUrl</span> <span class="op">=</span> URL<span class="op">(</span>fileURLWithPath<span class="op">:</span> <span class="st">"/path/to/your/file.jpg"</span><span class="op">)</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">fileData</span> <span class="op">=</span> <span class="cf">try</span><span class="op">!</span> Data<span class="op">(</span>contentsOf<span class="op">:</span> fileUrl<span class="op">)</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">fileName</span> <span class="op">=</span> fileUrl<span class="op">.</span>lastPathComponent</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>body<span class="op">.</span>append<span class="op">(</span><span class="st">"--</span><span class="er">\(</span><span class="st">boundary)</span><span class="sc">\r\n</span><span class="st">"</span><span class="op">.</span>data<span class="op">(</span>using<span class="op">:</span> <span class="op">.</span>utf8<span class="op">)!)</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>body<span class="op">.</span>append<span class="op">(</span><span class="st">"Content-Disposition: form-data; name=</span><span class="sc">\"</span><span class="st">file</span><span class="sc">\"</span><span class="st">; filename=</span><span class="sc">\"</span><span class="er">\(</span><span class="st">fileName)</span><span class="sc">\"\r\n</span><span class="st">"</span><span class="op">.</span>data<span class="op">(</span>using<span class="op">:</span> <span class="op">.</span>utf8<span class="op">)!)</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>body<span class="op">.</span>append<span class="op">(</span><span class="st">"Content-Type: image/jpeg</span><span class="sc">\r\n\r\n</span><span class="st">"</span><span class="op">.</span>data<span class="op">(</span>using<span class="op">:</span> <span class="op">.</span>utf8<span class="op">)!)</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>body<span class="op">.</span>append<span class="op">(</span>fileData<span class="op">)</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>body<span class="op">.</span>append<span class="op">(</span><span class="st">"</span><span class="sc">\r\n</span><span class="st">"</span><span class="op">.</span>data<span class="op">(</span>using<span class="op">:</span> <span class="op">.</span>utf8<span class="op">)!)</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>body<span class="op">.</span>append<span class="op">(</span><span class="st">"--</span><span class="er">\(</span><span class="st">boundary)--</span><span class="sc">\r\n</span><span class="st">"</span><span class="op">.</span>data<span class="op">(</span>using<span class="op">:</span> <span class="op">.</span>utf8<span class="op">)!)</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>request<span class="op">.</span>httpBody <span class="op">=</span> body</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">task</span> <span class="op">=</span> URLSession<span class="op">.</span>shared<span class="op">.</span>dataTask<span class="op">(</span>with<span class="op">:</span> request<span class="op">)</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>task<span class="op">.</span>resume<span class="op">()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This example teaches us several important points:</p>
+<ul>
+<li>To convert our form into request body we us Data object in Swift</li>
+<li>We convert each form field name and value to smaller Data chunks and append them to our body</li>
+<li>We can encode any string values using utf8</li>
+<li>We can use file URLs as primary media for passing any files like images, documents etc</li>
+<li>We use same Data object to read the contents of file, passing its URL as parameter</li>
+<li>With each field name we add boundary and Content-Disposition row</li>
+<li>For files its also important to add filename and MIME type</li>
+</ul>
+<p>Last point poses the next problem.</p>
+</section>
+<section id="how-to-detect-mime-type-of-an-arbitrary-file-in-swift" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-detect-mime-type-of-an-arbitrary-file-in-swift">How to detect MIME type of an arbitrary file in Swift?</h2>
+<p>Solution that GPT-4 suggested here was marked as using some <a href="https://developer.apple.com/library/archive/releasenotes/General/CarbonCoreDeprecations/index.html#//apple_ref/doc/uid/TP40012224">deprecated tech by Apple</a></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode swift code-with-copy"><code class="sourceCode swift"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">MobileCoreServices</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="fu">mimeType</span><span class="op">(</span><span class="va">forPath</span> <span class="va">path</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span> -&gt; <span class="fu">String</span> <span class="op">{</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="va">url</span> <span class="op">=</span> URL<span class="op">(</span>fileURLWithPath<span class="op">:</span> path<span class="op">)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="va">pathExtension</span> <span class="op">=</span> url<span class="op">.</span>pathExtension</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">let</span> <span class="va">uti</span> <span class="op">=</span> UTTypeCreatePreferredIdentifierForTag<span class="op">(</span>kUTTagClassFilenameExtension<span class="op">,</span> pathExtension<span class="op">!</span> <span class="kw">as</span> CFString<span class="op">,</span> <span class="kw">nil</span><span class="op">)?.</span>takeRetainedValue<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">let</span> <span class="va">mimetype</span> <span class="op">=</span> UTTypeCopyPreferredTagWithClass<span class="op">(</span>uti<span class="op">,</span> kUTTagClassMIMEType<span class="op">)?.</span>takeRetainedValue<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            <span class="kw">return</span> mimetype <span class="kw">as</span> String</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">return</span> <span class="st">"application/octet-stream"</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>As an alternative GPT-4 suggested using hardcoded mappings or wrapping low level C libraries like <code>libmagic</code>. Luckily we were able to find a replacement for deprecated CarbonCore tools - <a href="https://developer.apple.com/documentation/uniformtypeidentifiers/uttype">UTType</a>, which can be obtained via <code>URL.resourceValues</code> method as follows:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode swift code-with-copy"><code class="sourceCode swift"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="fu">getMimeTypeFromURL</span><span class="op">(</span><span class="va">_</span> <span class="va">fileURL</span><span class="op">:</span> <span class="dt">URL</span><span class="op">)</span> -&gt; <span class="fu">String</span>? <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> <span class="va">fileURL</span> <span class="op">=</span> fileURL</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  fileURL<span class="op">.</span>resolveSymlinksInPath<span class="op">()</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">do</span> <span class="op">{</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="va">fileObjectResource</span> <span class="op">=</span> <span class="cf">try</span> fileURL<span class="op">.</span>resourceValues<span class="op">(</span>forKeys<span class="op">:</span> <span class="op">[.</span>isDirectoryKey<span class="op">])</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> fileObjectResource<span class="op">.</span>isDirectory <span class="op">??</span> <span class="kw">false</span> <span class="op">{</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      <span class="kw">return</span> <span class="kw">nil</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> #available<span class="op">(</span>macOS <span class="fl">11.0</span><span class="op">,</span> iOS <span class="fl">14.0</span><span class="op">,</span> <span class="op">*)</span> <span class="op">{</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> <span class="va">resourceValues</span> <span class="op">=</span> <span class="cf">try</span> fileURL<span class="op">.</span>resourceValues<span class="op">(</span>forKeys<span class="op">:</span> <span class="op">[.</span>contentTypeKey<span class="op">,</span> <span class="op">.</span>isDirectoryKey<span class="op">])</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="kw">let</span> <span class="va">type</span> <span class="op">=</span> resourceValues<span class="op">.</span>contentType<span class="op">,</span> <span class="kw">let</span> <span class="va">mime</span> <span class="op">=</span> type<span class="op">.</span>preferredMIMEType  <span class="op">{</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> mime</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>      <span class="op">}</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">return</span> <span class="st">"application/octet-stream"</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">catch</span> <span class="op">{</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">return</span> <span class="kw">nil</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>UTType api is only supported since iOS 14.0 so we fallback to generic <code>application/octet-stream</code> for any previous versions. Providing accurate MIME type is not necessary for properly uploading files, but it can be crucial in some cases (like if backend applies some compression over the uploaded media). We added <code>resolveSymlinksInPath</code> method after we encountered a bug with bundled resource. At least in some cases bundled resources were symlinks and we were getting <code>application/octet-stream</code> type for them unless those symlinks were resolved.</p>
+</section>
+<section id="using-interactive-playground-to-test-drive-our-mime-detection-and-form-serialization" class="level2">
+<h2 class="anchored" data-anchor-id="using-interactive-playground-to-test-drive-our-mime-detection-and-form-serialization">Using interactive Playground to test-drive our MIME detection and form serialization</h2>
+<p>We wanted to make sure our <code>getMimeTypeFromURL</code> function works with real life files. We also wanted to play around with an idea of embedding interactive UI into Swift Playground. We decided to create a basic View in SwiftUI that would allow us to do 2 things:</p>
+<ol type="1">
+<li>Pick a random directory from our hard drive and run its contents by <code>getMimeTypeFromURL</code> to see how it handles different files</li>
+<li>Provide a UI for filling basic form that we will be encoding and sending to the sample API in order to verify the serialization works. We picked <a href="https://fastapi.tiangolo.com">FastAPI</a> and its underlying <a href="https://www.starlette.io/requests/#request-files">Starlette</a> http server as a source of truth to see if our <code>multipart/form-data</code> can be recognized and parsed.</li>
+</ol>
+<p>Adding SwiftUI view to a Playground is as simple as</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode swift code-with-copy"><code class="sourceCode swift"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 1. Import the SwiftUI</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">SwiftUI</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">// 2. Import the Playground Support</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">PlaygroundSupport</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">// 3. Build the View</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> ContentView<span class="op">:</span> <span class="dt">View</span> <span class="op">{</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">@State</span> <span class="kw">private</span> <span class="kw">var</span> <span class="va">formValues</span><span class="op">:</span> FormValues <span class="op">=</span> FormValues<span class="op">()</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> <span class="va">body</span><span class="op">:</span> some View <span class="op">{</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">// </span><span class="al">TODO</span><span class="co">: add our controls here</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">// 4. Attach it to the Playground</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>PlaygroundPage<span class="op">.</span>current<span class="op">.</span>setLiveView<span class="op">(</span>ContentView<span class="op">())</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>After that we run our Playground and voila</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="SwiftUIPlayground.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">SwiftUI In Playground</figcaption>
+</figure>
+</div>
+<p>Opening the standard file selection dialog inside our View was actually a little bit more challenging. GPT-4 was suggesting some convoluted ways with <code>NSViewRepresentable</code> as proxy between AppKit <code>NSOpenPanel</code> and our SwiftUI view. After some trials and errors we came up with much simpler way:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode swift code-with-copy"><code class="sourceCode swift"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">// we simply initialize NSOpenPanel and open in as modal, than call our callback when its over</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="fu">openFolderOrFile</span><span class="op">(</span><span class="va">canChooseDirectories</span><span class="op">:</span> <span class="dt">Bool</span> <span class="op">=</span> false<span class="op">,</span> <span class="va">_</span> <span class="va">action</span><span class="op">:</span> <span class="op">(</span><span class="dt">_</span> <span class="dt">url</span>: <span class="dt">URL</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="dt">Void</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> <span class="va">openPanel</span> <span class="op">=</span> NSOpenPanel<span class="op">()</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  openPanel<span class="op">.</span>title <span class="op">=</span> <span class="st">"Choose a directory"</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  openPanel<span class="op">.</span>showsResizeIndicator <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  openPanel<span class="op">.</span>showsHiddenFiles <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  openPanel<span class="op">.</span>canChooseDirectories <span class="op">=</span> canChooseDirectories</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  openPanel<span class="op">.</span>canCreateDirectories <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  openPanel<span class="op">.</span>allowsMultipleSelection <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  openPanel<span class="op">.</span>directoryURL <span class="op">=</span> URL<span class="op">(</span>fileURLWithPath<span class="op">:</span> NSHomeDirectory<span class="op">())</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> openPanel<span class="op">.</span>runModal<span class="op">()</span> <span class="op">==</span> NSApplication<span class="op">.</span>ModalResponse<span class="op">.</span>OK <span class="op">{</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">let</span> <span class="va">url</span> <span class="op">=</span> openPanel<span class="op">.</span>url <span class="op">{</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>      action<span class="op">(</span>url<span class="op">)</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co">// ... deep in our View we use it like this...</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    Button<span class="op">(</span><span class="st">"Select Folder"</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>        openFolderOrFile<span class="op">(</span>canChooseDirectories<span class="op">:</span> <span class="kw">true</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>          url <span class="cf">in</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>          print<span class="op">(</span><span class="st">"Selected directory: </span><span class="er">\(</span><span class="st">url.path)"</span><span class="op">)</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>          walkFolder<span class="op">(</span>url<span class="op">)</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>      <span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We use <code>FileManager</code> to read the contents of a directory and iterate files inside. This works quite well, except in some cases the Playground gets frozen. Seems like it mostly happens when XCode is in full screen mode.</p>
+<p>Having all the necessary tools we were ready to start implementing <code>MFFormData</code> - A low-level API, inspired by the Web’s FormData API, that gives complete control over the form data before submitting it over HTTP.</p>
+<p>We will tell about it in our <a href="../../posts/mfencoder/part_2.html">next part</a> of this series.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

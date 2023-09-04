@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Artem Putilov">
+<meta name="dcterms.date" content="2023-09-02">
+<meta name="keywords" content="Swift, MFEncoder, OpenAI, GPT-4, Data Encoding, Multipart Forms, Software Development, Programming">
+
+<title>Behind My Code - Learning Swift Through Building MFEncoder: A Journey Guided by OpenAI</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Behind My Code</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://temaput.github.io/" rel="" target="">
+ <span class="menu-text">About Me</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/temaput/" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/temaput/" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Learning Swift Through Building MFEncoder: A Journey Guided by OpenAI</h1>
+            <p class="subtitle lead">Part 4: Final</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">code</div>
+                <div class="quarto-category">swift</div>
+                <div class="quarto-category">web</div>
+                <div class="quarto-category">ai</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Artem Putilov </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 2, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<section id="brief-summary" class="level2">
+<h2 class="anchored" data-anchor-id="brief-summary">Brief Summary</h2>
+<p>In this set of articles, we take a close look at Swift programming. We’re focusing on creating a package called “MFEncoder” to handle multipart form data. This is important for things like sending forms and files over the internet. We will use the OpenAI GPT-4 chatbot as a guide or mentor to help us through the project.</p>
+</section>
+<section id="previous-parts" class="level2">
+<h2 class="anchored" data-anchor-id="previous-parts">Previous Parts</h2>
+<p>In <a href="../../posts/mfencoder/part_1.html">Part 1</a> we discussed the details of Multipart form encoding. We also built some foundational elements as well as interactive Playground to help us with testing our implementation with the real backend.</p>
+<p>In <a href="../../posts/mfencoder/part_2.html">Part 2</a> we implemented MFFormData - a low-level API, inspired by the Web’s FormData API, that gives complete control over the form data before submitting it over HTTP.</p>
+<p>In <a href="../../posts/mfencoder/part_2.html">Part 3</a> we dived into details of Encoder protocol implementation, looking at JSONEncoder source code.</p>
+</section>
+</section>
+<section id="part-four" class="level1">
+<h1>Part four</h1>
+<p>Since our MFEncoder implementation is heavily based on JSONEncoder, which we have already discussed in detail, we will provide only a brief introduction to what is now available as a <a href="https://github.com/temaput/MFEncoder">Swift Package</a>.</p>
+<p>MFEncoder was created to fully support the Encoder protocol. We implemented all three types of containers as structures, each holding a <code>ContainedValue</code>, which is our version of <code>JSONFuture</code>. Our <code>MFEncoder</code> class combines <code>JSONEncoder</code>, <code>JSONEncoderImpl</code>, and <code>_SpecialTreatment</code> encoder into one entity.</p>
+<section id="mfvalue-implementation" class="level2">
+<h2 class="anchored" data-anchor-id="mfvalue-implementation">MFValue implementation</h2>
+<p><code>MFValue</code> is a polymorphic recursive enum, which can be thought of as equivalent to JSONValue. The main difference is its <code>Writer</code> class uses <a href="../../posts/mfencoder/part_2.html">MFFormData</a> internally to produce the final result.</p>
+<section id="nested-fields-representation" class="level3">
+<h3 class="anchored" data-anchor-id="nested-fields-representation">Nested fields representation</h3>
+<p>In the context of multipart/form-data encoding, there’s no formal, standardized way to handle complex, nested objects directly. The MIME type <code>multipart/form-data</code> is primarily designed for form data that consists of key-value pairs, where the values are either text or file content.</p>
+<p>However, there are some commonly used workarounds to include nested or complex data:</p>
+<ol type="1">
+<li><p><strong>Flatten the Keys</strong>: The keys for nested objects can be flattened into a string that represents their path within the object. For example, given a nested object like <code>{ "user": { "name": "Alice", "age": 30 }}</code>, the keys could be flattened as <code>user[name]</code> and <code>user[age]</code>.</p></li>
+<li><p><strong>Multiple Fields</strong>: We can also break the nested structure down into multiple fields with related names, although this can be complex to manage for deeply nested structures. For the same structure we would get <code>user.name</code> and <code>user.age</code> as field names.</p></li>
+<li><p><strong>JSON Encoding</strong>: Convert the nested objects to a JSON string and send that string as a text field. On the server-side, one can then parse this JSON string back into an object.</p></li>
+</ol>
+<p>Here is an example of possible JSON solution:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode swift code-with-copy"><code class="sourceCode swift"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">nestedData</span> <span class="op">=</span> <span class="op">[</span><span class="st">"user"</span><span class="op">:</span> <span class="op">[</span><span class="st">"name"</span><span class="op">:</span> <span class="st">"Alice"</span><span class="op">,</span> <span class="st">"age"</span><span class="op">:</span> <span class="dv">30</span><span class="op">]]</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">jsonData</span> <span class="op">=</span> <span class="cf">try</span> JSONSerialization<span class="op">.</span>data<span class="op">(</span>withJSONObject<span class="op">:</span> nestedData<span class="op">,</span> options<span class="op">:</span> <span class="op">.</span>prettyPrinted<span class="op">)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">jsonString</span> <span class="op">=</span> String<span class="op">(</span>data<span class="op">:</span> jsonData<span class="op">,</span> encoding<span class="op">:</span> <span class="op">.</span>utf8<span class="op">)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">// Add 'jsonString' to your multipart form</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The multipart request would look like this:</p>
+<pre><code>Content-Disposition: form-data; name="user"
+{"name":"Alice","age":30}</code></pre>
+</section>
+<section id="nested-arrays-representation" class="level3">
+<h3 class="anchored" data-anchor-id="nested-arrays-representation">Nested arrays representation</h3>
+<p>Encoding a list (array) with <code>multipart/form-data</code> is somewhat similar to encoding nested objects: there is no universally standardized way, but there are some commonly used approaches.</p>
+<section id="using-indexed-keys" class="level4">
+<h4 class="anchored" data-anchor-id="using-indexed-keys">Using Indexed Keys</h4>
+<p>The most straightforward approach is to use indexed keys for array elements. For example, to encode the array <code>["apple", "banana", "cherry"]</code> under the key <code>fruits</code>, you might use keys like <code>fruits[0]</code>, <code>fruits[1]</code>, and <code>fruits[2]</code>.</p>
+<p>Here’s how this could look in the HTTP payload:</p>
+<pre><code>Content-Disposition: form-data; name="fruits[0]"
+apple
+
+Content-Disposition: form-data; name="fruits[1]"
+banana
+
+Content-Disposition: form-data; name="fruits[2]"
+cherry</code></pre>
+</section>
+<section id="using-unindexed-keys" class="level4">
+<h4 class="anchored" data-anchor-id="using-unindexed-keys">Using Unindexed Keys</h4>
+<p>Another common approach is to use the same key for each item in the array. Some server-side frameworks support this method and will automatically accumulate multiple parameters into a list on the server side.</p>
+<p>Here’s an example:</p>
+<pre><code>Content-Disposition: form-data; name="fruits[]"
+apple
+
+Content-Disposition: form-data; name="fruits[]"
+banana
+
+Content-Disposition: form-data; name="fruits[]"
+cherry</code></pre>
+</section>
+</section>
+<section id="nestedfieldsencoding-strategy" class="level3">
+<h3 class="anchored" data-anchor-id="nestedfieldsencoding-strategy">NestedFieldsEncoding strategy</h3>
+<p>To make our encoder flexible we decided to use provide multiple options of encoding nested fields. We introduced NestedFieldsEncoding strategy enum which currently has 2 options:</p>
+<ul>
+<li>flattenFields</li>
+<li>multipleFields</li>
+</ul>
+<p>We believe that these 2 options cover most of the use cases. While JSON option is something that should be implemented via custom encode methods on user types.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode swift code-with-copy"><code class="sourceCode swift"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">extension</span> MFValue <span class="op">{</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">struct</span> Writer <span class="op">{</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* ... irrelevant parts omitted ... */</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">func</span> <span class="fu">pathToKey</span><span class="op">(</span><span class="va">_</span> <span class="va">path</span><span class="op">:</span> [<span class="dt">String</span>]<span class="op">)</span> -&gt; <span class="fu">String</span> <span class="op">{</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      <span class="cf">switch</span> nestedFieldsEncodingStrategy <span class="op">{</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">case</span> <span class="op">.</span>flattenKeys<span class="op">:</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> <span class="op">(</span>path<span class="op">[..</span><span class="fl">.0</span><span class="op">]</span> <span class="op">+</span> path<span class="op">[</span><span class="fl">1.</span><span class="op">..].</span>map<span class="op">({</span> key <span class="cf">in</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>          <span class="kw">return</span> <span class="st">"[</span><span class="er">\(</span><span class="st">key)]"</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="op">})).</span>joined<span class="op">(</span>separator<span class="op">:</span> <span class="st">""</span><span class="op">)</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>      <span class="kw">default</span><span class="op">:</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span> path<span class="op">.</span>joined<span class="op">(</span>separator<span class="op">:</span> <span class="st">"."</span><span class="op">)</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>      <span class="op">}</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">func</span> <span class="fu">fillFormData</span><span class="op">(</span><span class="va">_</span> <span class="va">value</span><span class="op">:</span> <span class="dt">MFValue</span><span class="op">,</span> <span class="va">path</span><span class="op">:</span> [<span class="dt">String</span>] <span class="op">=</span> []<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>      <span class="cf">switch</span> value <span class="op">{</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>      <span class="cf">case</span> <span class="op">.</span>object<span class="op">(</span><span class="kw">let</span> <span class="va">object</span><span class="op">):</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span>key<span class="op">,</span> value<span class="op">)</span> <span class="cf">in</span> object <span class="op">{</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>          <span class="kw">var</span> <span class="va">nextPath</span> <span class="op">=</span> path</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>          nextPath<span class="op">.</span>append<span class="op">(</span>key<span class="op">)</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>          fillFormData<span class="op">(</span>value<span class="op">,</span> path<span class="op">:</span> nextPath<span class="op">)</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>      <span class="cf">case</span> <span class="op">.</span>array<span class="op">(</span><span class="kw">let</span> <span class="va">array</span><span class="op">):</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        precondition<span class="op">(!</span>path<span class="op">.</span>isEmpty<span class="op">,</span> <span class="st">"Root element should be object"</span><span class="op">)</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span>index<span class="op">,</span> value<span class="op">)</span> <span class="cf">in</span> array<span class="op">.</span>enumerated<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>          <span class="kw">var</span> <span class="va">nextPath</span> <span class="op">=</span> path</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span> nestedFieldsEncodingStrategy <span class="op">==</span> <span class="op">.</span>flattenKeys <span class="op">{</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>            nextPath<span class="op">.</span>append<span class="op">(</span><span class="st">"</span><span class="er">\(</span><span class="st">index)"</span><span class="op">)</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>          <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>            nextPath<span class="op">[</span>nextPath<span class="op">.</span>endIndex<span class="op">-</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="st">"</span><span class="er">\(</span><span class="st">nextPath.last!)[]"</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>          <span class="op">}</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>          fillFormData<span class="op">(</span>value<span class="op">,</span> path<span class="op">:</span> nextPath<span class="op">)</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>      <span class="cf">case</span> <span class="op">.</span>number<span class="op">(</span><span class="kw">let</span> <span class="va">n</span><span class="op">):</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>        append<span class="op">(</span>path<span class="op">:</span> path<span class="op">,</span> value<span class="op">:</span> n<span class="op">)</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* ... more basic values cases omitted ...*/</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>      <span class="op">}</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If we consider this data:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"users"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span><span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Alice"</span><span class="fu">,</span> <span class="dt">"age"</span><span class="fu">:</span> <span class="dv">25</span><span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span><span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Bob"</span><span class="fu">,</span> <span class="dt">"age"</span><span class="fu">:</span> <span class="dv">30</span><span class="fu">}</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then using different NestedFieldEncoding strategy will give us the following results.</p>
+<section id="flattenfields" class="level4">
+<h4 class="anchored" data-anchor-id="flattenfields">flattenFields</h4>
+<pre><code>Content-Disposition: form-data; name="users[0][name]"
+Alice
+
+Content-Disposition: form-data; name="users[0][age]"
+25
+
+Content-Disposition: form-data; name="users[1][name]"
+Bob
+
+Content-Disposition: form-data; name="users[1][age]"
+30</code></pre>
+</section>
+<section id="multiplefields" class="level4">
+<h4 class="anchored" data-anchor-id="multiplefields">multipleFields</h4>
+<pre><code>Content-Disposition: form-data; name="users[].name"
+Alice
+
+Content-Disposition: form-data; name="users[].age"
+25
+
+Content-Disposition: form-data; name="users[].name"
+Bob
+
+Content-Disposition: form-data; name="users[].age"
+30</code></pre>
+</section>
+</section>
+</section>
+<section id="leveraging-playgrounds-for-cross-platform-image-testing" class="level2">
+<h2 class="anchored" data-anchor-id="leveraging-playgrounds-for-cross-platform-image-testing">Leveraging Playgrounds for Cross-Platform Image Testing</h2>
+<p>We kicked off this project using a Playground. But when we shifted to Swift Package, we didn’t want to lose the interactive feel. So, we added a new Playground to the package, just as <a href="https://developer.apple.com/wwdc20/10096">Apple recommended</a>.</p>
+<p>This Playground does two things: It lets us test the Encoder in real-time and acts as a guide for those using the package.</p>
+<p>Another bonus of Playgrounds? They’re great for testing across different platforms. We aimed to check if our MFFormData could handle and send all usual image types found in Apple’s world: like NSImage, UIImage, CGImage, and so on. And for the iOS image tests we made a separate iOS Playground.</p>
+<p>But here’s where it got tricky. When testing various image formats, we hit a snag. If we loaded images directly from an external file system this way:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode swift code-with-copy"><code class="sourceCode swift"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">someImage</span> <span class="op">=</span> UIImage<span class="op">(</span>contentsOfFile<span class="op">:</span> <span class="st">"/absolute/path/to/someImage.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>All was good. But when we tried to pull the image from the Playground’s bundle like this:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode swift code-with-copy"><code class="sourceCode swift"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="va">someImage</span> <span class="op">=</span> UIImage<span class="op">(</span>named<span class="op">:</span> <span class="st">"someImage.png"</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>No errors popped up, and the image got sent, but weirdly, the fileType always read <code>application/octet-stream</code>.</p>
+<p>To fix this, we had to dig deep into XCode’s temporary file system. Turns out, when adding images to the Playground’s bundle, XCode was stashing them in another place and making multiple shortcut links (or “symlinks”) for different building setups. Because of this, our <code>getMimeTypeFromURL</code> was reading a symlink and not the actual image file, leading it to return the wrong mime type.</p>
+<p>We solved this by calling the resolveSymlinksInPath() function on the files.</p>
+<p>All in all, using Playgrounds to develop cross-platform libraries turned out to be a smart and efficient move.</p>
+</section>
+<section id="writing-tests-with-gpt-4" class="level2">
+<h2 class="anchored" data-anchor-id="writing-tests-with-gpt-4">Writing tests with GPT-4</h2>
+<p>It’s a common understanding that writing automated tests is a part of development ideally suited for delegation to AI. We wanted to see this in action, so we asked GPT-4 to draft a test for us. We clarified our focus was solely on the Encoder, meaning we needed to examine the serialization outcome directly. Here’s what GPT-4 came up with:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode swift code-with-copy"><code class="sourceCode swift"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">XCTest</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="at">@testable</span> <span class="kw">import</span> <span class="im">YourPackage</span>  // <span class="im">Replace</span> <span class="im">with</span> <span class="im">your</span> <span class="im">actual</span> <span class="im">package</span> <span class="im">name</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MFFormDataTests<span class="op">:</span> <span class="dt">XCTestCase</span> <span class="op">{</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> <span class="va">profile</span><span class="op">:</span> Profile<span class="op">!</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">override</span> <span class="kw">func</span> <span class="fu">setUp</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">super</span><span class="op">.</span>setUp<span class="op">()</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        profile <span class="op">=</span> Profile<span class="op">()</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">override</span> <span class="kw">func</span> <span class="fu">tearDown</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        profile <span class="op">=</span> <span class="kw">nil</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>        <span class="kw">super</span><span class="op">.</span>tearDown<span class="op">()</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">func</span> <span class="fu">testProfileSerialization</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> <span class="va">formData</span> <span class="op">=</span> MFFormData<span class="op">()</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>        formData<span class="op">.</span>append<span class="op">(</span>name<span class="op">:</span> <span class="st">"username"</span><span class="op">,</span> value<span class="op">:</span> profile<span class="op">.</span>username<span class="op">)</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>        formData<span class="op">.</span>append<span class="op">(</span>name<span class="op">:</span> <span class="st">"password"</span><span class="op">,</span> value<span class="op">:</span> profile<span class="op">.</span>password<span class="op">)</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>        formData<span class="op">.</span>append<span class="op">(</span>name<span class="op">:</span> <span class="st">"rank"</span><span class="op">,</span> value<span class="op">:</span> <span class="st">"</span><span class="er">\(</span><span class="st">profile.rank)"</span><span class="op">)</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>        formData<span class="op">.</span>append<span class="op">(</span>name<span class="op">:</span> <span class="st">"active"</span><span class="op">,</span> value<span class="op">:</span> <span class="st">"</span><span class="er">\(</span><span class="st">profile.active)"</span><span class="op">)</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">let</span> <span class="va">avatar</span> <span class="op">=</span> profile<span class="op">.</span>avatar <span class="op">{</span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>            formData<span class="op">.</span>append<span class="op">(</span>name<span class="op">:</span> <span class="st">"avatar"</span><span class="op">,</span> value<span class="op">:</span> <span class="st">"</span><span class="er">\(</span><span class="st">avatar)"</span><span class="op">)</span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Assuming you have a method to convert this form data to Data or String</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> <span class="va">serializedData</span> <span class="op">=</span> formData<span class="op">.</span>serialize<span class="op">()</span>  <span class="co">// Replace this with your actual serialization method</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> <span class="va">expectedSerializationResult</span> <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a><span class="st">        --boundary</span></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a><span class="st">        Content-Disposition: form-data; name="username"</span></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a><span class="st">        </span><span class="er">\(</span><span class="st">profile.username)</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a><span class="st">        --boundary</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a><span class="st">        Content-Disposition: form-data; name="password"</span></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a><span class="st">        </span><span class="er">\(</span><span class="st">profile.password)</span></span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a><span class="st">        --boundary</span></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a><span class="st">        Content-Disposition: form-data; name="rank"</span></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a><span class="st">        </span><span class="er">\(</span><span class="st">profile.rank)</span></span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a><span class="st">        --boundary</span></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a><span class="st">        Content-Disposition: form-data; name="active"</span></span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a><span class="st">        </span><span class="er">\(</span><span class="st">profile.active)</span></span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a><span class="st">        --boundary</span></span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a><span class="st">        Content-Disposition: form-data; name="avatar"</span></span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a><span class="st">        </span><span class="er">\(</span><span class="st">profile.avatar ?? "")</span></span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a><span class="st">        --boundary--</span></span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a><span class="st">        """</span></span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>        XCTAssertEqual<span class="op">(</span>serializedData<span class="op">,</span> expectedSerializationResult<span class="op">)</span></span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>While this generated test provides a solid foundation, it’s a bit too basic and needs tweaking. The <code>expectedSerializationResult</code> string is simplified, and we’ll need to refine it to align with the genuine output of our MFFormData class. This adjustment will involve elements like actual MIME types, correct line breaks, and boundary strings. Still, it’s a decent starting point.</p>
+<p>In the end, we found an improved method to create a fitting <code>expectedSerializationResult</code> for our tests. We utilized our Python web server to cross-check and reflect the payloads we sent from our Playgrounds.</p>
+<p>Distinguishing between the expected and actual strings was tricky, especially when differences revolved around white spacing. Initially, we considered removing all white spaces, but realizing their significance, we sought a better approach. Turning to GPT-4 for guidance, we received a solution that effectively addressed our spacing discrepancies.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode swift code-with-copy"><code class="sourceCode swift"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="fu">debugPrintString</span><span class="op">(</span><span class="va">_</span> <span class="va">str</span><span class="op">:</span> <span class="dt">String</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> <span class="va">debugString</span> <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> scalar <span class="cf">in</span> str<span class="op">.</span>unicodeScalars <span class="op">{</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> scalar<span class="op">.</span>isASCII <span class="op">{</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> scalar<span class="op">.</span>value <span class="op">&lt;</span> <span class="dv">32</span> <span class="op">||</span> scalar<span class="op">.</span>value <span class="op">&gt;=</span> <span class="dv">127</span> <span class="op">{</span>  <span class="co">// Non-printable ASCII</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                debugString <span class="op">+=</span> <span class="st">"</span><span class="sc">\\</span><span class="er">\(</span><span class="st">scalar.value)"</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>                debugString <span class="op">+=</span> <span class="st">"</span><span class="er">\(</span><span class="st">scalar)"</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>            debugString <span class="op">+=</span> <span class="st">"</span><span class="er">\(</span><span class="st">scalar)"</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    print<span class="op">(</span>debugString<span class="op">)</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once we tackled basic serialization, we moved on to testing the more complex MFEncoder. Here, we hit a snag: we couldn’t dictate the sequence in which fields were serialized. This made direct comparison of serialized results challenging for structures with multiple fields. Without a Decoder in our plans, we lacked the means to parse serialization outcomes. Three potential solutions crossed our minds:</p>
+<ol type="1">
+<li>Test structures with only one field.</li>
+<li>Bypass final result testing and instead check if the MFEncoder was populating the MFFormData correctly. This was a plausible route since we had existing tests for the fundamental encoding.</li>
+<li>Develop a technique to compare strings that share components but present them in varied sequences, possibly sorting the components in advance.</li>
+</ol>
+<p>The first route was deemed unrealistic. We dismissed the second because it revealed too much about MFEncoder’s inner workings, and we didn’t want our tests to be tied to this particular implementation detail.</p>
+<p>Eventually, we realized the third option was the simplest: sorting both strings gave us sequences of characters ready for comparison. This approach gave us the confidence we needed in our results.</p>
+</section>
+<section id="using-ai-as-code-mentor" class="level2">
+<h2 class="anchored" data-anchor-id="using-ai-as-code-mentor">Using AI as code mentor</h2>
+<p>Initially, our strategy was to rely solely on GPT-4 for assistance, a plan that proved effective in approximately 80% of cases. With the guidance of GPT-4, we found little need to consult Stack Overflow. However, we occasionally turned to Apple’s official documentation and conducted a comprehensive examination of the source code for <code>JSONEncoder</code>, as recommended by GPT-4.</p>
+<p>GPT-4 excels at offering high-level explanations of topics such as multipart/form-data and the Encoder protocol. It serves as a valuable supplement to Apple’s formal documentation by providing more accessible language and practical examples. While some of these examples occasionally encountered issues, many of them were resolvable through iterative discussions with GPT-4.</p>
+<p>We discovered that the psychological effect of having a readily available “expert” via GPT-4 positively influenced our confidence. This made even the more complex tasks appear somewhat less daunting.</p>
+<p>Lastly, GPT-4 has been an invaluable asset in crafting both the package documentation and this article. Overall, we are highly optimistic about the potential of learning new technologies and programming languages through this approach.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

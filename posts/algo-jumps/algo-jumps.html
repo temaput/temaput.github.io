@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Artem Putilov">
-<meta name="dcterms.date" content="2022-11-04">
+<meta name="dcterms.date" content="2023-03-29">
 
-<title>Behind My Code - Fake Innovation</title>
+<title>Behind My Code - Solving random LeetCode problems</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -108,9 +142,11 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Fake Innovation</h1>
+      <h1 class="title">Solving random LeetCode problems</h1>
+            <p class="subtitle lead">Jumps Game</p>
                                 <div class="quarto-categories">
-                <div class="quarto-category">initial_commit</div>
+                <div class="quarto-category">python</div>
+                <div class="quarto-category">algo</div>
               </div>
                   </div>
   </div>
@@ -128,7 +164,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 4, 2022</p>
+        <p class="date">March 29, 2023</p>
       </div>
     </div>
     
@@ -146,32 +182,85 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p><em>— I keep having the feeling that every time I work on something, I keep lying to myself and to others. I’ve been working in the IT industry for many years now, and it seems like it’s just spiraling into a self-destructive loop of hype and fake innovation hysteria.</em></p>
-<p>— The IT industry can certainly be a fast-paced and ever-changing field, with a lot of pressure to constantly innovate and deliver new products and solutions. It’s not uncommon for individuals in this industry to experience feelings of burnout or frustration with the focus on hype and “the next big thing” instead of delivering meaningful and sustainable solutions. It may be helpful for you to take some time to reflect on what you value in your work and what kind of impact you hope to have. You may also consider seeking out projects or initiatives within your company that align with your values and give you a sense of purpose and fulfillment.</p>
-<p><em>— You right, but what about the industry itself? Everything we do is self repeats trying hard to pretend to be next generations of greatness and genuine creativity while most of the time we just repeat the erroneous circle: instead of using existing tools we create a better new ones repeating same mistakes and than having to look for new solutions to remedy those.</em></p>
-<p>— It’s true that the IT industry can sometimes be characterized by a focus on creating new solutions rather than improving existing ones, which can lead to a cycle of “reinventing the wheel” and fixing new problems that arise. However, this approach can also drive innovation and progress. The key is to strike a balance between creating new solutions and building on existing ones in a sustainable and thoughtful way.</p>
-<p>It’s important to remember that the industry is made up of individuals and companies, and there is a wide range of approaches and values within it. Some prioritize short-term gains and hype, while others prioritize stability, sustainability, and real-world impact. By seeking out projects and companies that align with your values, you can play a role in shaping the industry in a direction that you believe is more positive and impactful.</p>
-<p><em>— I keep asking myself, why do I work on things in a certain way, and not the way it was done just half a year ago? Why do new and shiny ReactJS apps look so different from ReactJS apps made just a few years ago? Is this really necessary? What’s wrong with the way we used to do it before?</em></p>
-<p>— The rapid pace of change in the IT industry can sometimes lead to a feeling of constantly having to adapt to new technologies and approaches. This can be frustrating, especially if you feel that previous approaches were effective and efficient.</p>
-<p>In some cases, the push towards new solutions is driven by the desire for better performance, increased security, or improved user experience. In other cases, it may be driven by a desire for novelty or the pursuit of hype and marketing advantage.</p>
-<p>Ultimately, whether or not a change is necessary will depend on the specific context and goals of a project. It’s important to evaluate each change objectively, taking into consideration the trade-offs and benefits, and to prioritize what is most important for your users and stakeholders.</p>
-<p>By staying informed and up-to-date on the latest developments in your field, you can make informed decisions about which approaches are best suited for the specific problem you are trying to solve. Additionally, it may be helpful to establish best practices and guidelines within your organization to ensure that change is implemented in a consistent and effective way.</p>
-<!-- _--- Take this new trendy candy - microfrontends. Even the name was derrived from microservices, plus using and reusing shared code in every possible way was there in software engineering for ages right? Not much of a progress!_
+<section id="jumps-game" class="level1">
+<h1>Jumps Game</h1>
+<p>Given an array of integers arr, you are initially positioned at the first index of the array.</p>
+<p>In one step you can jump from index i to index:</p>
+<p>i + 1 where: i + 1 &lt; arr.length. i - 1 where: i - 1 &gt;= 0. j where: arr[i] == arr[j] and i != j. Return the minimum number of steps to reach the last index of the array.</p>
+<p>Notice that you can not jump outside of the array at any time.</p>
+<p>Example 1:</p>
+<p>Input: arr = [100,-23,-23,404,100,23,23,23,3,404] Output: 3 Explanation: You need three jumps from index 0 –&gt; 4 –&gt; 3 –&gt; 9. Note that index 9 is the last index of the array.</p>
+<section id="bfs-solution" class="level2">
+<h2 class="anchored" data-anchor-id="bfs-solution">BFS Solution</h2>
+<p>BFS seems like a straghtforward way to do it since we are searching for the shortest way in the graph. We will require: - a function that pickes next steps based on the roles (back, forward, jump) - for picking where to jump we will use a mapping from values into their positions int -&gt; [int] - a simple que of next steps - in order to avoid cycles we need another hash of visited positions we will also use it to retrace our steps</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> List, Dict, Set, Deque</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> deque</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    m: Dict[<span class="bu">int</span>, List[<span class="bu">int</span>]]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    q: Deque[<span class="bu">int</span>]</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    distances: Dict[<span class="bu">int</span>, <span class="bu">int</span>]</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    arr: List[<span class="bu">int</span>]</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.m <span class="op">=</span> <span class="bu">dict</span>()</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.q <span class="op">=</span> deque()</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.distances <span class="op">=</span> <span class="bu">dict</span>()</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> minJumps(<span class="va">self</span>, arr: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="co"># edge cases</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(arr) <span class="op">&lt;</span> <span class="dv">3</span>:</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="bu">len</span>(arr) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.arr <span class="op">=</span> arr</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.buildM()</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> <span class="va">self</span>.pickNext(<span class="dv">0</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="bu">len</span>(<span class="va">self</span>.q) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> result <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>            position <span class="op">=</span> <span class="va">self</span>.q.popleft()</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>            result <span class="op">=</span> <span class="va">self</span>.pickNext(position)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> result <span class="cf">if</span> result <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span> <span class="cf">else</span> <span class="dv">0</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> compressInput(<span class="va">self</span>, arr: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> List[<span class="bu">int</span>]:</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> [arr[<span class="dv">0</span>]]</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(arr)<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> arr[i] <span class="op">!=</span> arr[i<span class="op">-</span><span class="dv">1</span>] <span class="kw">or</span> arr[i] <span class="op">!=</span> arr[i<span class="op">+</span><span class="dv">1</span>]:</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>                result.append(arr[i])</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>        result.append(arr[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> result</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> buildM(<span class="va">self</span>):</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> (i, x) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="va">self</span>.arr):</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>            ml <span class="op">=</span> <span class="va">self</span>.m.setdefault(x, [])</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>            ml.append(i)</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> pickNext(<span class="va">self</span>, pos: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="va">None</span> <span class="op">|</span> <span class="bu">int</span>:</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>        ml <span class="op">=</span> <span class="bu">reversed</span>(<span class="va">self</span>.m.get(<span class="va">self</span>.arr[pos], []))</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.m[<span class="va">self</span>.arr[pos]] <span class="op">=</span> []</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>        distance <span class="op">=</span> <span class="va">self</span>.distances.get(pos,<span class="dv">0</span>)</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>        nearest <span class="op">=</span> []</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pos <span class="op">&lt;</span> <span class="bu">len</span>(<span class="va">self</span>.arr) <span class="op">-</span> <span class="dv">1</span>:</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>            nearest.append(pos <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pos <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>            nearest.append(pos <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> t <span class="kw">in</span> [ml, nearest]:</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> p <span class="kw">in</span> t:</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> p <span class="kw">not</span> <span class="kw">in</span> <span class="va">self</span>.distances:</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> p <span class="op">&gt;=</span> <span class="bu">len</span>(<span class="va">self</span>.arr) <span class="op">-</span> <span class="dv">1</span>:</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">return</span> distance <span class="op">+</span> <span class="bu">len</span>(<span class="va">self</span>.arr) <span class="op">-</span> p </span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>                    <span class="va">self</span>.q.append(p)</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>                    <span class="va">self</span>.distances[p] <span class="op">=</span> distance <span class="op">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
-_However the Hype is huge! Webpack module federation plugin is stated as *"A game-changer in JavaScript architecture"* by its own author! It's just a plugin that lets us do our webapps in such way that some parts of them can be built and distributed separately from each other..._
-_Hardly a first thing you need adding a lot of convoluted logic behind the facade with much questionable benefits._
 
---- It's true that the hype surrounding new technologies and approaches can sometimes be disproportionate to their actual impact and benefits. Microfrontends is one example of a concept that has gained popularity in recent years.
-
-In the case of microfrontends, while the idea of breaking down a monolithic frontend into smaller, more manageable parts has some appeal, it can also introduce new complexities and trade-offs. It's important to carefully evaluate whether microfrontends are the right approach for a particular project, taking into consideration factors such as complexity, scalability, maintainability, and development team size and expertise.
-
-It's also important to keep in mind that the industry is constantly evolving, and what is considered a "best practice" today may not be the case tomorrow. By staying informed and critically evaluating new approaches and technologies, you can make informed decisions about what is best for your particular use case. -->
-<p><em>— I don’t want to join either the anti-hype or pro side army. My point is, are we even doing this right? And I’m thinking about focusing on myself here: am I really doing this right? Should I have really used this shiny tool, or could it have been done differently and more simply?</em></p>
-<p>— It’s important to regularly reflect on your approach to software development and to question whether you are using the right tools and techniques for a given project. It’s possible that a new and shiny tool may not be the best fit for a particular problem, and that a simpler solution would be more appropriate.</p>
-<p>When making decisions about tools and techniques, it’s important to consider the specific needs and requirements of the project, as well as the skills and experience of your development team. Keeping up-to-date with the latest developments in the industry can also help you make informed decisions.</p>
-<p>Additionally, it’s a good idea to regularly re-evaluate your approach and consider whether there are other, more effective ways of solving the problem at hand. By constantly learning and iterating, you can continually improve your skills and grow as a software engineer.</p>
-
-
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

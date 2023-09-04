@@ -2,8 +2,14 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/mfencoder/part_4.html",
+      "/posts/mfencoder/part_3.html",
+      "/posts/mfencoder/part_2.html",
+      "/posts/mfencoder/part_1.html",
+      "/posts/algo-jumps/algo-jumps.html",
       "/posts/spanish-learning-app/index.html",
       "/posts/holodeck-microfrontends/index.html",
+      "/posts/holodeck-filterbuilder/index.html",
       "/posts/holodeck-elastic/index.html",
       "/posts/welcome/index.html"
     ]

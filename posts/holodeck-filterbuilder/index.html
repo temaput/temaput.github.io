@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Artem Putilov">
-<meta name="dcterms.date" content="2022-11-04">
+<meta name="dcterms.date" content="2022-11-07">
 
-<title>Behind My Code - Fake Innovation</title>
+<title>Behind My Code - Holodeck Inc.&nbsp;Filter Builder</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -108,9 +142,13 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Fake Innovation</h1>
+      <h1 class="title">Holodeck Inc.&nbsp;Filter Builder</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">initial_commit</div>
+                <div class="quarto-category">code</div>
+                <div class="quarto-category">analysis</div>
+                <div class="quarto-category">holodeck</div>
+                <div class="quarto-category">elasticsearch</div>
+                <div class="quarto-category">react</div>
               </div>
                   </div>
   </div>
@@ -128,7 +166,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 4, 2022</p>
+        <p class="date">November 7, 2022</p>
       </div>
     </div>
     
@@ -146,30 +184,44 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p><em>— I keep having the feeling that every time I work on something, I keep lying to myself and to others. I’ve been working in the IT industry for many years now, and it seems like it’s just spiraling into a self-destructive loop of hype and fake innovation hysteria.</em></p>
-<p>— The IT industry can certainly be a fast-paced and ever-changing field, with a lot of pressure to constantly innovate and deliver new products and solutions. It’s not uncommon for individuals in this industry to experience feelings of burnout or frustration with the focus on hype and “the next big thing” instead of delivering meaningful and sustainable solutions. It may be helpful for you to take some time to reflect on what you value in your work and what kind of impact you hope to have. You may also consider seeking out projects or initiatives within your company that align with your values and give you a sense of purpose and fulfillment.</p>
-<p><em>— You right, but what about the industry itself? Everything we do is self repeats trying hard to pretend to be next generations of greatness and genuine creativity while most of the time we just repeat the erroneous circle: instead of using existing tools we create a better new ones repeating same mistakes and than having to look for new solutions to remedy those.</em></p>
-<p>— It’s true that the IT industry can sometimes be characterized by a focus on creating new solutions rather than improving existing ones, which can lead to a cycle of “reinventing the wheel” and fixing new problems that arise. However, this approach can also drive innovation and progress. The key is to strike a balance between creating new solutions and building on existing ones in a sustainable and thoughtful way.</p>
-<p>It’s important to remember that the industry is made up of individuals and companies, and there is a wide range of approaches and values within it. Some prioritize short-term gains and hype, while others prioritize stability, sustainability, and real-world impact. By seeking out projects and companies that align with your values, you can play a role in shaping the industry in a direction that you believe is more positive and impactful.</p>
-<p><em>— I keep asking myself, why do I work on things in a certain way, and not the way it was done just half a year ago? Why do new and shiny ReactJS apps look so different from ReactJS apps made just a few years ago? Is this really necessary? What’s wrong with the way we used to do it before?</em></p>
-<p>— The rapid pace of change in the IT industry can sometimes lead to a feeling of constantly having to adapt to new technologies and approaches. This can be frustrating, especially if you feel that previous approaches were effective and efficient.</p>
-<p>In some cases, the push towards new solutions is driven by the desire for better performance, increased security, or improved user experience. In other cases, it may be driven by a desire for novelty or the pursuit of hype and marketing advantage.</p>
-<p>Ultimately, whether or not a change is necessary will depend on the specific context and goals of a project. It’s important to evaluate each change objectively, taking into consideration the trade-offs and benefits, and to prioritize what is most important for your users and stakeholders.</p>
-<p>By staying informed and up-to-date on the latest developments in your field, you can make informed decisions about which approaches are best suited for the specific problem you are trying to solve. Additionally, it may be helpful to establish best practices and guidelines within your organization to ensure that change is implemented in a consistent and effective way.</p>
-<!-- _--- Take this new trendy candy - microfrontends. Even the name was derrived from microservices, plus using and reusing shared code in every possible way was there in software engineering for ages right? Not much of a progress!_
-
-_However the Hype is huge! Webpack module federation plugin is stated as *"A game-changer in JavaScript architecture"* by its own author! It's just a plugin that lets us do our webapps in such way that some parts of them can be built and distributed separately from each other..._
-_Hardly a first thing you need adding a lot of convoluted logic behind the facade with much questionable benefits._
-
---- It's true that the hype surrounding new technologies and approaches can sometimes be disproportionate to their actual impact and benefits. Microfrontends is one example of a concept that has gained popularity in recent years.
-
-In the case of microfrontends, while the idea of breaking down a monolithic frontend into smaller, more manageable parts has some appeal, it can also introduce new complexities and trade-offs. It's important to carefully evaluate whether microfrontends are the right approach for a particular project, taking into consideration factors such as complexity, scalability, maintainability, and development team size and expertise.
-
-It's also important to keep in mind that the industry is constantly evolving, and what is considered a "best practice" today may not be the case tomorrow. By staying informed and critically evaluating new approaches and technologies, you can make informed decisions about what is best for your particular use case. -->
-<p><em>— I don’t want to join either the anti-hype or pro side army. My point is, are we even doing this right? And I’m thinking about focusing on myself here: am I really doing this right? Should I have really used this shiny tool, or could it have been done differently and more simply?</em></p>
-<p>— It’s important to regularly reflect on your approach to software development and to question whether you are using the right tools and techniques for a given project. It’s possible that a new and shiny tool may not be the best fit for a particular problem, and that a simpler solution would be more appropriate.</p>
-<p>When making decisions about tools and techniques, it’s important to consider the specific needs and requirements of the project, as well as the skills and experience of your development team. Keeping up-to-date with the latest developments in the industry can also help you make informed decisions.</p>
-<p>Additionally, it’s a good idea to regularly re-evaluate your approach and consider whether there are other, more effective ways of solving the problem at hand. By constantly learning and iterating, you can continually improve your skills and grow as a software engineer.</p>
+<p>Holodeck Inc.&nbsp;is changing the game in the entertainment industry with its revolutionary holodeck technology. With the help of advanced virtual reality and haptic feedback, people can now experience their wildest dreams and fantasies in a completely immersive environment.</p>
+<p>As a software engineer at Holodeck Inc., I’m part of the team that builds the platform that powers this cutting-edge technology. One of our main challenges is to provide a seamless and intuitive experience for users to create and customize their own virtual environments.</p>
+<p>That’s where our FilterBuilder comes in. It’s a powerful tool that enables users to easily create complex search queries to filter and sort their virtual environments. With a simple drag-and-drop interface, users can add various criteria and conditions to narrow down their search, from the type of environment to the number of people allowed and the specific activities available.</p>
+<p>Behind the scenes, our FilterBuilder is built on top of ElasticSearch, a powerful search engine that allows us to efficiently search through vast amounts of data in real-time. We’ve developed a custom adapter that translates the FilterBuilder structures into ElasticSearch DSL queries, making it easy for us to process and respond to search requests quickly and accurately.</p>
+<p>The FilterBuilder itself is built on a recursive and polymorphic architecture, allowing it to handle a wide variety of search criteria and conditions. We use abstract classes and factory functions to dynamically generate the proper concrete classes based on the specific type of filter attribute and schema reference.</p>
+<p>For example, the ValuesListHandler class handles filters that allow users to select from a pre-defined list of options. It generates ElasticSearch DSL queries that search for records that match any of the selected options.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">class</span> ValuesListHandler<span class="op">&lt;</span>T<span class="op">&gt;</span> <span class="kw">extends</span> AbstractFieldHandler<span class="op">&lt;</span>ValuesListItemType<span class="op">&lt;</span>T<span class="op">&gt;</span>[]<span class="op">,</span> ValuesListItemType<span class="op">&lt;</span>T<span class="op">&gt;</span>[]<span class="op">&gt;</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="fu">asSearchRequest</span>()<span class="op">:</span> <span class="bu">Object</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> {</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>            terms<span class="op">:</span> {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                [<span class="vs">`</span><span class="sc">${</span><span class="kw">this</span><span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs">.keyword`</span>]<span class="op">:</span> <span class="kw">this</span><span class="op">.</span><span class="at">value</span><span class="op">?.</span><span class="fu">map</span>((item) <span class="kw">=&gt;</span> item<span class="op">.</span><span class="at">value</span>)<span class="op">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            }<span class="op">,</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        }<span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="fu">buildFilterInputInitializerAggregation</span>() {</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">this</span><span class="op">.</span><span class="fu">buildAggregationQuery</span>({</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>            terms<span class="op">:</span> {</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                field<span class="op">:</span> <span class="vs">`</span><span class="sc">${</span><span class="kw">this</span><span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs">.keyword`</span><span class="op">,</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                size<span class="op">:</span> <span class="dv">1000</span><span class="op">,</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>            }<span class="op">,</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        })<span class="op">;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="fu">processElasticInputInitializerResponse</span>(response<span class="op">:</span> ValuesListInitializerResponse) {</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (response<span class="op">.</span><span class="at">aggregations</span>) {</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>            <span class="kw">const</span> a <span class="op">=</span> response<span class="op">.</span><span class="at">aggregations</span>[<span class="kw">this</span><span class="op">.</span><span class="at">name</span>]<span class="op">;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> (<span class="bu">Array</span><span class="op">.</span><span class="fu">isArray</span>(a<span class="op">.</span><span class="at">buckets</span>)) {</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> a<span class="op">.</span><span class="at">buckets</span><span class="op">.</span><span class="fu">map</span>((item) <span class="kw">=&gt;</span> ({</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>                    label<span class="op">:</span> <span class="vs">`</span><span class="sc">${</span>item<span class="op">.</span><span class="at">key</span><span class="sc">}</span><span class="vs"> (</span><span class="sc">${</span>item<span class="op">.</span><span class="at">doc_count</span><span class="sc">}</span><span class="vs">)`</span><span class="op">,</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>                    value<span class="op">:</span> item<span class="op">.</span><span class="at">key</span><span class="op">,</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>                }))<span class="op">;</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The FilterBuilder also includes a progress indicator endpoint that shows users how many records match each sub-block in the filter. We achieve this by running multiple smaller queries that progressively narrow down the search criteria, and aggregating the results to provide real-time feedback on how many records are matched by each block.</p>
+<p>Our FilterBuilder is just one small part of the Holodeck platform, but it plays a crucial role in providing a seamless and immersive experience for our users. With its powerful and intuitive interface, users can quickly and easily create their own virtual environments and experiences, making the impossible possible.</p>
 
 
 
