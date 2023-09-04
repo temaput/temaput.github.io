@@ -1,51 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://temaput.github.io/Blog/about.html</loc>
-    <lastmod>2023-09-04T15:26:14.121Z</lastmod>
+    <loc>https://temaput.github.io/projects-list.html</loc>
+    <lastmod>2023-09-04T15:47:07.624Z</lastmod>
   </url>
   <url>
-    <loc>https://temaput.github.io/Blog/posts/spanish-learning-app/index.html</loc>
-    <lastmod>2023-09-04T15:26:13.001Z</lastmod>
+    <loc>https://temaput.github.io/index.html</loc>
+    <lastmod>2023-09-04T15:47:06.943Z</lastmod>
   </url>
   <url>
-    <loc>https://temaput.github.io/Blog/posts/welcome/index.html</loc>
-    <lastmod>2023-09-04T15:26:12.116Z</lastmod>
+    <loc>https://temaput.github.io/posts/algo-jumps/algo-jumps.html</loc>
+    <lastmod>2023-09-04T15:47:05.553Z</lastmod>
   </url>
   <url>
-    <loc>https://temaput.github.io/Blog/posts/mfencoder/part_4.html</loc>
-    <lastmod>2023-09-04T15:26:10.798Z</lastmod>
+    <loc>https://temaput.github.io/posts/holodeck-microfrontends/index.html</loc>
+    <lastmod>2023-09-04T15:47:04.857Z</lastmod>
   </url>
   <url>
-    <loc>https://temaput.github.io/Blog/posts/mfencoder/part_2.html</loc>
-    <lastmod>2023-09-04T15:26:09.666Z</lastmod>
+    <loc>https://temaput.github.io/posts/mfencoder/part_3.html</loc>
+    <lastmod>2023-09-04T15:47:03.355Z</lastmod>
   </url>
   <url>
-    <loc>https://temaput.github.io/Blog/posts/holodeck-elastic/index.html</loc>
-    <lastmod>2023-09-04T15:26:08.643Z</lastmod>
+    <loc>https://temaput.github.io/posts/mfencoder/part_1.html</loc>
+    <lastmod>2023-09-04T15:47:02.379Z</lastmod>
   </url>
   <url>
-    <loc>https://temaput.github.io/Blog/posts/holodeck-filterbuilder/index.html</loc>
-    <lastmod>2023-09-04T15:26:07.573Z</lastmod>
+    <loc>https://temaput.github.io/posts/holodeck-filterbuilder/index.html</loc>
+    <lastmod>2023-09-04T15:47:00.696Z</lastmod>
   </url>
   <url>
-    <loc>https://temaput.github.io/Blog/posts/mfencoder/part_1.html</loc>
-    <lastmod>2023-09-04T15:26:09.257Z</lastmod>
+    <loc>https://temaput.github.io/posts/holodeck-elastic/index.html</loc>
+    <lastmod>2023-09-04T15:47:01.777Z</lastmod>
   </url>
   <url>
-    <loc>https://temaput.github.io/Blog/posts/mfencoder/part_3.html</loc>
-    <lastmod>2023-09-04T15:26:10.248Z</lastmod>
+    <loc>https://temaput.github.io/posts/mfencoder/part_2.html</loc>
+    <lastmod>2023-09-04T15:47:02.782Z</lastmod>
   </url>
   <url>
-    <loc>https://temaput.github.io/Blog/posts/holodeck-microfrontends/index.html</loc>
-    <lastmod>2023-09-04T15:26:11.741Z</lastmod>
+    <loc>https://temaput.github.io/posts/mfencoder/part_4.html</loc>
+    <lastmod>2023-09-04T15:47:03.904Z</lastmod>
   </url>
   <url>
-    <loc>https://temaput.github.io/Blog/posts/algo-jumps/algo-jumps.html</loc>
-    <lastmod>2023-09-04T15:26:12.460Z</lastmod>
+    <loc>https://temaput.github.io/posts/welcome/index.html</loc>
+    <lastmod>2023-09-04T15:47:05.225Z</lastmod>
   </url>
   <url>
-    <loc>https://temaput.github.io/Blog/index.html</loc>
-    <lastmod>2023-09-04T15:26:13.846Z</lastmod>
+    <loc>https://temaput.github.io/posts/spanish-learning-app/index.html</loc>
+    <lastmod>2023-09-04T15:47:06.092Z</lastmod>
+  </url>
+  <url>
+    <loc>https://temaput.github.io/about.html</loc>
+    <lastmod>2023-09-04T15:47:07.252Z</lastmod>
   </url>
 </urlset>
