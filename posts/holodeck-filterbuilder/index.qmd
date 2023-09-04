@@ -1,0 +1,58 @@
+---
+title: "Holodeck Inc. Filter Builder"
+author: "Artem Putilov"
+date: "2022-11-07"
+categories: [code, analysis, holodeck, elasticsearch, react]
+image: "image.png"
+---
+
+
+
+Holodeck Inc. is changing the game in the entertainment industry with its revolutionary holodeck technology. With the help of advanced virtual reality and haptic feedback, people can now experience their wildest dreams and fantasies in a completely immersive environment.
+
+As a software engineer at Holodeck Inc., I'm part of the team that builds the platform that powers this cutting-edge technology. One of our main challenges is to provide a seamless and intuitive experience for users to create and customize their own virtual environments.
+
+That's where our FilterBuilder comes in. It's a powerful tool that enables users to easily create complex search queries to filter and sort their virtual environments. With a simple drag-and-drop interface, users can add various criteria and conditions to narrow down their search, from the type of environment to the number of people allowed and the specific activities available.
+
+Behind the scenes, our FilterBuilder is built on top of ElasticSearch, a powerful search engine that allows us to efficiently search through vast amounts of data in real-time. We've developed a custom adapter that translates the FilterBuilder structures into ElasticSearch DSL queries, making it easy for us to process and respond to search requests quickly and accurately.
+
+The FilterBuilder itself is built on a recursive and polymorphic architecture, allowing it to handle a wide variety of search criteria and conditions. We use abstract classes and factory functions to dynamically generate the proper concrete classes based on the specific type of filter attribute and schema reference.
+
+For example, the ValuesListHandler class handles filters that allow users to select from a pre-defined list of options. It generates ElasticSearch DSL queries that search for records that match any of the selected options.
+
+```typescript
+export class ValuesListHandler<T> extends AbstractFieldHandler<ValuesListItemType<T>[], ValuesListItemType<T>[]> {
+    public asSearchRequest(): Object {
+        return {
+            terms: {
+                [`${this.name}.keyword`]: this.value?.map((item) => item.value),
+            },
+        };
+    }
+
+    public buildFilterInputInitializerAggregation() {
+        return this.buildAggregationQuery({
+            terms: {
+                field: `${this.name}.keyword`,
+                size: 1000,
+            },
+        });
+    }
+
+    public processElasticInputInitializerResponse(response: ValuesListInitializerResponse) {
+        if (response.aggregations) {
+            const a = response.aggregations[this.name];
+            if (Array.isArray(a.buckets)) {
+                return a.buckets.map((item) => ({
+                    label: `${item.key} (${item.doc_count})`,
+                    value: item.key,
+                }));
+            }
+        }
+    }
+}
+```
+
+The FilterBuilder also includes a progress indicator endpoint that shows users how many records match each sub-block in the filter. We achieve this by running multiple smaller queries that progressively narrow down the search criteria, and aggregating the results to provide real-time feedback on how many records are matched by each block.
+
+Our FilterBuilder is just one small part of the Holodeck platform, but it plays a crucial role in providing a seamless and immersive experience for our users. With its powerful and intuitive interface, users can quickly and easily create their own virtual environments and experiences, making the impossible possible.

@@ -1,0 +1,10 @@
+{
+	"python.analysis.typeCheckingMode": "basic",
+	"cSpell.words": [
+		"Holoalbum",
+		"Holoalbums",
+		"Holodeck",
+		"Starlette",
+		"Unkeyed"
+	]
+}

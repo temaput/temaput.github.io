@@ -1,0 +1,336 @@
+---
+title: "Learning Swift Through Building MFEncoder: A Journey Guided by OpenAI"
+subtitle: "Part 4: Final"
+author: "Artem Putilov"
+date: "2023-09-02"
+categories: [code, swift, web, ai]
+keywords: [Swift, MFEncoder, OpenAI, GPT-4, Data Encoding, Multipart Forms, Software Development, Programming]
+image: "form4.jpeg"
+---
+
+# Introduction
+
+## Brief Summary
+
+In this set of articles, we take a close look at Swift programming. We're focusing on creating a package called "MFEncoder" to handle multipart form data. This is important for things like sending forms and files over the internet. We will use the OpenAI GPT-4 chatbot as a guide or mentor to help us through the project.
+
+## Previous Parts
+In [Part 1](part_1.qmd) we discussed the details of Multipart form encoding. We also built some foundational elements as well as interactive Playground to help us with testing our implementation with the real backend.
+
+In [Part 2](part_2.qmd) we implemented MFFormData - a low-level API, inspired by the Web's FormData API, that gives complete control over the form data before submitting it over HTTP.
+
+In [Part 3](part_2.qmd) we dived into details of Encoder protocol implementation, looking at JSONEncoder source code. 
+
+
+# Part four
+
+Since our MFEncoder implementation is heavily based on JSONEncoder, which we have already discussed in detail, we will provide only a brief introduction to what is now available as a [Swift Package](https://github.com/temaput/MFEncoder).
+
+MFEncoder was created to fully support the Encoder protocol. We implemented all three types of containers as structures, each holding a `ContainedValue`, which is our version of `JSONFuture`. Our `MFEncoder` class combines `JSONEncoder`, `JSONEncoderImpl`, and `_SpecialTreatment` encoder into one entity.
+
+## MFValue implementation
+`MFValue` is a polymorphic recursive enum, which can be thought of as equivalent to JSONValue. The main difference is its `Writer` class uses [MFFormData](part_2.qmd) internally to produce the final result. 
+
+### Nested fields representation
+
+In the context of multipart/form-data encoding, there's no formal, standardized way to handle complex, nested objects directly. The MIME type `multipart/form-data` is primarily designed for form data that consists of key-value pairs, where the values are either text or file content.
+
+However, there are some commonly used workarounds to include nested or complex data:
+
+1. **Flatten the Keys**: The keys for nested objects can be flattened into a string that represents their path within the object. For example, given a nested object like `{ "user": { "name": "Alice", "age": 30 }}`, the keys could be flattened as `user[name]` and `user[age]`.
+
+2. **Multiple Fields**: We can also break the nested structure down into multiple fields with related names, although this can be complex to manage for deeply nested structures. For the same structure we would get `user.name` and `user.age` as field names.
+
+3. **JSON Encoding**: Convert the nested objects to a JSON string and send that string as a text field. On the server-side, one can then parse this JSON string back into an object.
+
+Here is an example of possible JSON solution:
+
+```swift
+let nestedData = ["user": ["name": "Alice", "age": 30]]
+let jsonData = try JSONSerialization.data(withJSONObject: nestedData, options: .prettyPrinted)
+let jsonString = String(data: jsonData, encoding: .utf8)
+
+// Add 'jsonString' to your multipart form
+```
+
+The multipart request would look like this:
+
+```
+Content-Disposition: form-data; name="user"
+{"name":"Alice","age":30}
+```
+
+### Nested arrays representation
+
+Encoding a list (array) with `multipart/form-data` is somewhat similar to encoding nested objects: there is no universally standardized way, but there are some commonly used approaches.
+
+#### Using Indexed Keys
+
+The most straightforward approach is to use indexed keys for array elements. For example, to encode the array `["apple", "banana", "cherry"]` under the key `fruits`, you might use keys like `fruits[0]`, `fruits[1]`, and `fruits[2]`.
+
+Here's how this could look in the HTTP payload:
+
+```
+Content-Disposition: form-data; name="fruits[0]"
+apple
+
+Content-Disposition: form-data; name="fruits[1]"
+banana
+
+Content-Disposition: form-data; name="fruits[2]"
+cherry
+```
+
+#### Using Unindexed Keys
+
+Another common approach is to use the same key for each item in the array. Some server-side frameworks support this method and will automatically accumulate multiple parameters into a list on the server side.
+
+Here's an example:
+
+```
+Content-Disposition: form-data; name="fruits[]"
+apple
+
+Content-Disposition: form-data; name="fruits[]"
+banana
+
+Content-Disposition: form-data; name="fruits[]"
+cherry
+```
+
+### NestedFieldsEncoding strategy
+
+To make our encoder flexible we decided to use provide multiple options of encoding nested fields. We introduced NestedFieldsEncoding strategy enum which currently has 2 options:
+
+- flattenFields
+- multipleFields
+
+We believe that these 2 options cover most of the use cases. While JSON option is something that should be implemented via custom encode methods on user types.
+
+```swift
+
+extension MFValue {
+  
+  struct Writer {
+
+    /* ... irrelevant parts omitted ... */
+    func pathToKey(_ path: [String]) -> String {
+      switch nestedFieldsEncodingStrategy {
+      case .flattenKeys:
+        return (path[...0] + path[1...].map({ key in
+          return "[\(key)]"
+        })).joined(separator: "")
+        
+      default:
+        return path.joined(separator: ".")
+      }
+    }
+    func fillFormData(_ value: MFValue, path: [String] = []) {
+      switch value {
+      case .object(let object):
+        for (key, value) in object {
+          
+          var nextPath = path
+          nextPath.append(key)
+          fillFormData(value, path: nextPath)
+        }
+      case .array(let array):
+        precondition(!path.isEmpty, "Root element should be object")
+        for (index, value) in array.enumerated() {
+          var nextPath = path
+          if nestedFieldsEncodingStrategy == .flattenKeys {
+            nextPath.append("\(index)")
+            
+          } else {
+            nextPath[nextPath.endIndex-1] = "\(nextPath.last!)[]"
+          }
+          fillFormData(value, path: nextPath)
+        }
+        
+      case .number(let n):
+        append(path: path, value: n)
+
+    /* ... more basic values cases omitted ...*/
+      }
+    }
+  }
+}
+```
+
+If we consider this data:
+
+```json
+{
+    "users": [
+        {"name": "Alice", "age": 25},
+        {"name": "Bob", "age": 30}
+    ]
+}
+```
+
+Then using different NestedFieldEncoding strategy will give us the following results.
+
+#### flattenFields
+
+```
+Content-Disposition: form-data; name="users[0][name]"
+Alice
+
+Content-Disposition: form-data; name="users[0][age]"
+25
+
+Content-Disposition: form-data; name="users[1][name]"
+Bob
+
+Content-Disposition: form-data; name="users[1][age]"
+30
+```
+
+
+#### multipleFields
+
+```
+Content-Disposition: form-data; name="users[].name"
+Alice
+
+Content-Disposition: form-data; name="users[].age"
+25
+
+Content-Disposition: form-data; name="users[].name"
+Bob
+
+Content-Disposition: form-data; name="users[].age"
+30
+```
+
+
+## Leveraging Playgrounds for Cross-Platform Image Testing
+
+We kicked off this project using a Playground. But when we shifted to Swift Package, we didn't want to lose the interactive feel. So, we added a new Playground to the package, just as [Apple recommended](https://developer.apple.com/wwdc20/10096).
+
+This Playground does two things: It lets us test the Encoder in real-time and acts as a guide for those using the package.
+
+Another bonus of Playgrounds? They're great for testing across different platforms. We aimed to check if our MFFormData could handle and send all usual image types found in Apple's world: like NSImage, UIImage, CGImage, and so on. And for the iOS image tests we made a separate iOS Playground.
+
+But here's where it got tricky. When testing various image formats, we hit a snag. If we loaded images directly from an external file system this way:
+
+```swift
+let someImage = UIImage(contentsOfFile: "/absolute/path/to/someImage.png")
+```
+
+All was good. But when we tried to pull the image from the Playground's bundle like this:
+
+```swift
+let someImage = UIImage(named: "someImage.png") 
+```
+
+No errors popped up, and the image got sent, but weirdly, the fileType always read `application/octet-stream`.
+
+To fix this, we had to dig deep into XCode's temporary file system. Turns out, when adding images to the Playground's bundle, XCode was stashing them in another place and making multiple shortcut links (or "symlinks") for different building setups. Because of this, our `getMimeTypeFromURL` was reading a symlink and not the actual image file, leading it to return the wrong mime type.
+
+We solved this by calling the resolveSymlinksInPath() function on the files.
+
+All in all, using Playgrounds to develop cross-platform libraries turned out to be a smart and efficient move.
+
+## Writing tests with GPT-4
+
+It's a common understanding that writing automated tests is a part of development ideally suited for delegation to AI. We wanted to see this in action, so we asked GPT-4 to draft a test for us. We clarified our focus was solely on the Encoder, meaning we needed to examine the serialization outcome directly. Here's what GPT-4 came up with:
+
+```swift
+import XCTest
+@testable import YourPackage  // Replace with your actual package name
+
+class MFFormDataTests: XCTestCase {
+
+    var profile: Profile!
+
+    override func setUp() {
+        super.setUp()
+        profile = Profile()
+    }
+
+    override func tearDown() {
+        profile = nil
+        super.tearDown()
+    }
+
+    func testProfileSerialization() {
+        let formData = MFFormData()
+        formData.append(name: "username", value: profile.username)
+        formData.append(name: "password", value: profile.password)
+        formData.append(name: "rank", value: "\(profile.rank)")
+        formData.append(name: "active", value: "\(profile.active)")
+        if let avatar = profile.avatar {
+            formData.append(name: "avatar", value: "\(avatar)")
+        }
+
+        // Assuming you have a method to convert this form data to Data or String
+        let serializedData = formData.serialize()  // Replace this with your actual serialization method
+
+        let expectedSerializationResult = """
+        --boundary
+        Content-Disposition: form-data; name="username"
+        \(profile.username)
+        --boundary
+        Content-Disposition: form-data; name="password"
+        \(profile.password)
+        --boundary
+        Content-Disposition: form-data; name="rank"
+        \(profile.rank)
+        --boundary
+        Content-Disposition: form-data; name="active"
+        \(profile.active)
+        --boundary
+        Content-Disposition: form-data; name="avatar"
+        \(profile.avatar ?? "")
+        --boundary--
+        """
+
+        XCTAssertEqual(serializedData, expectedSerializationResult)
+    }
+}
+```
+
+While this generated test provides a solid foundation, it's a bit too basic and needs tweaking. The `expectedSerializationResult` string is simplified, and we'll need to refine it to align with the genuine output of our MFFormData class. This adjustment will involve elements like actual MIME types, correct line breaks, and boundary strings. Still, it's a decent starting point.
+
+In the end, we found an improved method to create a fitting `expectedSerializationResult` for our tests. We utilized our Python web server to cross-check and reflect the payloads we sent from our Playgrounds.
+
+Distinguishing between the expected and actual strings was tricky, especially when differences revolved around white spacing. Initially, we considered removing all white spaces, but realizing their significance, we sought a better approach. Turning to GPT-4 for guidance, we received a solution that effectively addressed our spacing discrepancies.
+
+```swift
+func debugPrintString(_ str: String) {
+    var debugString = ""
+    for scalar in str.unicodeScalars {
+        if scalar.isASCII {
+            if scalar.value < 32 || scalar.value >= 127 {  // Non-printable ASCII
+                debugString += "\\\(scalar.value)"
+            } else {
+                debugString += "\(scalar)"
+            }
+        } else {
+            debugString += "\(scalar)"
+        }
+    }
+    print(debugString)
+}
+``` 
+
+Once we tackled basic serialization, we moved on to testing the more complex MFEncoder. Here, we hit a snag: we couldn't dictate the sequence in which fields were serialized. This made direct comparison of serialized results challenging for structures with multiple fields. Without a Decoder in our plans, we lacked the means to parse serialization outcomes. Three potential solutions crossed our minds:
+
+1. Test structures with only one field.
+2. Bypass final result testing and instead check if the MFEncoder was populating the MFFormData correctly. This was a plausible route since we had existing tests for the fundamental encoding.
+3. Develop a technique to compare strings that share components but present them in varied sequences, possibly sorting the components in advance.
+
+The first route was deemed unrealistic. We dismissed the second because it revealed too much about MFEncoder's inner workings, and we didn't want our tests to be tied to this particular implementation detail.
+
+Eventually, we realized the third option was the simplest: sorting both strings gave us sequences of characters ready for comparison. This approach gave us the confidence we needed in our results.
+
+## Using AI as code mentor
+
+Initially, our strategy was to rely solely on GPT-4 for assistance, a plan that proved effective in approximately 80% of cases. With the guidance of GPT-4, we found little need to consult Stack Overflow. However, we occasionally turned to Apple's official documentation and conducted a comprehensive examination of the source code for `JSONEncoder`, as recommended by GPT-4.
+
+GPT-4 excels at offering high-level explanations of topics such as multipart/form-data and the Encoder protocol. It serves as a valuable supplement to Apple's formal documentation by providing more accessible language and practical examples. While some of these examples occasionally encountered issues, many of them were resolvable through iterative discussions with GPT-4.
+
+We discovered that the psychological effect of having a readily available "expert" via GPT-4 positively influenced our confidence. This made even the more complex tasks appear somewhat less daunting.
+
+Lastly, GPT-4 has been an invaluable asset in crafting both the package documentation and this article. Overall, we are highly optimistic about the potential of learning new technologies and programming languages through this approach.

@@ -21,30 +21,30 @@ We are the employees of Holodeck Inc, who develops and maintains the system, wor
 
 Our platform is responsible for supplying the holodecks all around the world with numerous new hologram characters, finding replacements, picking the best candidates for the holo-plots, advertisements and etc.
 
-Through our platform the holoproducers can reach to holocreators and we are provide the necessary tools for them to share and distribute their content (latter) search for cintent and compile it into the final product (formers).
+Through our platform the holo-producers can reach to holo-creators and we are provide the necessary tools for them to share and distribute their content (latter) search for content and compile it into the final product (formers).
 
-Our platform consists of 2 mobile apps - one for holo-producers and another for holo-artists and a central dashboard that allows our admins and holocasters to assist producers in finding everything they need.
+Our platform consists of 2 mobile apps - one for holo-producers and another for holo-artists and a central dashboard that allows our admins and holo-casters to assist producers in finding everything they need.
  
 ![Platform](Platform.svg)
 
-Recently Holodeck Inc management decided to completely revamp their central dashboard and we were tasked to create a new and shiny web console made with ReactJS. One of the major new features there is our brand new Holoalbum - a dynamic and powerful reactjs component that lets our holocasters prepare a list of recommended holo-characters with all their characteristics, multiple photos and etc. This component lets manually order, filter, hide and further finetune the list. The result should be visible whithin the ProdApp as a similar but much simplified version.
+Recently Holodeck Inc management decided to completely revamp their central dashboard and we were tasked to create a new and shiny web console made with ReactJS. One of the major new features there is our brand new Holoalbum - a dynamic and powerful react.js component that lets our holo-casters prepare a list of recommended holo-characters with all their characteristics, multiple photos and etc. This component lets manually order, filter, hide and further fine tune the list. The result should be visible within the ProdApp as a similar but much simplified version.
 
 ![HoloAlbum](HoloAlbum.svg)
 
-The most challenging here was that we had to implement Holoalbum twice: admin version on a new Fresh reactjs dashboard  webapp and limited producers version on HoloProd app. HoloProd app was initially developed by subcontractors as react.native app for iPads. Unfortunately implementation was very poor. Later we had to add a lot of functionality there including webversion (react native web), mfa (Firebase) and secure encrypted offline storage that was leveraging service workers in web version. Since it was a project dedicated to revamping admin dashboard and not the apps and we were very limited in terms of time and resources  we would prefer to deal with HoloProd codebase as little as possible.
+The most challenging here was that we had to implement Holoalbum twice: admin version on a new Fresh react.js dashboard  webapp and limited producers version on HoloProd app. HoloProd app was initially developed by subcontractors as react.native app for iPads. Unfortunately implementation was very poor. Later we had to add a lot of functionality there including web version (react native web), mfa (Firebase) and secure encrypted offline storage that was leveraging service workers in web version. Since it was a project dedicated to revamping admin dashboard and not the apps and we were very limited in terms of time and resources  we would prefer to deal with HoloProd codebase as little as possible.
 
-After serious  considerations we decided to try a new microfrontend architecture to achieve maximal code reusability and to minimize the  unpleasant  updates to react.native app code.
+After serious  considerations we decided to try a new micro frontend architecture to achieve maximal code reusability and to minimize the  unpleasant  updates to react.native app code.
 
-Holodeck Inc management agreed Holoalbums to be a webversion only feature (iPad version was very rarely used by the time anyway ).
+Holodeck Inc management agreed Holoalbums to be a web version only feature (iPad version was very rarely used by the time anyway ).
 
-### Первый подход: просто скопировать код
-У нас был готовый компонент Holoalbum, который мы использовали в админке. Нам нужно было его использовать в HoloProd. Но HoloProd был написан на react.native и мы не хотели его трогать. Поэтому мы решили создать новый CRA проект для реализации продюсерского варианта Holo Album, перенеся туда основные компоненты альбома из админки и подключив его к HoloProd как микрофронтенд.
+### First Approach: Simply Copy the Code
+We had a ready-made Holoalbum component that we used in the admin panel. We needed to use it in HoloProd. But HoloProd was written in react.native, and we didn't want to touch it. Therefore, we decided to create a new CRA project for the producer version of the Holo Album, transferring the main album components from the admin panel and connecting it to HoloProd as a micro frontend.
 
 ![Initial Composition](ContainerComposition1.svg)
 
-Мы быстро протестировали данный сценарий на пустом компоненте и убедились что идея рабочая и мы действительно можем просто "подсоединить" новый компонент для просмотра альбомов в веб-версию мобильного приложения react.native.
+We quickly tested this scenario on an empty component and confirmed that the idea was workable and that we could indeed just "connect" a new component for viewing albums to the web version of the react.native mobile app.
 
-Веб-версия приложения собиралась с помощью Webpack, который мы модифицировали, подключив туда новый плагин. 
+The web version of the app was built using Webpack, which we modified by adding a new plugin.
 
 ```javascript
 	new ModuleFederationPlugin({
@@ -65,38 +65,38 @@ Holodeck Inc management agreed Holoalbums to be a webversion only feature (iPad 
 	})
 ```
 
-Здесь почти все взято из простейшего примера из [репозитория Module Federation](https://github.com/module-federation/module-federation-examples/blob/master/cra/host/modulefederation.config.js)
+Almost everything here is taken from the simplest example in the [Module Federation repository](https://github.com/module-federation/module-federation-examples/blob/master/cra/host/modulefederation.config.js).
 
-Переменная PRODUCER_ALBUM_APP_URL содержит адрес веб-версии HoloProd. Ее мы передаем в скрипт через переменные окружения.
+The variable PRODUCER_ALBUM_APP_URL contains the address of the web version of HoloProd. We pass it to the script through environment variables.
 
 ```javascript
 const PRODUCER_ALBUM_APP_URL =
   process.env.PRODUCER_ALBUM_APP_URL || "http://localhost:3002";
-  ```
+```
 
-Описание shared модулей довольно запутанно в документации:
+The documentation's description of shared modules is quite convoluted:
 > Shared modules are modules that are both overridable and provided as overrides to nested containers. They usually point to the same module in each build, e.g., the same library.
 
-> The packageName option allows setting a package name to look for a requiredVersion. It is automatically inferred for the module requests by default, set requiredVersion to false when automatic infer should be disabled.
+> The packageName option allows setting a package name to look for a requiredVersion. It is automatically inferred for the module requests by default, set requiredVersion to false when automatic inference should be disabled.
 
-На практике это означает, что необходимо указывать в shared modules те зависимости, которые могут использоваться в обоих проектах и указывать конкретные версии этих зависимостей если только они не совпадают.
-Указывать вообще все модули, как это сделано в примере, не обязательно, и в нашем случае это приводило к ошибкам компиляции, поскольку модули react.native имеют особенности сборки. Кроме того в проекте были ссылки на кастомные модули в github, что также приводило к ошибкам.
+In practice, this means that you need to specify in shared modules those dependencies that can be used in both projects and specify specific versions of these dependencies unless they match.
+You don't need to list all modules, as done in the example. In our case, doing so led to compilation errors because react.native modules have build peculiarities. Additionally, the project had links to custom modules in GitHub, which also caused errors.
 
-Помимо этого мы сразу же столкнулись с ошибкой компиляции, которая первой указана в документации:
+Besides that, we immediately encountered a compilation error, which is the first one listed in the documentation:
 
 > Uncaught Error: Shared module is not available for eager consumption
 
-Как следует из [документации](https://webpack.js.org/concepts/module-federation/#uncaught-error-shared-module-is-not-available-for-eager-consumption), проблема в попытке импортировать модули, которые подгружаются асинхронно. То есть если в App.js у нас импортируется, например, react, а этот модуль еще должен быть скачен асинхронно, то приложение не сможет его найти. Поэтому в документации рекомендуется использовать lazy loading. Переместить код входного файла проекта (в нашем случае index.web.js) в отдельный модуль (bootstrap.web.js), а в самом входном файле оставить только асинхронный импорт
+As the [documentation suggests](https://webpack.js.org/concepts/module-federation/#uncaught-error-shared-module-is-not-available-for-eager-consumption), the issue is the attempt to import modules that load asynchronously. So, if in App.js, for example, we import react, and this module still needs to be downloaded asynchronously, the application won't be able to find it. Therefore, the documentation recommends using lazy loading. Move the entry file's code (in our case index.web.js) to a separate module (bootstrap.web.js), and in the main entry file, leave only the asynchronous import.
 
 ```javascript
 // index.web.js
 import("./bootstrap.web");
 ```
 
-#### Подключение компонента в навигацию
-Доступ к конкретному альбому осуществляется по специальной ссылке, которую мы получаем из админки. Нет общего списка альбомов, страница конкретного альбома получает айдишник из ссылки и делает запрос на получение данных альбома.
+#### Integrating the Component into Navigation
+Access to a specific album is made via a unique link that we obtain from the admin panel. There's no general list of albums; the page of a specific album retrieves the ID from the link and requests the album's data.
 
-В навигацию на базе react-navigation мы добавили новый экран, который отображает страницу альбома. Для этого в файле homeNavigation.js мы добавили новый экран в стек навигации:
+In the react-navigation-based navigation, we added a new screen that displays the album page. For this, in the homeNavigation.js file, we incorporated a new screen into the navigation stack:
 
 ```javascript
 const HomeNavigation = createDrawerNavigator(
@@ -108,9 +108,9 @@ const HomeNavigation = createDrawerNavigator(
   },
 ```
 
-Как видно из кода, мы используем Android-like навигацию с боковым меню. Во время тестирования, мы пробовали добавлять экран в други навигационные стеки, но в итоге остановились на этом варианте.
+As evident from the code, we utilize an Android-like navigation with a side menu. During testing, we tried adding the screen to other navigation stacks, but eventually settled on this option.
 
-ProdAlbum.js имеет 2 версии, различающиеся суффиксом в соответствии с принятой практикой в RN: ProdAlbum.web.js и ProdAlbum.ios.js. Последний файл испрользуется для отображения пустого экрана в iOS приложении, где по условиям задачи Альбомы не поддерживаются. Веб версия ProdAlbum.web.js проверяет авторизацию пользователя и подключает наш микрофронтенд, который отображает страницу альбома.
+ProdAlbum.js has two versions, differentiated by a suffix following the RN convention: ProdAlbum.web.js and ProdAlbum.ios.js. The latter file is used to display an empty screen in the iOS app where, per the task requirements, Albums are not supported. The web version, ProdAlbum.web.js, checks user authentication and integrates our micro-frontend, which presents the album page.
 
 ```javascript
 // ProdAlbum.web.js
@@ -137,43 +137,41 @@ ProdAlbum.js имеет 2 версии, различающиеся суффик�
   )
 ```
 
-Как видно из кода, мы используем React.Suspense для отображения загрузки, пока микрофронтенд не загрузится. Кроме того, мы используем штатный каркас экрана: Header + ScrollView для отображения нашего внешнего компонента внутри стандартного экрана приложения. Для того чтобы наш микрофронтенд мог успешно осуществлять запросы к API, мы передаем ему токен пользователя, который мы получили в ходе авторизации.
+#### Using Micro-Frontends with React and Webpack
 
-Сам внешний компонент загружается с помощью React.lazy, который позволяет загружать компоненты динамически. В нашем случае, мы используем Webpack для сборки нашего приложения, поэтому мы можем использовать директиву import() для загрузки компонента.
+We utilize React.Suspense to display a loading spinner while the micro-frontend is being loaded. Moreover, we employ the standard screen framework: a Header combined with a ScrollView to present our external component within the app's default screen. To ensure our micro-frontend can successfully make API requests, we pass it the user's token, which we obtain during authentication.
+
+The external component is loaded using React.lazy, allowing for dynamic component loading. In our context, since we use Webpack to bundle our application, we can employ the import() directive for component loading.
 
 ```javascript
 // ProdAlbum.web.js
 const RemoteProducerAlbum = React.lazy(() => import("remote/App"));
 ```
 
-remote/App.js - это точка входа в наш микрофронтенд. В этом файле мы экспортируем наш компонент Album, который будет отображаться внутри нашего хост-приложения.
+remote/App.js serves as the entry point to our micro-frontend. Within this file, we export our Album component to be displayed inside our host application.
 
+The modifications to the host application are limited to:
 
-Этим ограничивается набор модификаций хост-приложения:
+1. Crafting a screen framework that displays the external component.
+2. Incorporating it into the navigation.
+3. Adapting the Webpack configuration to integrate the Module Federation Plugin.
 
-1. Создание каркаса экрана, который будет отображать внешний компонент
-2. Подключение его к навигации
-3. Модификация настройки Webpack для подключения Module Federation Plugin
+This approach equipped us to address the following challenges:
 
-Данный подход позволил нам решить следующие проблемы:
-
-1. Минимизация изменений в хост-приложении. Как мы видели, едиственная серьезная модификация потребовалась для подключения Module Federation Plugin. Все остальное - либо создание нового кода, либо минимальные изменения в существующем коде.
-2. Использование возможностей хост приложения для отображения внешнего компонента. Доступ к альбомам осуществляется с использованием тех же механизмов безопасности (MFA), что и внутри хост-приложения. Также, мы можем использовать любые другие возможности хост-приложения, например, использовать Redux для хранения данных, которые будут доступны внутри внешнего компонента, или использовать штатные навигационные и стилевые компоненты.
-
-
-
-### Второй подход: использовать кодовую базу админки
-
-Скоро мы сообразили, что можем просто использовать кодовую базу админки для создания нового продюсерского веб-приложения. Вместо того чтобы выдергивать компоненты Альбома из админки мы просто создали отдельный контейнер - обертку, который внутри себя использовал те же компоненты, что и основной контейнер альбома. Различие заключалось в недоступности некоторых инструментов редактирования, скрытии нескольких лишних элементов, а также использования специальной службы, которая получала данные Альбома из другого эндпоинта, который в отличие от эндпоинта Админки, принимал токены Продюсеров и осуществлял дополнительные проверки доступа.
+1. **Minimized Changes to Host Application**: As observed, the only significant modification required was integrating the Module Federation Plugin. Everything else involved creating new code or making minor adjustments to the existing code.
+2. **Leveraging Host Application Capabilities**: Album access utilizes the same security mechanisms (MFA) as within the host application. Additionally, we can capitalize on any other features of the host application, like employing Redux for data storage accessible within the external component, or utilizing built-in navigation and styling components.
 
 
 
+### Second Approach: Utilizing the Admin's Codebase
+
+Soon, we realized that we could simply use the admin's codebase to develop a new producer web application. Instead of extracting Album components from the admin panel, we created a separate container wrapper that internally used the same components as the main album container. The differences were the unavailability of some editing tools, hiding a few extra elements, and the use of a specialized service fetching the Album's data from a different endpoint. Unlike the admin endpoint, this one accepted producer tokens and performed additional access checks.
 
 ![Final Composition](ContainerComposition2.svg)
 
-Таким образом мы избавились от лишнего приложения и необходимости дублировать код. Для запуска и билда продюсерского веб-приложения мы добавили отдельные скрипты в package.json, подсмотрев идею в [том же примере от автора плагина](https://github.com/module-federation/module-federation-examples/blob/master/cra/remote/package.json). Поскольку админка была изначально собрана на базе CRA, этот пример был для нас очень полезен.
+This way, we eliminated the need for an extra application and redundant code. To launch and build the producer web app, we added separate scripts in the package.json, drawing inspiration from [the same example by the plugin's author](https://github.com/module-federation/module-federation-examples/blob/master/cra/remote/package.json). Since the admin panel was initially built on CRA (Create React App), this example was highly beneficial for us.
 
-Подражая примеру, мы выносим конфигурацию плагина в отдельный файл modulefederation.config.js. Тут все стандартно: важно чтобы имя контейнера было тем же, которое мы использовали в хост приложении (remote), а путь к корневому файлу был тот же, что мы используем в импорте в хост приложении (App).
+Following the example, we exported the plugin configuration to a separate file named modulefederation.config.js. Everything here is standard: it's essential that the container's name remained the same as we used in the host application (remote), and the path to the root file matched what we use in the host app's import (App).
 
 ```js
 module.exports = {
@@ -186,9 +184,10 @@ module.exports = {
 }
 ```
 
-Использование отдельных сценариев для запуска и билда позволяет нам модифицировать стандартную конфигурацию webpack, добавляя в нее плагин ModuleFederationPlugin и передавая ему настройки из modulefederation.config.js. При этом нам не нужно добавлять никаких специальных инструментов типа rewired. Все прозрачно и понятно.
+Using separate scripts for launching and building allows us to modify the default webpack configuration, incorporating the ModuleFederationPlugin and feeding it settings from modulefederation.config.js. In doing so, we don't have to introduce any specialized tools like rewired. Everything remains transparent and straightforward.
 
-Помимо подключения плагина, наш webpack.config override переопределяет точку входа: вместо index.tsx, который инициализирует полноценное приложении админки, мы указываем специальный файл, который инициализирует только наш ProdAlbum компонент.
+Besides integrating the plugin, our webpack.config override redefines the entry point: rather than index.tsx, which initializes the full-blown admin app, we designate a specific file that solely initializes our ProdAlbum component.
+
 
 ```js
 // override/webpack.config.js
@@ -204,7 +203,8 @@ const override = config => {
 };
 
 ```
-Данный индекс использует ту же технику для асинхронной подгрузки компонентов: непосредственно в индексном файле расположен только один асинхронный импорт, который загружает bootstrap модуль, который импортирует и передает в ReactDOM.render приложение-обертку, которое возвращает компонент альбома и его контекст.
+
+This index employs the same technique for asynchronous component loading: directly in the index file, there's only one asynchronous import that fetches the bootstrap module. This module, in turn, imports and passes to the ReactDOM.render a wrapper application, which returns the album component and its context.
 
 ```js
 // ProdAlbumApp.tsx
@@ -238,25 +238,26 @@ const ProdAlbumApp = (props: { idToken: string }) => {
 };
 ```
 
-Большой пример, где мы используем id документа, доставая его из URL, а также передаваемый в компонент idToken, который мы получили в хост-приложении. Этот токен используется для инициализации специфической службы, которая получает данные Альбома из специфического эндпоинта, проверяющего права доступа конкретного продюсера к этому документу.
+A significant example where we utilize the document ID, extracting it from the URL, as well as the idToken passed to the component, which we obtained in the host application. This token is used to initialize a specific service that fetches Album data from a particular endpoint, verifying a specific producer's access rights to this document.
 
-Таким образом мы можем не беспокоиться об инициализации всех остальных служб и контекстов, используемых в админке (авторизация, глобальный redux store и проч), а подключаться непосредственно к нашему компоненту, готовя только необходимые для него контексты и службы.
+This way, we can avoid concerns about initializing all other services and contexts used in the admin panel (authorization, global redux store, etc.), and connect directly to our component, preparing only the necessary contexts and services for it.
 
-Отдельного упоминания заслуживает publicPath параметр, установленный в примере в значение 'auto'. Как следует из [документации](https://webpack.js.org/guides/public-path/#root) он задает базовый путь для всех статических ресурсов, которые будут сгенерированы Webpack. В шаблоне CRA этот параметр устанавливается на основе PUBLIC_URL или homePage в package.json. В случае, если мы хотим использовать один и тот же шаблон для разных приложений, но с разными publicPath, то мы можем использовать значение 'auto', которое позволяет Webpack самостоятельно определить publicPath на основе текущего URL. 
-Поскольку в основном проекте мы используем homePage мы попытались установить этот же путь и в publicPath. Однако это не сработало и мы получали ошибку загрузки:
+Worthy of separate mention is the `publicPath` parameter set in the example to 'auto'. As per the [documentation](https://webpack.js.org/guides/public-path/#root), it defines the base path for all static resources that will be generated by Webpack. In the CRA template, this parameter is based on PUBLIC_URL or homePage in package.json. If we want to use the same template for different applications but with different publicPaths, we can use the 'auto' value, allowing Webpack to independently determine the publicPath based on the current URL. 
+Since we use homePage in the main project, we tried to set this same path in publicPath. However, this didn't work, and we encountered a loading error:
 
 > Uncaught ChunkLoadError: Loading chunk ... failed.
 
-Причина в том, что поскольку мы собираем отдельный бандл Альбома, и располагаем его на отдельном хостинге, то homePage в package.json не будет соответствовать текущему URL.
-В итоге мы остановились на следующем решении: оставить значение pulicPath = 'auto', а непосредственно в сценариях запуска и сборки переписывать PUBLIC_URL на значение по-умолчанию:
+The reason being, since we compile a separate Album bundle and place it on a separate hosting, the homePage in package.json will not match the current URL.
+In the end, we settled on the following solution: keep the value of publicPath = 'auto', and directly in the launch and build scripts, rewrite the PUBLIC_URL to its default value:
 
 ```js
 process.env.PUBLIC_URL = '/'
 ```
 
-### Развертывание
 
-Сборка и публикация веб версии ProdApp и ProdAlbum бандла осуществляется с использованием статического хостинга Firebase и Github Actions CI. Firebase предоставляет все удобства, включая шаблоны workflows для Github Actions, а также автоматизированные адреса для превью версий. Путь к бандлу ProdAlbum (PRODUCER_ALBUM_APP_URL) сохраняем в github secrets и не забываем передать его в соотвтествующих workflow.
+### Deployment
+
+The build and publication of the web version of ProdApp and the ProdAlbum bundle are executed using Firebase's static hosting and Github Actions CI. Firebase offers all the conveniences, including workflow templates for Github Actions, as well as automated addresses for preview versions. We store the path to the ProdAlbum bundle (PRODUCER_ALBUM_APP_URL) in GitHub secrets and remember to pass it in the corresponding workflow.
 
 ```yaml
 	# Prod App workflow
@@ -267,7 +268,7 @@ process.env.PUBLIC_URL = '/'
 		PRODUCER_ALBUM_APP_URL: ${{ secrets.PRODUCER_ALBUM_APP_URL }}
 ```
 
-В обоих случаях для правильной работы SPA необходимо настроить правила перенаправления на index.html. В Firebase это делается с помощью файла firebase.json:
+In both cases, for the SPA to work correctly, it is necessary to set up redirection rules to index.html. In Firebase, this is done using the firebase.json file:
 
 ```json
 {
@@ -282,7 +283,7 @@ process.env.PUBLIC_URL = '/'
 }
 ```
 
-Дополнительно для правильного отображения шрифтов из бандла ProdAlbum потребовалось добавить заголовок [Access-Control-Allow-Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin):
+Additionally, to display the fonts correctly from the ProdAlbum bundle, it was necessary to add the [Access-Control-Allow-Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin) header:
 
 ```json
 {
@@ -297,11 +298,12 @@ process.env.PUBLIC_URL = '/'
 }
 ```
 
-### Итоги
-Нам кажется, данный кейс представляет собой случай эффективного  использования microfrontends на практике. Нам удалось значительно сократить время разработки, засчет "подключения" к устаревшему проекту нового функционала, взяв его из кодовой базы, которая находилась в активной разработке и была практически готова к использованию, вместо того, чтобы создавать его заново на базе старого проекта. Также мы смогли избежать дублирования кода, который был общим для обоих проектов, и использовать его в обоих приложениях.
+### Conclusions
 
-Конечно это привело к появлению дополнительной зависимости: ProdApp теперь зависит от бандла ProdAlbum, который является частью кодовой базы Dashboard. Однако, поскольку ProdAlbum собирается и разворачивается отдельно от Dashboard эта зависимость не создает лишних рисков что при очередном обновлении Dashboard мы случайно сломаем ProdApp. Кроме того данная зависимость представляеся соответствующей правилу "принципа единственной ответственности" поскольку бизнес-логика Альбома сосредоточена в одном месте и если что-то поменяется в том как Альбомы выглядят или работают в Dashboard, то это почти наверняка повлечет перемены в ProdAlbum. 
+We believe that this case serves as an example of effective microfrontends implementation in practice. We managed to significantly reduce development time by "plugging in" new features into an outdated project, taking it from a codebase that was actively being developed and almost ready to use, rather than rebuilding it on the base of an older project. Additionally, we avoided duplicating code that was common to both projects, allowing its use in both applications.
 
-Ключевым моментом в данном случае в пользу выбора microfrontends оказалось то как легко было передать авторизационный токен из среды ProdApp в ProdAlbum. Если бы мы просто развернули микросайт для просмотра Альбомов и поместили бы его на тот же домен что и ProdApp, нам бы не удалось так же просто использовать авторизацию в ProdApp для доступа к ProdAlbum. Вместо этого нам пришлось бы реализовать еще одну авторизацию для ProdAlbum, что было бы не очень хорошо с точки зрения безопасности и потребовало бы дополнительных действий со стороны пользователя.
+Of course, this led to the emergence of an additional dependency: ProdApp now relies on the ProdAlbum bundle, which is part of the Dashboard codebase. However, since the ProdAlbum is built and deployed separately from the Dashboard, this dependency doesn't introduce any additional risks that an update to the Dashboard might inadvertently break the ProdApp. Moreover, this dependency adheres to the "single responsibility principle," since the business logic of the Album is concentrated in one place. If anything changes regarding how the Albums look or operate in the Dashboard, it would most likely result in changes to ProdAlbum.
 
-Хочется поблагодарить создателя плагина [Zack Jackson](https://twitter.com/ScriptedAlchemy) за его работу и за прекрасный набор примеров использования из которых мы почерпнули много полезного (не только для данного кейса). С другой стороны, нам кажется, что документация плагина и Webpack в целом могла бы быть более подробной и понятной. Например, формулировки, объясняющие shared modules и publicPath в документации плагина не совсем понятны и не дают полного представления о том как они работают. 
+A key point in this case in favor of choosing microfrontends was how easily we were able to transfer the authorization token from the ProdApp environment to ProdAlbum. Had we simply launched a microsite for viewing the Albums and placed it on the same domain as the ProdApp, we would not have been able to leverage the authorization in ProdApp for access to ProdAlbum. Instead, we would have had to implement another authentication mechanism for ProdAlbum, which would not have been optimal from a security standpoint and would have required additional user actions.
+
+We'd like to thank the plugin creator, [Zack Jackson](https://twitter.com/ScriptedAlchemy), for his work and the excellent set of examples from which we drew a lot of valuable insights (not only for this case). On the other hand, we feel that the documentation for the plugin and Webpack in general could be more detailed and clear. For instance, the explanations regarding shared modules and publicPath in the plugin's documentation are not entirely clear and don't provide a full understanding of how they operate.

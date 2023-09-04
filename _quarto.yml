@@ -2,7 +2,7 @@ project:
   type: website
 
 website:
-  title: "Blog"
+  title: "Behind My Code"
   navbar:
     right:
       - href: https://temaput.github.io/
@@ -13,7 +13,7 @@ website:
         href: https://www.linkedin.com/in/temaput/
 format:
   html:
-    theme: vapor
+    theme: slate
     css: styles.css
 
 

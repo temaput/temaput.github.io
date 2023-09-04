@@ -1,0 +1,116 @@
+---
+title: "Learning Swift Through Building MFEncoder: A Journey Guided by OpenAI"
+subtitle: "Part 2: Implementing FormData"
+author: "Artem Putilov"
+date: "2023-08-30"
+categories: [code, swift, web, ai]
+keywords: [Swift, MFEncoder, OpenAI, GPT-4, Data Encoding, Multipart Forms, Software Development, Programming]
+image: "form2.jpeg"
+---
+
+# Introduction
+
+## Brief Summary
+
+In this set of articles, we take a close look at Swift programming. We're focusing on creating a package called "MFEncoder" to handle multipart form data. This is important for things like sending forms and files over the internet. We will use the OpenAI GPT-4 chatbot as a guide or mentor to help us through the project.
+
+## Previous Parts
+In [Part 1](part_1.qmd) we discussed the details of Multipart form encoding. We also built some foundational elements as well as interactive Playground to help us with testing our implementation with the real backend.
+
+# Part two
+
+We will tell about implementing MFFormData - a low-level API, inspired by the Web's FormData API, that gives complete control over the form data before submitting it over HTTP.
+
+[Web FormData](https://devdocs.io/dom/formdata) is a key/value container that implements all standard access / modify methods. Somewhat special about it is that it can hold multiple values for with the same key, thats why it has getAll access method. Calling append with the same key is allowed. 
+
+## Implementation details
+
+We implement our MFFormData as a wrapper around an Array of structures. Each item has a key and a value of type Data. We use this array to produce the final Data by joining each item with `--boundary` separator. Additionally item can hold fileName and mime type.
+
+We implement mutating methods (set, append) via set of overloaded methods for all supported data types which are:
+
+- CustomStringConvertible: any primitive value including numeric and booleans are covered by this
+- URL: adds file contents for file URLs, absolute path string otherwise
+- UIImage, NSImage, CGImage
+- Data: adds file contents with mime type `application/octet-stream`
+- Date: adds date representation
+
+Date serialization is inspired by JSONEncoder via strategy pattern. Supported options are:
+
+- Unix timestamp with seconds (default)
+- Javascript timestamp (milliseconds)
+- iso string 
+- custom formatter, passed as enclosed value together with option
+
+### Headers encoding
+
+The headers for each part should be ASCII. This includes the Content-Disposition header, which contains the name of the field and the filename if applicable. The field name and filename should be percent-encoded if they contain non-ASCII or special characters. In Swift, we can use the addingPercentEncoding(withAllowedCharacters:) method for this.
+
+To create a custom `CharacterSet` that includes all ASCII characters in Swift, we can initialize a `CharacterSet` from a Unicode range. ASCII characters range from 0 to 127, so we can create a `CharacterSet` that represents all ASCII characters like this:
+
+```swift
+let asciiCharacterSet = CharacterSet(charactersIn: "\0" ... "\u{7f}")
+```
+
+This uses the Unicode scalar initializer of `CharacterSet` and Swift's support for creating ranges from characters to define a set of all ASCII characters. The range from "\0" (the null character) to "\u{7f}" (the delete character) includes all ASCII characters.
+
+Please note that this `CharacterSet` will include all ASCII characters, including control characters and other non-printable characters. To exclude these, we should define a more specific range, such as from " " (space, ASCII 32) to "~" (tilde, ASCII 126), which includes all printable ASCII characters:
+
+```swift
+let printableAsciiCharacterSet = CharacterSet(charactersIn: " " ... "~")
+```
+
+### Access methods
+
+To implement get and getAll methods as well as iterators we need a way to return polymorphic value which basically can be either `String` or `Data`.
+
+```swift
+  public enum ValueOutput {
+    case stringCase(String)
+    case blobCase(Data)
+    
+    init?(_ item: FormDataItem) {
+      if item.filename != nil {
+        self = .blobCase(item.value)
+      } else {
+        if let stringValue = String(data: item.value, encoding: .utf8) {
+          self = .stringCase(stringValue)
+          
+        } else {
+          return nil
+        }
+      }
+      
+    }
+  }
+```
+
+This union enum also serves as an Element of our IteratorsProtocol implementations for `values`, `entities`. 
+
+To implement IteratorProtocol over our Array GPT-4 suggested an elegant way to use deferred increment of a current item counter:
+
+```swift
+// part of KeysIterator
+    mutating public func next() -> String? {
+      defer {
+        current += 1
+        while current < elements.count && elements[current - 1].name == elements[current].name {
+          current += 1
+        }
+      }
+      return current < elements.count ? elements[current].name : nil
+    }
+```
+
+Having 3 different Iterators with ValueOutput we can complete web-like FormData implementation.
+
+### Helpers
+
+To simplify the process of sending requests we add `bodyForHttpRequest` and `contentTypeForHttpRequest` getters. First one actually composes the final Data from wrapped Array, the second one provides contentType header. The reason its useful is because same boundary string should be used inside form data body and content-type header. Additionally we provide complete helper method which is capable of generating `URLRequest` from given URL as a parameter.
+
+This completes our second part. In the [next part](part_3.qmd) we will show the implementation of MFEncoder which is a higher level api conforming to Swift Encoder protocol.
+
+
+
+
+
