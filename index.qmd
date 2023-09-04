@@ -1,5 +1,5 @@
 ---
-title: "Behind My Code"
+title: "Decoding My Experiences in Tech"
 listing:
   contents: posts
   sort: "date desc"

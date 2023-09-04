@@ -9,6 +9,7 @@ website:
   twitter-card: true
   open-graph: true
   site-url: https://temaput.github.io/Blog/
+  body-footer: "<br><br> [![](/by.svg)](https://creativecommons.org/licenses/by/4.0/)<br> Artem Putilov, 2023"
   navbar:
     right:
       - href: https://temaput.github.io/
