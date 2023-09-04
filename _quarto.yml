@@ -3,6 +3,12 @@ project:
 
 website:
   title: "Behind My Code"
+  description: "A blog about how technological curiosity shapes my development adventure"
+  google-analytics: "G-XBYLY9KNL7"
+  favicon: favicon.png
+  twitter-card: true
+  open-graph: true
+  site-url: https://temaput.github.io/Blog/
   navbar:
     right:
       - href: https://temaput.github.io/
